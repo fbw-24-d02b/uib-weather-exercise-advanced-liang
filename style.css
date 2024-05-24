@@ -195,14 +195,9 @@ svg {
     }
   }
 
-  /* take full size of handy screen and 428*926 by desktop */
-  @media (min-width: 500px) {
-    &, &::before {
-      width: 428px;
-      height: 926px;
-    }
-
-    header {
+  /* take full size of handy screen and width 428px when over it*/
+  @media (min-width: 428px) {
+    &, &::before, header {
       width: 428px;
     }
   }
