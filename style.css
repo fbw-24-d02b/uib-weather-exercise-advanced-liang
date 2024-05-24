@@ -158,19 +158,6 @@ svg {
     z-index: -1;
   }
 
-  /* take full size of handy screen and 428*926 by desktop */
-  @media (min-width: 500px) {
-    width: 428px;
-    height: 926px;
-
-    &::before {
-      width: 428px;
-      height: 926px;
-    }
-  }
-
-
-
   &>* {
     width: 100%;
   }
@@ -180,6 +167,7 @@ svg {
     padding: var(--size-200);
     height: 60px;
     position: fixed;
+    top: 0;
     left: 50%;
     translate: -50%;
 
@@ -204,6 +192,18 @@ svg {
         padding-left: 50%;
         animation: scroll 8s linear infinite;
       }
+    }
+  }
+
+  /* take full size of handy screen and 428*926 by desktop */
+  @media (min-width: 500px) {
+    &, &::before {
+      width: 428px;
+      height: 926px;
+    }
+
+    header {
+      width: 428px;
     }
   }
 
