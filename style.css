@@ -1,6 +1,7 @@
 /* 
-功能点：切换背景图片 
-地址滚动条
+功能点：
+切换背景图片 
+地址滚动条  ok
  */
 
 :root {
@@ -130,8 +131,8 @@ svg {
 .weather {
   /* take iphone 12/13 Pro Max iOS 14.6 for example*/
   padding: var(--size-200);
-  width: 428px;
-  height: 926px;
+  width: min(100svw, 428px);
+  height: min(100svh, 926px);
   background-size: cover;
   margin: 0 auto;
   display: flex;
@@ -146,8 +147,8 @@ svg {
     top: 0;
     left: 50%;
     translate: -50%;
-    width: min(100vw, 428px);
-    height: min(100vh, 926px);
+    width: min(100svw, 428px);
+    height: min(100svh, 926px);
     /* 
 功能点：切换背景图片
  */
@@ -164,7 +165,6 @@ svg {
   /* header */
   header {
     padding: var(--size-200);
-    width: min(100%, 428px);
     height: 60px;
     position: fixed;
     left: 50%;
@@ -180,7 +180,7 @@ svg {
     }
 
     .address {
-      width: 80%;
+      width: 75%;
       overflow: hidden;
       white-space: nowrap;
 
