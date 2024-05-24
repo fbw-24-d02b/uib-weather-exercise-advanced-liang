@@ -297,17 +297,6 @@ svg {
         "richu middle-5 rila"
         "richu middle-6 rila";
 
-      i.icon-richu,
-      i.icon-rila {
-        color: var(--yellow-sun);
-        font-size: var(--fs-600);
-      }
-
-      i.icon-qingtian {
-        color: var(--yellow-sun);
-        font-size: var(--fs-700);
-      }
-
       i.icon-navigate {
         color: #51F3FA;
       }
@@ -316,10 +305,10 @@ svg {
         color: #4FFF39;
       }
 
-      li.left-side {
+      /* li.left-side {
         grid-area: richu;
         padding-top: var(--size-700);
-        padding-left: var(--size-200);
+        padding-left: 60%;
 
         font-size: var(--fs-300);
         text-align: center;
@@ -328,11 +317,11 @@ svg {
       li.right-side {
         grid-area: rila;
         padding-top: var(--size-700);
-        padding-right: var(--size-200);
+        padding-right: 60%;
 
         font-size: var(--fs-300);
         text-align: center;
-      }
+      } */
 
       li.middle-1 {
         grid-area: middle-1;
@@ -388,8 +377,8 @@ svg {
     div.half-circle {
       position: absolute;
       width: 85%;
-      left: calc(7.5% + 1px);
-      top: 8%;
+      left: 7.5%;
+      top: 7.5%;
       aspect-ratio: 2/1;
       overflow: hidden;
       /* z-index: -1; */
@@ -401,6 +390,30 @@ svg {
         height: 200%;
         border-radius: 50%;
         border: 3px solid var(--primary-fc);
+      }
+    }
+
+    div.icons-sun {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 15%;
+      padding-left: 2.5%;
+      padding-right: 3%;
+      text-align: center;
+
+
+      p {
+        font-size: var(--fs-300);
+      }
+
+      i.icon-richu,
+      i.icon-rila {
+        color: var(--yellow-sun);
+        font-size: var(--fs-600);
       }
     }
   }
