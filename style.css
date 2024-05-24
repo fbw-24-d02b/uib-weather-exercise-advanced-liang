@@ -129,10 +129,10 @@ svg {
 /* general styling */
 
 .weather {
-  /* take iphone 12/13 Pro Max iOS 14.6 for example*/
+  /* screen size takes iphone 12/13 Pro Max for reference*/
   padding: var(--size-200);
-  width: 100svw;
-  height: 100svh;
+  width: min(100svw, 428px);
+  height: min(100svh, 926px);
   background-size: cover;
   margin: 0 auto;
   display: flex;
@@ -147,8 +147,8 @@ svg {
     top: 0;
     left: 50%;
     translate: -50%;
-    width: 100svw;
-    height: 100svh;
+    width: min(100svw, 428px);
+    height: min(100svh, 926px);
     /* 
 功能点：切换背景图片,待开发
  */
@@ -165,6 +165,7 @@ svg {
   /* header */
   header {
     padding: var(--size-200);
+    width: min(100svw, 428px);
     height: 60px;
     position: fixed;
     top: 0;
@@ -195,12 +196,6 @@ svg {
     }
   }
 
-  /* take full size of handy screen and width 428px when over it*/
-  @media (min-width: 428px) {
-    &, &::before, header {
-      width: 428px;
-    }
-  }
 
   /* main */
 }
