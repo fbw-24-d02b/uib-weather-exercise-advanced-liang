@@ -1,6 +1,7 @@
 /* 
 功能点：
 切换背景图片 待开发
+定义 428， 926 为屏幕宽高
 地址滚动条  ok
  */
 
@@ -32,7 +33,12 @@
   --size-800: 4rem;
   --size-900: 5rem;
 
+  /* screen size takes iphone 12/13 Pro Max for reference*/
+  --mw-handy: 428px;
+  --mh-handy: 926px;
+
   color: var(--primary-fc);
+
 
   h1 {
     font-size: var(--fs-900);
@@ -129,9 +135,8 @@ svg {
 /* general styling */
 
 .weather {
-  /* screen size takes iphone 12/13 Pro Max for reference*/
   padding: var(--size-200);
-  min-width: 100svw;
+  width: 100svw;
   min-height: 100svh;
   background-size: cover;
   margin: 0 auto;
@@ -166,10 +171,6 @@ svg {
   header {
     padding: var(--size-200);
     height: 60px;
-    position: fixed;
-    top: 0;
-    left: 50%;
-    translate: -50%;
 
 
     display: flex;
@@ -181,12 +182,12 @@ svg {
     }
 
     .address {
-      width: 75%;
+      width: 70%;
       overflow: hidden;
       white-space: nowrap;
 
 
-      h5 {
+      p {
         display: inline-block;
         white-space: nowrap;
         padding-left: 50%;
@@ -195,14 +196,24 @@ svg {
     }
   }
 
-  @media (min-width: px) {
+  @media screen and (min-width: 428px) {
+    width: var(--mw-handy);
+    min-height: var(--mh-handy);
+
+    &::before {
+      width: var(--mw-handy);
+      height: var(--mh-handy);
+    }
+
     header {
-      width: 768px;
+      width: var(--mw-handy);
     }
   }
 
+
   /* main */
 }
+
 
 @keyframes scroll {
   0% {
@@ -214,18 +225,39 @@ svg {
   }
 }
 
-@media screen and (min-width: 428px) {
+.general-forecast {
+  .slider {
+    position: relative;
 
-  &,
-  &::before {
-    width: 428px;
-    height: 926px;
-  }
+    .pic-locker {
+      position: absolute;
+      top: 0;
+      left: 0;
 
-  header {
-    width: 428px;
+      i.icon-tupian {
+        font-size: var(--fs-700);
+
+      }
+    }
+
+    .points {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+
+      li {
+        width: var(--size-300);
+        height: var(--size-300);
+        border-radius: 50%;
+        border: 1px solid var(--primary-fc);
+      }
+    }
   }
 }
+
+
 
 /* Utility classes */
 
