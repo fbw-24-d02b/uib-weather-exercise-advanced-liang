@@ -131,8 +131,8 @@ svg {
 .weather {
   /* screen size takes iphone 12/13 Pro Max for reference*/
   padding: var(--size-200);
-  width: min(100svw, 428px);
-  height: min(100svh, 926px);
+  min-width: 100svw;
+  min-height: 100svh;
   background-size: cover;
   margin: 0 auto;
   display: flex;
@@ -147,8 +147,8 @@ svg {
     top: 0;
     left: 50%;
     translate: -50%;
-    width: min(100svw, 428px);
-    height: min(100svh, 926px);
+    width: 100svw;
+    height: 100svh;
     /* 
 功能点：切换背景图片,待开发
  */
@@ -165,7 +165,6 @@ svg {
   /* header */
   header {
     padding: var(--size-200);
-    width: min(100svw, 428px);
     height: 60px;
     position: fixed;
     top: 0;
@@ -196,6 +195,11 @@ svg {
     }
   }
 
+  @media (min-width: px) {
+    header {
+      width: 768px;
+    }
+  }
 
   /* main */
 }
@@ -210,8 +214,18 @@ svg {
   }
 }
 
+@media screen and (min-width: 428px) {
 
+  &,
+  &::before {
+    width: 428px;
+    height: 926px;
+  }
 
+  header {
+    width: 428px;
+  }
+}
 
 /* Utility classes */
 
