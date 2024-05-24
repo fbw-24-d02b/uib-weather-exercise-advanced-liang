@@ -1,6 +1,6 @@
 /* 
 功能点：
-切换背景图片 
+切换背景图片 待开发
 地址滚动条  ok
  */
 
@@ -131,8 +131,8 @@ svg {
 .weather {
   /* take iphone 12/13 Pro Max iOS 14.6 for example*/
   padding: var(--size-200);
-  width: min(100svw, 428px);
-  height: min(100svh, 926px);
+  width: 100svw;
+  height: 100svh;
   background-size: cover;
   margin: 0 auto;
   display: flex;
@@ -147,16 +147,29 @@ svg {
     top: 0;
     left: 50%;
     translate: -50%;
-    width: min(100svw, 428px);
-    height: min(100svh, 926px);
+    width: 100svw;
+    height: 100svh;
     /* 
-功能点：切换背景图片
+功能点：切换背景图片,待开发
  */
     background-image: linear-gradient(rgb(0, 0, 0, 0.5), rgb(0, 0, 0, 0.5)), url('./images/Balingen-2.jpeg');
     background-size: cover;
     background-position: center;
     z-index: -1;
   }
+
+  /* take full size of handy screen and 428*926 by desktop */
+  @media (min-width: 500px) {
+    width: 428px;
+    height: 926px;
+
+    &::before {
+      width: 428px;
+      height: 926px;
+    }
+  }
+
+
 
   &>* {
     width: 100%;
