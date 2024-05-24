@@ -1,0 +1,20 @@
+    
+    /* 画半圆的方法 */
+    &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 200%;
+    border-radius: 50%;
+    border: 2px solid var(--primary-fc);
+  }
+
+
+/* 选择flow类除了第一个子元素之外的所有元素 */
+:where(.flow :not(:first-child)) {
+  margin-top: var(--flow-spacer, 3em);
+}
+.sub {
+  vertical-align: sub;
+  color: #ffffff;
+}
