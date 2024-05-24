@@ -97,9 +97,32 @@
               <p>21:08</p>
             </div>
           </div>
+          <div class="moving-sun">
+            <svg width="300" height="150" viewBox="0 0 300 150">
+              <defs>
+                <linearGradient id="color-gradient">
+                  <stop offset="0%" stop-color="#f36924" />
+                  <stop offset="10%" stop-color="#ebdf98" />
+                  <stop offset="30%" stop-color="#f0f0f0" />
+                  <stop offset="80%" stop-color="#f0f0f0" />
+                  <stop offset="90%" stop-color="#ebdf98" />
+                  <stop offset="100%" stop-color="#f36924" />
+                </linearGradient>
+              </defs>
+              
+              <path id="half-circle" d="M0,150 A150,150 0 0,1 300,150" stroke="url(#color-gradient)" stroke-width="4" fill="none" />
+              
+              <circle id="moving-circle" cx="0" cy="0" r="10" fill="#FBFE41">
+                <animateMotion dur="30s" repeatCount="indefinite" calcMode="linear">
+                  <mpath xlink:href="#half-circle" />
+                </animateMotion>
+              </circle>
+            </svg>
+          </div>
         </div>
       </section>
-      <section class="hours-forecast"></section>
+      <section class="hours-forecast">
+      </section>
       <section class="days-forecast"></section>
       <section class="parameters"></section>
       <section class="radar-chart"></section>

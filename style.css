@@ -228,7 +228,7 @@ svg {
   }
 }
 
-.general-forecast {
+section.general-forecast {
   padding-inline: var(--size-200);
 
   .slider {
@@ -414,6 +414,18 @@ svg {
       i.icon-rila {
         color: var(--yellow-sun);
         font-size: var(--fs-600);
+      }
+    }
+
+    div.moving-sun {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -87%);
+
+      svg {
+        display: block;
+        overflow: visible;
       }
     }
   }
