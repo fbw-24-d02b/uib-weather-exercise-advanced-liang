@@ -305,24 +305,6 @@ section.general-forecast {
         color: #4FFF39;
       }
 
-      /* li.left-side {
-        grid-area: richu;
-        padding-top: var(--size-700);
-        padding-left: 60%;
-
-        font-size: var(--fs-300);
-        text-align: center;
-      }
-
-      li.right-side {
-        grid-area: rila;
-        padding-top: var(--size-700);
-        padding-right: 60%;
-
-        font-size: var(--fs-300);
-        text-align: center;
-      } */
-
       li.middle-1 {
         grid-area: middle-1;
         align-self: end;
@@ -381,7 +363,6 @@ section.general-forecast {
       top: 7.5%;
       aspect-ratio: 2/1;
       overflow: hidden;
-      /* z-index: -1; */
 
       &::before {
         content: '';
@@ -389,7 +370,7 @@ section.general-forecast {
         width: 100%;
         height: 200%;
         border-radius: 50%;
-        border: 3px solid var(--primary-fc);
+        /* border: 3px solid var(--primary-fc); */
       }
     }
 
@@ -421,7 +402,7 @@ section.general-forecast {
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(-50%, -87%);
+      transform: scale(1.7) translate(-29.5%, -57%);
 
       svg {
         display: block;
