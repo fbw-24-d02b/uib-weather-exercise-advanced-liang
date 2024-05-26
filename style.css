@@ -185,6 +185,30 @@ svg {
     i {
       font-size: var(--fs-700);
 
+      span {
+        width: max-content;
+        font-size: var(--fs-400);
+        position: absolute;
+        top: 100%;
+        right: var(--size-200);
+        padding: var(--size-100);
+        background-color: var(--bgc-transparent);
+        display: none;
+  
+        &::after {
+          content: '';
+          border: var(--size-200) solid transparent;
+          border-bottom-color: var(--bgc-transparent);
+          position: absolute;
+          top: -1rem;
+          right: 0;
+        }
+  
+        /* :has(i.icon-location:hover) & {
+          display: block;
+        } */
+      }
+
       &.icon-location {
         cursor: pointer;
         position: relative;
@@ -193,31 +217,19 @@ svg {
           color: var(--yellow-sun);
           scale: 1.1;
           text-shadow: 0 0 10px var(--yellow-sun);
+
+          span {
+            display: block;
+
+            color: var(--primary-fc);
+            scale: 1;
+            text-shadow: none;
+          }
         }
       }
     }
 
-    span {
-      position: absolute;
-      top: var(--size-200);
-      right: 0;
-      padding: var(--size-100);
-      background-color: var(--bgc-transparent);
-      /* display: none; */
-
-      &::after {
-        content: '';
-        border: var(--size-200) solid transparent;
-        border-bottom-color: var(--bgc-transparent);
-        position: absolute;
-        top: -var(--size-200);
-        right: 0;
-      }
-
-      /* :has(i.icon-location:hover) & {
-        display: block;
-      } */
-    }
+    
 
 
     .address {
