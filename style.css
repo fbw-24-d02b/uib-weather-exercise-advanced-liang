@@ -133,7 +133,6 @@ svg {
 
 
 /* general styling */
-
 .weather {
   padding: var(--size-200);
   width: 100svw;
@@ -197,10 +196,6 @@ svg {
           top: -1rem;
           right: 0;
         }
-
-        /* :has(i.icon-location:hover) & {
-          display: block;
-        } */
       }
 
       &.icon-location {
@@ -302,11 +297,7 @@ svg {
       width: var(--maxw-handy);
     }
   }
-
-
-  /* main */
 }
-
 
 @keyframes scroll {
   0% {
@@ -318,6 +309,7 @@ svg {
   }
 }
 
+ /* main */
 section.general-forecast {
   padding: var(--size-200);
 
