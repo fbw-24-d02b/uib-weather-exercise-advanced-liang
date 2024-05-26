@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // add a click event listener to the location icon
   var locationIcon = document.querySelector('.iconfont.icon-location');
-  
+
   locationIcon.addEventListener('click', function () {
     document.getElementById('weather-form').style.display = 'flex';
     // Clear the input fields
