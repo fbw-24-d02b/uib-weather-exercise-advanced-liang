@@ -174,6 +174,7 @@ svg {
   header {
     padding: var(--size-200);
     height: 60px;
+    position: relative;
 
 
     display: flex;
@@ -182,7 +183,41 @@ svg {
 
     i {
       font-size: var(--fs-700);
+
+      &.icon-location {
+        cursor: pointer;
+        position: relative;
+
+        &:hover {
+          color: var(--yellow-sun);
+          scale: 1.1;
+          text-shadow: 0 0 10px var(--yellow-sun);
+        }
+      }
     }
+
+    span {
+      position: absolute;
+      top: 95%;
+      right: 3.5%;
+      padding: var(--size-100);
+      background-color: var(--bgc-transparent);
+      display: none;
+
+      &::after {
+        content: '';
+        border: var(--size-200) solid transparent;
+        border-bottom-color: var(--bgc-transparent);
+        position: absolute;
+        top: -50%;
+        right: 0;
+      }
+
+      :has(i.icon-location:hover) & {
+        display: block;
+      }
+    }
+
 
     .address {
       width: 70%;
@@ -201,7 +236,8 @@ svg {
 
   @media screen and (min-width: 428px) {
     width: var(--mw-handy);
-    min-height: var(--mh-handy);
+    height: var(--mh-handy);
+    overflow-y: auto;
 
     &::before {
       width: var(--mw-handy);
@@ -229,7 +265,7 @@ svg {
 }
 
 section.general-forecast {
-  padding-inline: var(--size-200);
+  padding: var(--size-200);
 
   .slider {
     height: var(--size-600);
