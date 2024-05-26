@@ -3,10 +3,11 @@ task list:
 "general weather informaiton"
     --static layout for general weather informaiton-- done
     --fetch weather data from OpenWeatherMap API-- done
-    --add input form to refresh location and weather data-- done
+    --add an form to refresh location and weather data-- done
+    --switch location by clicking on the location icon-- 
     --switch the background image at random on changing locations--
     --calculate real-time sun position on sunrise-sunset curve--
-    --show weather app via githup or rented domain--
+    --show weather app via githup or a rented domain--
 */
 
 
@@ -87,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var minTemperature = Math.floor(weatherData.main.temp_min);
         var windSpeed = Math.floor(weatherData.wind.speed);
         var windSpeedKmh = Math.floor((windSpeed * 3.6));
-        var rainProbability = weatherData.rain ? (weatherData.rain['1h'] ? weatherData.rain['1h'] : 0) : 0;
+        var humidity = weatherData.main.humidity; 
         var weatherDescription = weatherData.weather[0].description;
 
         console.log(weatherData);
@@ -97,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("max-temperature").textContent = maxTemperature + "°C";
         document.getElementById("min-temperature").textContent = minTemperature + "°C";
         document.getElementById("wind-speed").textContent = windSpeedKmh + " km/h";
-        document.getElementById("rain-probability").textContent = rainProbability + " mm";
+        document.getElementById("humidity").textContent = humidity + "%";
         document.getElementById("weather-description").textContent = weatherDescription;
       })
       .catch(error => console.error("An error occurred while fetching current weather:", error));
