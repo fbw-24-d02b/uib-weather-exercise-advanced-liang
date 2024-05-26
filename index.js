@@ -6,7 +6,7 @@ task list:
     --add an form to refresh location and weather data-- done
     --add cancel button and esc function to hide the location-input-form-- 
     --switch location by clicking on the location icon-- 
-    --switch the background image at random on changing locations--
+    --switch the background image on changing locations--
     --calculate real-time sun position on sunrise-sunset curve--
     --show weather app via githup or a rented domain--
 */
