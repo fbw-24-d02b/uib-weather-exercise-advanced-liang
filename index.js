@@ -67,11 +67,11 @@ window.onload = function () {
         fetch(openWeatherUrl)
           .then(response => response.json())
           .then(weatherData => {
-            var temperature = weatherData.main.temp;
-            var maxTemperature = weatherData.main.temp_max;
-            var minTemperature = weatherData.main.temp_min;
-            var windSpeed = weatherData.wind.speed;
-            var windSpeedKmh = (windSpeed * 3.6).toFixed(2);
+            var temperature = Math.floor(weatherData.main.temp);
+            var maxTemperature = Math.floor(weatherData.main.temp_max);
+            var minTemperature = Math.floor(weatherData.main.temp_min);
+            var windSpeed = Math.floor(weatherData.wind.speed);
+            var windSpeedKmh = Math.floor((windSpeed * 3.6).toFixed(2));
             var rainProbability = weatherData.rain ? (weatherData.rain['1h'] ? weatherData.rain['1h'] : 0) : 0;
 
             console.log(weatherData.main);
