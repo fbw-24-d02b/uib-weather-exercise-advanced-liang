@@ -1,11 +1,5 @@
-/* 
-功能点：
-切换背景图片 待开发
-定义 428， 926 为屏幕宽高
-地址滚动条  ok
- */
 
- :root {
+:root {
   --ff-primary: "Be Vietnam Pro", sans-serif;
 
   --primary-fc: #ffffff;
@@ -158,9 +152,6 @@ svg {
     translate: -50%;
     width: 100svw;
     height: 100svh;
-    /* 
-功能点：切换背景图片,待开发
- */
     background-image: linear-gradient(var(--bgc-transparent), var(--bgc-transparent)), url('./images/Balingen-2.jpeg');
     background-size: cover;
     background-position: center;
@@ -194,7 +185,7 @@ svg {
         padding: var(--size-100);
         background-color: var(--bgc-transparent);
         display: none;
-  
+
         &::after {
           content: '';
           border: var(--size-200) solid transparent;
@@ -203,7 +194,7 @@ svg {
           top: -1rem;
           right: 0;
         }
-  
+
         /* :has(i.icon-location:hover) & {
           display: block;
         } */
@@ -229,20 +220,67 @@ svg {
       }
     }
 
-    
-
-
     .address {
       width: 70%;
       overflow: hidden;
       white-space: nowrap;
-
+      text-transform: capitalize;
 
       p {
         display: inline-block;
         white-space: nowrap;
         padding-left: 100%;
         animation: scroll 10s linear infinite;
+      }
+    }
+  }
+
+  #weather-form {
+
+    position: absolute;
+    width: min(100%, 428px);
+    height: min(100%, 926px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-500);
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    background-color: var(--bgc-transparent);
+    backdrop-filter: blur(10px); 
+    
+
+    .input-container {
+      position: relative;
+    }
+
+    .input-container input {
+      padding-left: 100px;
+      /* Adjust this value based on the length of the placeholder text */
+    }
+
+    .input-container::before {
+      content: attr(data-placeholder);
+      position: absolute;
+      left: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: grey;
+    }
+
+    button {
+      width: fit-content;
+      cursor: pointer;
+      padding: var(--size-100) var(--size-200);
+      border: 0;
+
+      &:hover {
+        background-color: var(--yellow-sun);
+      }
+
+      &:active {
+        transform: scale(0.9);
       }
     }
   }
@@ -460,4 +498,3 @@ section.general-forecast {
     }
   }
 }
-

@@ -16,13 +16,21 @@
     <header>
       <i class="iconfont icon-menu"></i>
       <div class="address">
-        <p>Balingen, Germany</p>
-        <!-- <p>Balingen, Germany</p> -->
+        <p id="address">Balingen, Germany</p>
       </div>
       <i class="iconfont icon-location">
         <span>Add location</span>
       </i>
     </header>
+    <form id="weather-form">
+      <div class="input-container" data-placeholder="City:">
+          <input type="text" id="city" name="city" required>
+      </div>
+      <div class="input-container" data-placeholder="Country:">
+          <input type="text" id="country" name="country" required>
+      </div>
+      <button type="submit">Get Weather</button>
+  </form>
     <main>
       <section class="general-forecast">
         <div class="slider">
@@ -42,7 +50,7 @@
 
             <li class="middle-1"></li>
             <li class="middle-1">
-              <span id="min-temperature">8°</span> / <span id="max-temperature">14°</span> 
+              <span id="min-temperature">8°</span> / <span id="max-temperature">14°</span>
             </li>
 
             <li class="middle-2">

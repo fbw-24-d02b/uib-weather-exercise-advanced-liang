@@ -9,62 +9,37 @@
   <script src="test.js"></script>
   <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4559490_9ebhsvprti.css">
   <style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
+    .input-container {
+        position: relative;
+        /* display: inline-block; */
     }
-    th, td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: left;
+    .input-container input {
+        padding-left: 100px; /* Adjust this value based on the length of the placeholder text */
     }
-    th {
-        background-color: #f2f2f2;
+    .input-container::before {
+        content: attr(data-placeholder);
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: grey;
     }
-  </style>
+</style>
 </head>
 
 <body>
-  <h1>Get Weather Information</h1>
-  <form id="weather-form">
-      <label for="city">City:</label>
-      <input type="text" id="city" name="city" required>
-      <label for="country">Country:</label>
-      <input type="text" id="country" name="country" required>
-      <button type="submit">Get Weather</button>
-  </form>
+    <h1>Get Weather Information</h1>
+    <form id="weather-form">
+        <div class="input-container" data-placeholder="City:">
+            <input type="text" id="city" name="city" required>
+        </div>
+        <div class="input-container" data-placeholder="Country:">
+            <input type="text" id="country" name="country" required>
+        </div>
+        <button type="reset">Get Weather</button>
+    </form>
 
-  <h2>Weather Details</h2>
-  <table id="weather-table">
-      <tr>
-          <th>Parameter</th>
-          <th>Value</th>
-      </tr>
-      <tr>
-          <td>Temperature</td>
-          <td id="temperature"></td>
-      </tr>
-      <tr>
-          <td>Max Temperature</td>
-          <td id="max-temperature"></td>
-      </tr>
-      <tr>
-          <td>Min Temperature</td>
-          <td id="min-temperature"></td>
-      </tr>
-      <tr>
-          <td>Wind Speed</td>
-          <td id="wind-speed"></td>
-      </tr>
-      <tr>
-          <td>Rain Probability</td>
-          <td id="rain-probability"></td>
-      </tr>
-      <tr>
-          <td>Weather Description</td>
-          <td id="weather-description"></td>
-      </tr>
-  </table>
 
 </body>
 
