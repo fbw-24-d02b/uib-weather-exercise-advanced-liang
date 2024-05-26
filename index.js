@@ -1,14 +1,11 @@
 window.onload = function () {
 
-  // fill in class .middle-6 with the current date and format it 
+  // Update the date in the .middle-6 class with the current date formatted in German style
   var currentDate = new Date();
   var formattedDate = currentDate.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
   document.querySelector('.middle-6').textContent = formattedDate;
-  // over
-  // over
-  // over 
 
-  // fill in class .middle-5 with the current time and format it 
+  // Update the time in the .middle-5 class with the current time formatted as HH:MM:SS
   function updateClock() {
     var currentTime = new Date();
     var hours = currentTime.getHours();
@@ -24,75 +21,43 @@ window.onload = function () {
     document.querySelector(".middle-5").textContent = timeString;
   }
 
-  // Update clock every second
+  // Update the clock every second
   setInterval(updateClock, 1000);
 
-  // Initial call to display clock immediately
+  // Initial call to display the clock immediately
   updateClock();
-  // over
-  // over
-  // over
 
+  // API Key and URL for fetching weather data
+  const apiKey = '8ee0ee1386092cdc507a8269ed0e2b74';
+  const city = 'Balingen';
+  const country = 'DE'; // Germany's country code
 
-  // fetch sunrise time, sunset time, current temperature, maxTemperatureand, minTemperature, windSpeed and rainProbability and fill in corrsponding classes
+  // Build the API request URL
+  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}&units=metric`;
 
-  // fetch position information
-  navigator.geolocation.getCurrentPosition(function(position) {
-    var latitude = position.coords.latitude;
-    var longitude = position.coords.longitude;
+  // Fetch weather data from OpenWeatherMap API
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(weatherData => {
+      // Process the fetched weather data
+      var temperature = Math.floor(weatherData.main.temp);
+      var maxTemperature = Math.floor(weatherData.main.temp_max);
+      var minTemperature = Math.floor(weatherData.main.temp_min);
+      var windSpeed = Math.floor(weatherData.wind.speed);
+      var windSpeedKmh = Math.floor((windSpeed * 3.6));
+      var rainProbability = weatherData.rain ? (weatherData.rain['1h'] ? weatherData.rain['1h'] : 0) : 0;
+      var weatherDescription = weatherData.weather[0].description;
 
+      console.log(weatherData.main);
+      console.log(weatherData);
 
-    console.log(latitude, longitude);
-  
-    // Call the Sunrise-Sunset API to get the sunrise and sunset times
-    var sunriseSunsetUrl = `https://api.sunrise-sunset.org/json?lat=${latitude}&lng=${longitude}&formatted=0`;
-  
-    // Fetch sunrise and sunset times
-    fetch(sunriseSunsetUrl)
-      .then(response => response.json())
-      .then(sunriseSunsetData => {
-        var sunrise = new Date(sunriseSunsetData.results.sunrise);
-        var sunset = new Date(sunriseSunsetData.results.sunset);
-        var sunriseTime = sunrise.getHours() + ":" + sunrise.getMinutes();
-        var sunsetTime = sunset.getHours() + ":" + sunset.getMinutes();
-  
-        // Display sunrise and sunset times
-        document.getElementById("sunrise-time").textContent = sunriseTime;
-        document.getElementById("sunset-time").textContent = sunsetTime;
-  
-        // Call OpenWeatherMap API to get current weather 
-        var openWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=8ee0ee1386092cdc507a8269ed0e2b74&units=metric`;
-
-  
-        fetch(openWeatherUrl)
-          .then(response => response.json())
-          .then(weatherData => {
-            var temperature = Math.floor(weatherData.main.temp);
-            var maxTemperature = Math.floor(weatherData.main.temp_max);
-            var minTemperature = Math.floor(weatherData.main.temp_min);
-            var windSpeed = Math.floor(weatherData.wind.speed);
-            var windSpeedKmh = Math.floor((windSpeed * 3.6).toFixed(2));
-            var rainProbability = weatherData.rain ? (weatherData.rain['1h'] ? weatherData.rain['1h'] : 0) : 0;
-
-            console.log(weatherData.main);
-  
-            // Display current weather information
-            document.getElementById("current-temperature").textContent = temperature + "°C";
-            document.getElementById("max-temperature").textContent = maxTemperature + "°C";
-            document.getElementById("min-temperature").textContent = minTemperature + "°C";
-            document.getElementById("wind-speed").textContent = windSpeedKmh + " km/h";
-            document.getElementById("rain-probability").textContent = rainProbability + " mm";
-          })
-          .catch(error => console.error("An error occurred while fetching current weather:", error));
-      })
-      .catch(error => console.error("An error occurred while fetching sunrise and sunset times:", error));
-  }, function(error) {
-    console.error("An error occurred while getting the user's location:", error);
-  });
-  
-  
-
-  // over
-  // over
-  // over
+      // Display current weather information in corresponding HTML elements
+      document.getElementById("current-temperature").textContent = temperature + "°C";
+      document.getElementById("max-temperature").textContent = maxTemperature + "°C";
+      document.getElementById("min-temperature").textContent = minTemperature + "°C";
+      document.getElementById("wind-speed").textContent = windSpeedKmh + " km/h";
+      document.getElementById("rain-probability").textContent = rainProbability + " mm";
+      document.getElementById("weather-description").textContent = weatherDescription;
+    })
+    .catch(error => console.error("An error occurred while fetching current weather:", error));
 };

@@ -327,6 +327,7 @@ section.general-forecast {
       li.middle-3 {
         grid-area: middle-3;
 
+        text-transform: uppercase;
         font-size: var(--fs-500);
         font-weight: var(--fw-bold);
       }
