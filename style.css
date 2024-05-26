@@ -37,8 +37,8 @@
   --size-900: 5rem;
 
   /* screen size takes iphone 12/13 Pro Max for reference*/
-  --mw-handy: 428px;
-  --mh-handy: 926px;
+  --maxw-handy: 428px;
+  --maxh-handy: 926px;
 
   color: var(--primary-fc);
 
@@ -241,24 +241,24 @@ svg {
       p {
         display: inline-block;
         white-space: nowrap;
-        padding-left: 50%;
-        animation: scroll 8s linear infinite;
+        padding-left: 100%;
+        animation: scroll 10s linear infinite;
       }
     }
   }
 
   @media screen and (min-width: 428px) {
-    width: var(--mw-handy);
-    height: var(--mh-handy);
+    width: var(--maxw-handy);
+    height: var(--maxh-handy);
     overflow-y: auto;
 
     &::before {
-      width: var(--mw-handy);
-      height: var(--mh-handy);
+      width: var(--maxw-handy);
+      height: var(--maxh-handy);
     }
 
     header {
-      width: var(--mw-handy);
+      width: var(--maxw-handy);
     }
   }
 
