@@ -140,6 +140,7 @@ svg {
 .weather {
   padding: var(--size-200);
   width: 100svw;
+  min-width: 350px;
   min-height: 100svh;
   background-size: cover;
   margin: 0 auto;
@@ -198,24 +199,24 @@ svg {
 
     span {
       position: absolute;
-      top: 95%;
-      right: 3.5%;
+      top: var(--size-200);
+      right: 0;
       padding: var(--size-100);
       background-color: var(--bgc-transparent);
-      display: none;
+      /* display: none; */
 
       &::after {
         content: '';
         border: var(--size-200) solid transparent;
         border-bottom-color: var(--bgc-transparent);
         position: absolute;
-        top: -50%;
+        top: -var(--size-200);
         right: 0;
       }
 
-      :has(i.icon-location:hover) & {
+      /* :has(i.icon-location:hover) & {
         display: block;
-      }
+      } */
     }
 
 
