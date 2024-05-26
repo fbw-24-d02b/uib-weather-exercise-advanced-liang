@@ -1,15 +1,17 @@
-
 :root {
   --ff-primary: "Be Vietnam Pro", sans-serif;
 
+  /* color constants */
   --primary-fc: #ffffff;
   --bgc-transparent: rgba(0, 0, 0, 0.5);
   --yellow-sun: #FBFE41;
 
+  /* font-weight constants */
   --fw-regular: 400;
   --fw-semi-bold: 500;
   --fw-bold: 700;
 
+  /* font-size constants */
   --fs-100: 0.7rem;
   --fs-200: 0.8125rem;
   --fs-300: 0.875rem;
@@ -20,6 +22,7 @@
   --fs-800: 2.5rem;
   --fs-900: 3.5rem;
 
+  /* distance constants */
   --size-100: 0.25rem;
   --size-200: 0.5rem;
   --size-300: 0.75rem;
@@ -247,8 +250,8 @@ svg {
     align-items: center;
     z-index: 1;
     background-color: var(--bgc-transparent);
-    backdrop-filter: blur(10px); 
-    
+    backdrop-filter: blur(10px);
+
 
     .input-container {
       position: relative;
