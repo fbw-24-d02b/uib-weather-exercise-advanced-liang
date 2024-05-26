@@ -7,22 +7,19 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4559490_jpwsvudw3p.css">
   <!--  <i class="iconfont icon-navigate"></i> -->
-  
+  <script src="index.js"></script>
   <title>weather app</title>
-  <style>
- 
-  </style>
 </head>
 
 <body>
   <div class="weather">
     <header>
-        <i class="iconfont icon-menu"></i>
-        <div class="address">
-          <p>Schlossstr. 6, Balingen, Germany</p>
-          <p>Schlossstr. 6, Balingen, Germany</p>
-        </div>
-        <i class="iconfont icon-location"></i>
+      <i class="iconfont icon-menu"></i>
+      <div class="address">
+        <p>Schlossstr. 6, Balingen, Germany</p>
+        <p>Schlossstr. 6, Balingen, Germany</p>
+      </div>
+      <i class="iconfont icon-location"></i>
     </header>
     <main>
       <section class="general-forecast">
@@ -40,25 +37,14 @@
         </div>
         <div class="sunrise-sunset">
           <ul class="grid-box">
-            <!-- <li class="left-side">
-              <i class="iconfont icon-richu"></i>
-              <p>05:34</p>
-            </li>
 
-            <li class="right-side">
-              <i class="iconfont icon-rila"></i>
-              <p>21:08</p>
-            </li> -->
-
+            <li class="middle-1"></li>
             <li class="middle-1">
-
-            </li>
-            <li class="middle-1">
-              8°/14°
+              <span id="min-temperature">8°</span> / <span id="max-temperature">14°</span> 
             </li>
 
             <li class="middle-2">
-              <span>12℃</span>
+              <span id="current-temperature">12℃</span>
               <img src="./images/cloudy.svg" alt="">
             </li>
 
@@ -71,10 +57,10 @@
                 <i class="iconfont icon-navigate"></i> S
               </div>
               <div>
-                <i class="iconfont icon-fengsu"></i> 4 km/h
+                <i class="iconfont icon-fengsu"></i> <span id="wind-speed">4 km/h</span>
               </div>
               <div>
-                <i class="iconfont icon-yusan"></i> 10%
+                <i class="iconfont icon-yusan"></i> <span id="rain-probability">10%</span>
               </div>
             </li>
 
@@ -86,15 +72,16 @@
               24.05.2024 Thu.
             </li>
           </ul>
+
           <div class="half-circle"></div>
           <div class="icons-sun">
             <div class="sunrise">
               <i class="iconfont icon-richu"></i>
-              <p>05:34</p>
+              <p id="sunrise-time">05:34</p>
             </div>
             <div class="sunset">
               <i class="iconfont icon-rila"></i>
-              <p>21:08</p>
+              <p id="sunset-time">21:08</p>
             </div>
           </div>
           <div class="moving-sun">
@@ -109,9 +96,10 @@
                   <stop offset="100%" stop-color="#f36924" />
                 </linearGradient>
               </defs>
-              
-              <path id="half-circle" d="M0,150 A150,150 0 0,1 300,150" stroke="url(#color-gradient)" stroke-width="4" fill="none" />
-              
+
+              <path id="half-circle" d="M0,150 A150,150 0 0,1 300,150" stroke="url(#color-gradient)" stroke-width="4"
+                fill="none" />
+
               <circle id="moving-circle" cx="0" cy="0" r="10" fill="#FBFE41">
                 <animateMotion dur="30s" repeatCount="indefinite" calcMode="linear">
                   <mpath xlink:href="#half-circle" />
@@ -129,5 +117,3 @@
     </main>
   </div>
 </body>
-
-</html>

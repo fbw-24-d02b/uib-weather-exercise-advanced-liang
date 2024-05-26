@@ -5,7 +5,7 @@
 地址滚动条  ok
  */
 
-:root {
+ :root {
   --ff-primary: "Be Vietnam Pro", sans-serif;
 
   --primary-fc: #ffffff;
@@ -287,7 +287,7 @@ section.general-forecast {
       display: grid;
       place-items: center;
       grid-template-columns: auto 1fr auto;
-      grid-template-rows: repeat (6, 1fr);
+      grid-template-rows: repeat(2, 0.6fr) 1.5fr repeat(4, 1fr);
       grid-template-areas:
         "richu middle-1 rila"
         "richu middle-1 rila"
@@ -314,7 +314,7 @@ section.general-forecast {
         grid-area: middle-2;
         white-space: nowrap;
 
-        align-self: end;
+        align-self: center;
         font-size: var(--fs-800);
         font-weight: var(--fw-bold);
 
@@ -352,7 +352,6 @@ section.general-forecast {
         grid-area: middle-6;
 
         align-self: start;
-        font-size: var(--fs-300);
       }
     }
 
@@ -402,7 +401,7 @@ section.general-forecast {
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: scale(1.7) translate(-29.5%, -57%);
+      transform: scale(1.75) translate(-29%, -58%);
 
       svg {
         display: block;
@@ -411,3 +410,4 @@ section.general-forecast {
     }
   }
 }
+
