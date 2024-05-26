@@ -1,3 +1,13 @@
+/*
+task list:
+--static layout for general weather informaiton-- done
+--fetch weather data from OpenWeatherMap API-- done
+--calculate real-time sun position on sunrise-sunset curve--
+--add input form to refresh location and weather data--
+*/
+
+
+
 window.onload = function () {
 
   // Update the date in the .middle-6 class with the current date formatted in German style
@@ -29,8 +39,8 @@ window.onload = function () {
 
   // API Key and URL for fetching weather data
   const apiKey = '8ee0ee1386092cdc507a8269ed0e2b74';
-  const city = 'Balingen';
-  const country = 'DE'; // Germany's country code
+  var city = 'Balingen';
+  var country = 'DE'; // Germany's country code
 
   // Build the API request URL
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}&units=metric`;
