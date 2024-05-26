@@ -402,7 +402,7 @@ section.general-forecast {
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: scale(1.75) translate(-29%, -58%);
+      transform: scale(1.7) translate(-29.5%, -59%);
 
       svg {
         display: block;
