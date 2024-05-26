@@ -48,7 +48,6 @@ window.onload = function () {
       var rainProbability = weatherData.rain ? (weatherData.rain['1h'] ? weatherData.rain['1h'] : 0) : 0;
       var weatherDescription = weatherData.weather[0].description;
 
-      console.log(weatherData.main);
       console.log(weatherData);
 
       // Display current weather information in corresponding HTML elements
