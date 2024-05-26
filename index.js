@@ -4,6 +4,7 @@ task list:
 --fetch weather data from OpenWeatherMap API-- done
 --calculate real-time sun position on sunrise-sunset curve--
 --add input form to refresh location and weather data--
+--show weather app via githup or rented domain--
 */
 
 
