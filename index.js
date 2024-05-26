@@ -4,6 +4,7 @@ task list:
     --static layout for general weather informaiton-- done
     --fetch weather data from OpenWeatherMap API-- done
     --add an form to refresh location and weather data-- done
+    --add cancel button and esc function to hide the location-input-form-- 
     --switch location by clicking on the location icon-- 
     --switch the background image at random on changing locations--
     --calculate real-time sun position on sunrise-sunset curve--
