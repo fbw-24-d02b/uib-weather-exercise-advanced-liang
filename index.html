@@ -22,15 +22,15 @@
         <span>Add location</span>
       </i>
     </header>
-    <form id="weather-form">
+    <form id="weather-form" style="display: none">
       <div class="input-container" data-placeholder="City:">
-          <input type="text" id="city" name="city" required>
+        <input type="text" id="city" name="city" required>
       </div>
       <div class="input-container" data-placeholder="Country:">
-          <input type="text" id="country" name="country" required>
+        <input type="text" id="country" name="country" required>
       </div>
       <button type="submit">Get Weather</button>
-  </form>
+    </form>
     <main>
       <section class="general-forecast">
         <div class="slider">
@@ -82,8 +82,6 @@
               24.05.2024 Thu.
             </li>
           </ul>
-
-          <div class="half-circle"></div>
           <div class="icons-sun">
             <div class="sunrise">
               <i class="iconfont icon-richu"></i>
@@ -94,36 +92,28 @@
               <p id="sunset-time">21:08</p>
             </div>
           </div>
-          <div class="moving-sun">
-            <svg width="300" height="150" viewBox="0 0 300 150">
-              <defs>
-                <linearGradient id="color-gradient">
-                  <stop offset="0%" stop-color="#f36924" />
-                  <stop offset="10%" stop-color="#ebdf98" />
-                  <stop offset="30%" stop-color="#f0f0f0" />
-                  <stop offset="80%" stop-color="#f0f0f0" />
-                  <stop offset="90%" stop-color="#ebdf98" />
-                  <stop offset="100%" stop-color="#f36924" />
-                </linearGradient>
-              </defs>
+          <div class="top-half-circle-blue-box-1">
+            <div class="top-half-circle-blue-box-2">
+              <div class="top-half-circle-blue">
+              </div>
+            </div>
+          </div>
 
-              <path id="half-circle" d="M0,150 A150,150 0 0,1 300,150" stroke="url(#color-gradient)" stroke-width="4"
-                fill="none" />
-
-              <circle id="moving-circle" cx="0" cy="0" r="10" fill="#FBFE41">
-                <animateMotion dur="30s" repeatCount="indefinite" calcMode="linear">
-                  <mpath xlink:href="#half-circle" />
-                </animateMotion>
-              </circle>
-            </svg>
+          <div class="top-half-circle-yellow-box-1">
+            <div class="top-half-circle-yellow-box-2">
+              <div class="top-half-circle-yellow">
+              </div>
+            </div>
           </div>
         </div>
-      </section>
-      <section class="hours-forecast">
-      </section>
-      <section class="days-forecast"></section>
-      <section class="parameters"></section>
-      <section class="radar-chart"></section>
-    </main>
+
+  </div>
+  </section>
+  <section class="hours-forecast">
+  </section>
+  <section class="days-forecast"></section>
+  <section class="parameters"></section>
+  <section class="radar-chart"></section>
+  </main>
   </div>
 </body>

@@ -2,45 +2,91 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="test.css">
-  <script src="test.js"></script>
-  <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4559490_9ebhsvprti.css">
-  <style>
-    .input-container {
-        position: relative;
-        /* display: inline-block; */
-    }
-    .input-container input {
-        padding-left: 100px; /* Adjust this value based on the length of the placeholder text */
-    }
-    .input-container::before {
-        content: attr(data-placeholder);
-        position: absolute;
-        left: 5px;
-        top: 50%;
-        transform: translateY(-50%);
-        pointer-events: none;
-        color: grey;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div.moving-sun {
+            box-sizing: auto;
+            position: relative;
+            width: 340px;
+            height: 150px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+
+            svg {
+                overflow: visible;
+            }
+
+            #half-circle-2 {
+                transform-origin: 150px 150px;
+                rotate: 0deg;
+                transition-property: rotate;
+                transition-timing-function: linear;
+
+                animation: movingSun 10s linear infinite;
+            }
+        }
+
+
+
+        @keyframes movingSun {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(180deg);
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Get Weather Information</h1>
-    <form id="weather-form">
-        <div class="input-container" data-placeholder="City:">
-            <input type="text" id="city" name="city" required>
-        </div>
-        <div class="input-container" data-placeholder="Country:">
-            <input type="text" id="country" name="country" required>
-        </div>
-        <button type="reset">Get Weather</button>
-    </form>
+    <div class="moving-sun">
+        <svg width="300" height="300" viewBox="0 0 300 150">
+            <defs>
+                <linearGradient id="color-gradient">
+                    <stop offset="0%" stop-color="yellow" />
+                </linearGradient>
+            </defs>
 
+            <path id="half-circle" d="M0,150 A150,150 0 0,1 300,150" stroke="url(#color-gradient)" stroke-width="4"
+                fill="none" />
 
+            <defs>
+                <linearGradient id="color-gradient-2">
+                    <stop offset="0%" stop-color="blue" />
+                </linearGradient>
+            </defs>
+
+            <path id="half-circle-2" d="M0,150 A150,150 0 0,0 300,150" stroke="url(#color-gradient-2)" stroke-width="4"
+                fill="none" />
+
+            <circle id="moving-circle" cx="0" cy="0" r="10" fill="#FBFE41">
+                <animateMotion keyPoints="0;1" keyTimes="0;1" id="anim" dur="10s" repeatCount="indefinite"
+                    calcMode="linear">
+                    <mpath xlink:href="#half-circle" />
+                </animateMotion>
+            </circle>
+        </svg>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the elements to be modified
+            var halfCircle2 = document.getElementById("half-circle-2");
+            var animateMotion = document.getElementById("anim");
+
+            // Modify the rotate rule in CSS
+            halfCircle2.style.transform = "rotate(0deg)";
+
+            // Modify the keyPoints value in animateMotion
+            animateMotion.setAttribute("keyPoints", "0;1");
+        });
+    </script>
 </body>
 
 </html>

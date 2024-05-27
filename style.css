@@ -309,7 +309,7 @@ svg {
   }
 }
 
- /* main */
+/* main */
 section.general-forecast {
   padding: var(--size-200);
 
@@ -438,24 +438,6 @@ section.general-forecast {
       }
     }
 
-    div.half-circle {
-      position: absolute;
-      width: 85%;
-      left: 7.5%;
-      top: 7.5%;
-      aspect-ratio: 2/1;
-      overflow: hidden;
-
-      &::before {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 200%;
-        border-radius: 50%;
-        /* border: 3px solid var(--primary-fc); */
-      }
-    }
-
     div.icons-sun {
       position: absolute;
       width: 100%;
@@ -464,10 +446,8 @@ section.general-forecast {
       justify-content: space-between;
       align-items: center;
       padding-top: 15%;
-      padding-left: 2.5%;
-      padding-right: 3%;
+      padding-inline: var(--size-200);
       text-align: center;
-
 
       p {
         font-size: var(--fs-300);
@@ -480,16 +460,65 @@ section.general-forecast {
       }
     }
 
-    div.moving-sun {
+    div.top-half-circle-yellow-box-1, div.top-half-circle-blue-box-1 {
       position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: scale(1.7) translate(-29.5%, -59%);
+      width: 100%;
+      height: 50%;
+      overflow: hidden;
+    }
+    div.top-half-circle-yellow-box-2, div.top-half-circle-blue-box-2 {
+      position: absolute;
+      rotate: 0deg;
+      width: 100%;
+      aspect-ratio: 1/1;
+    }
+    div.top-half-circle-yellow-box-2 {
+      rotate: 0deg;
+      animation: movingSun 30s linear infinite;
 
-      svg {
+      &::before {
+        content: '';
+        position: absolute;
         display: block;
-        overflow: visible;
+        width: 1.05rem;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        background-color: var(--yellow-sun);
+
+        top: 50%;
+        left: 0.8rem;
+        translate: 0% -50%;
+        z-index: 2;
       }
     }
+    div.top-half-circle-yellow, div.top-half-circle-blue {
+      position: absolute;
+      width: 100%;
+      height: 50%;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        outline: var(--size-100) solid var(--yellow-sun);
+        outline-offset: -1.5rem;
+      }
+    }
+    div.top-half-circle-blue::before {
+      outline: var(--size-100) solid blue;
+    }
+  }
+}
+
+@keyframes movingSun {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(180deg);
   }
 }
