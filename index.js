@@ -4,6 +4,7 @@ task list:
     --static layout for general weather informaiton-- done
     --fetch weather data from OpenWeatherMap API-- done
     --add an form to refresh location and weather data-- done
+    --to convert all files into react components--
     --change the image for the weather description automaticly-- 
     --add cancel button and esc function to hide the location-input-form-- 
     --switch location by clicking on the location icon-- 
