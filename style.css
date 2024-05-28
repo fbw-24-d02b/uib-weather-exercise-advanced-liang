@@ -453,14 +453,14 @@ section.general-forecast {
     }
 
     div.half-circle-yellow::before,
-    div.half-circle-blue::before {
+    div.half-circle-white::before {
       width: 100%;
       outline: var(--size-100) solid var(--yellow-sun);
       outline-offset: -1.5rem;
     }
 
-    div.half-circle-blue::before {
-      outline: var(--size-100) solid blue;
+    div.half-circle-white::before {
+      outline: var(--size-100) solid var(--primary-fc);
     }
 
     .position-aspect-ratio-1.rotatable {
@@ -473,6 +473,7 @@ section.general-forecast {
         top: 50%;
         left: 0.8rem;
         translate: 0% -50%;
+        z-index: 1;
       }
     }
   }
