@@ -115,15 +115,13 @@ document.addEventListener("DOMContentLoaded", async function () {
       var weatherDescription = weatherData.weather[0].description;
 
       // Get city timezone offset
-      var cityTimezoneOffset = weatherData.timezone;
-      var cityTimezoneOffsetInHours = cityTimezoneOffset / 3600;
+      var cityTimezoneOffset = weatherData.timezone - 7200;
+      var cityTimezoneOffsetInHours = cityTimezoneOffset / 3600 ;
 
       // Calculate sunrise and sunset times in city's local time
-      var currentTimeStamp = weatherData.dt + cityTimezoneOffset;
       var sunriseTimestamp = weatherData.sys.sunrise + cityTimezoneOffset;
       var sunsetTimestamp = weatherData.sys.sunset + cityTimezoneOffset;
 
-      console.log(sunriseTimestamp, sunsetTimestamp);
 
       var sunriseDate = new Date(sunriseTimestamp * 1000);
       var sunsetDate = new Date(sunsetTimestamp * 1000);
@@ -135,6 +133,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       var sunsetHours = sunsetDate.getHours().toString().padStart(2, '0');
       var sunsetMinutes = sunsetDate.getMinutes().toString().padStart(2, '0');
       var sunsetTime = sunsetHours + ":" + sunsetMinutes;
+
+      console.log(sunriseTime, sunsetTime);
 
       // Display current weather information in corresponding HTML elements
       document.getElementById("current-temperature").textContent = temperature + "°C";
