@@ -17,6 +17,8 @@ task list:
 
 document.addEventListener("DOMContentLoaded", function () {
 
+
+
   // Update the date in the .middle-6 class with the current date formatted in German style
   var currentDate = new Date();
   var formattedDate = currentDate.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
@@ -91,10 +93,35 @@ document.addEventListener("DOMContentLoaded", function () {
         var minTemperature = Math.floor(weatherData.main.temp_min);
         var windSpeed = Math.floor(weatherData.wind.speed);
         var windSpeedKmh = Math.floor((windSpeed * 3.6));
-        var humidity = weatherData.main.humidity; 
+        var humidity = weatherData.main.humidity;
         var weatherDescription = weatherData.weather[0].description;
 
+        // Calculate sunrise and sunset times
+        var sunriseTimestamp = weatherData.sys.sunrise;
+        var sunsetTimestamp = weatherData.sys.sunset;
+
+        var sunriseDate = new Date(sunriseTimestamp * 1000);
+        var sunsetDate = new Date(sunsetTimestamp * 1000);
+
+        var sunriseTime = sunriseDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        var sunsetTime = sunsetDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        // Calculate the time differences
+        var timeDifference = (sunsetTimestamp - sunriseTimestamp) / 3600;
+        var hoursDifference = Math.floor(timeDifference);
+        var minutesDifference = Math.round((timeDifference - hoursDifference) * 60);
+
+        // Get current time (local system time)
+        var currentTime = new Date();
+        var currentTimeDifference = (sunriseDate - currentTime) / 3600;
+        var currentHoursDifference = Math.floor(currentTimeDifference);
+        var currentMinutesDifference = Math.round((currentTimeDifference - currentHoursDifference) * 60);
+
+
+        // Display the time differences
         console.log(weatherData);
+        console.log(sunriseTime + " " + sunsetTime);
+
 
         // Display current weather information in corresponding HTML elements
         document.getElementById("current-temperature").textContent = temperature + "°C";
@@ -103,6 +130,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("wind-speed").textContent = windSpeedKmh + " km/h";
         document.getElementById("humidity").textContent = humidity + "%";
         document.getElementById("weather-description").textContent = weatherDescription;
+        document.getElementById("sunrise-time").textContent = sunriseTime;
+        document.getElementById("sunset-time").textContent = sunsetTime;
       })
       .catch(error => console.error("An error occurred while fetching current weather:", error));
   }
