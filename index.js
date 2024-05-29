@@ -17,12 +17,6 @@ task list:
 
 document.addEventListener("DOMContentLoaded", function () {
 
-
-
-
-
-
-
   // Fetch weather data for the default city and country
   const apiKey = '8ee0ee1386092cdc507a8269ed0e2b74';
   var city = 'Balingen';
@@ -99,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // console.log(currentTimeStamp);
         console.log(currentDateTime);
-        console.log(currentTimeString);
+        // console.log(currentTimeString);
         console.log(cityTimezoneOffset);
         console.log(city);
         // Calculate the time differences
@@ -116,18 +110,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         element.style.transform = 'rotate(' + rotationAngle + 'deg)';
 
-        console.log(sunriseTimestamp);
-        console.log(currentTimeStamp);
-        console.log(sunsetTimestamp);
-
-        // element.style.animationDuration = timeDifferenceOfCurrentSunrise + 'h';
-
-        // console.log(rotationAngle);
-        // console.log(weatherData);
-        // console.log(sunriseTime + " " + sunsetTime);
-        // console.log(weatherData.timezone);
-        // console.log(timeDifferenceOfSunriseSunset);
-        // console.log(timeDifferenceOfCurrentSunrise);
 
         // Display current weather information in corresponding HTML elements
         document.getElementById("current-temperature").textContent = temperature + "°C";
@@ -145,29 +127,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
         document.querySelector('.middle-6').textContent = currentDateFormatted;
 
-        // Update the time in the .middle-5 class with the current time formatted as HH:MM:SS
-        function updateClock() {
-          var currentTime = new Date();
-          var hours = currentTime.getHours() + cityTimezoneOffsetInHours;
-          var minutes = currentTime.getMinutes();
-          var seconds = currentTime.getSeconds();
 
-          // Add leading zeros if needed
+
+        // Update every minute the time in the .middle-5 class with the current time formatted as HH:MM
+        function updateClock(cityTimezoneOffsetInHours) {
+          var systemTime = new Date();
+          var hours = systemTime.getHours() + cityTimezoneOffsetInHours;
+          var minutes = systemTime.getMinutes();
+
           hours = (hours < 10 ? "0" : "") + hours;
           minutes = (minutes < 10 ? "0" : "") + minutes;
-          seconds = (seconds < 10 ? "0" : "") + seconds;
 
           var timeString = hours + ":" + minutes;
           document.querySelector(".middle-5").textContent = timeString;
-
         }
+        updateClock(cityTimezoneOffsetInHours);
 
-        // Update the clock every second
-        setInterval(updateClock, 60000);
-
-        // Initial call to display the clock immediately
-        updateClock();
+        setInterval(() => {
+          updateClock(cityTimezoneOffsetInHours);
+        }, 1000);
       })
       .catch(error => console.error("An error occurred while fetching current weather:", error));
   }
+
+
+
 });
