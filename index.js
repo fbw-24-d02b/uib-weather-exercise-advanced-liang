@@ -96,32 +96,40 @@ document.addEventListener("DOMContentLoaded", function () {
         var humidity = weatherData.main.humidity;
         var weatherDescription = weatherData.weather[0].description;
 
-        // Calculate sunrise and sunset times
-        var sunriseTimestamp = weatherData.sys.sunrise;
-        var sunsetTimestamp = weatherData.sys.sunset;
+            // Get city timezone offset
+            var cityTimezoneOffset = weatherData.timezone;
+
+            // Calculate sunrise and sunset times in city's local time
+            var sunriseTimestamp = (weatherData.sys.sunrise + cityTimezoneOffset);
+            var sunsetTimestamp = (weatherData.sys.sunset + cityTimezoneOffset);
 
         var sunriseDate = new Date(sunriseTimestamp * 1000);
         var sunsetDate = new Date(sunsetTimestamp * 1000);
 
-        var sunriseTime = sunriseDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        var sunsetTime = sunsetDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        var sunriseHours = sunriseDate.getHours().toString().padStart(2, '0');
+        sunriseHours = sunriseHours-2;
+        var sunriseMinutes = sunriseDate.getMinutes().toString().padStart(2, '0');
+        var sunriseTime = sunriseHours + ":" + sunriseMinutes;
+
+        var sunsetHours = sunsetDate.getHours().toString().padStart(2, '0');
+        var sunsetMinutes = sunsetDate.getMinutes().toString().padStart(2, '0');
+        var sunsetTime = sunsetHours + ":" + sunsetMinutes;
+
+        // Get current local time from API response
+        var currentTimeStamp = weatherData.dt;
+        var currentDateTime = new Date(currentTimeStamp);
+        var currentTimeString = currentDateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
         // Calculate the time differences
-        var timeDifference = (sunsetTimestamp - sunriseTimestamp) / 3600;
-        var hoursDifference = Math.floor(timeDifference);
-        var minutesDifference = Math.round((timeDifference - hoursDifference) * 60);
+        var timeDifferenceOfSunriseSunset = (sunsetTimestamp - sunriseTimestamp) / 3600;
+        var timeDifferenceOfCurrentSunrise = (currentTimeStamp - sunriseTimestamp) / 3600;
 
-        // Get current time (local system time)
-        var currentTime = new Date();
-        var currentTimeDifference = (sunriseDate - currentTime) / 3600;
-        var currentHoursDifference = Math.floor(currentTimeDifference);
-        var currentMinutesDifference = Math.round((currentTimeDifference - currentHoursDifference) * 60);
-
-
-        // Display the time differences
         console.log(weatherData);
         console.log(sunriseTime + " " + sunsetTime);
-
+        console.log(currentTimeString);
+        console.log(weatherData.timezone);
+        console.log(timeDifferenceOfSunriseSunset);
+        console.log(timeDifferenceOfCurrentSunrise);
 
         // Display current weather information in corresponding HTML elements
         document.getElementById("current-temperature").textContent = temperature + "°C";
