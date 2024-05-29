@@ -1,14 +1,21 @@
 document.addEventListener("DOMContentLoaded", async function () {
   var cityTimezoneOffsetInHours;
+  var sunsetTimestamp;
+  var sunriseTimestamp;
 
   // Fetch weather data for the default city and country
   const apiKey = '8ee0ee1386092cdc507a8269ed0e2b74';
   var city = 'Balingen';
   var country = 'Germany';
-  cityTimezoneOffsetInHours = await fetchWeatherData(city, country, apiKey);
+  let weatherData = await fetchWeatherData(city, country, apiKey);
+  if (weatherData) {
+    cityTimezoneOffsetInHours = weatherData.cityTimezoneOffsetInHours;
+    sunsetTimestamp = weatherData.sunsetTimestamp;
+    sunriseTimestamp = weatherData.sunriseTimestamp;
+  }
 
   // define a function to update the clock with the current time in city's local time
-  function updateClock(TimezoneOffset) {
+  function updateClockAndSunPosition(TimezoneOffset, sunsetTimestamp, sunriseTimestamp) {
     var systemTime = new Date();
     var hours = systemTime.getHours() + TimezoneOffset;
     if (hours >= 24) {
@@ -26,10 +33,41 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     var timeString = hours + ":" + minutes + ":" + seconds;
     document.querySelector(".middle-5").textContent = timeString;
+
+    // Get the current timestamp
+
+    var currentTimeStamp = Math.floor(Date.now() / 1000) + TimezoneOffset * 3600;
+
+    // Calculate the time differences
+    var daytime = (sunsetTimestamp - sunriseTimestamp) / 3600;
+    var runningTime = (currentTimeStamp - sunriseTimestamp) / 3600;
+
+
+
+    // Get the sun position on the sunrise-sunset curve on loading the page
+    var rotationAngle = (runningTime / daytime) * 180;
+    var rotatingElement = document.querySelector('.position-aspect-ratio-1.rotatable');
+    var sun = document.querySelector('.moving-sun');
+
+    // Hide the sun if it is night time
+    if (currentTimeStamp <= sunriseTimestamp || currentTimeStamp >= sunsetTimestamp) {
+      rotationAngle = 0;
+      sun.style.display = 'none';
+    } else {
+      sun.style.display = 'block';
+    }
+
+    rotatingElement.style.transform = 'rotate(' + rotationAngle + 'deg)';
+
+     // Update the date in the .middle-6 class with the current date formatted in German style
+     var currentDateTime = new Date(currentTimeStamp * 1000);
+     var currentDateFormatted = currentDateTime.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+
+     document.querySelector('.middle-6').textContent = currentDateFormatted;
   }
 
-  updateClock(cityTimezoneOffsetInHours);
-  setInterval(function () { updateClock(cityTimezoneOffsetInHours) }, 1000);
+  updateClockAndSunPosition(cityTimezoneOffsetInHours, sunsetTimestamp, sunriseTimestamp);
+  setInterval(function () { updateClockAndSunPosition(cityTimezoneOffsetInHours, sunsetTimestamp, sunriseTimestamp) }, 1000);
 
   // update the weather data when the form is submitted
   document.getElementById('weather-form').addEventListener('submit', async function (event) {
@@ -41,7 +79,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById('weather-form').style.display = 'none';
     document.getElementById('address').textContent = city + ", " + country;
 
-    cityTimezoneOffsetInHours = await fetchWeatherData(city, country, apiKey);
+    let weatherData = await fetchWeatherData(city, country, apiKey);
+    if (weatherData) {
+      cityTimezoneOffsetInHours = weatherData.cityTimezoneOffsetInHours;
+      sunsetTimestamp = weatherData.sunsetTimestamp;
+      sunriseTimestamp = weatherData.sunriseTimestamp;
+    }
   });
 
   // add a click event listener to the location icon
@@ -82,6 +125,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       var sunriseTimestamp = weatherData.sys.sunrise + cityTimezoneOffset;
       var sunsetTimestamp = weatherData.sys.sunset + cityTimezoneOffset;
 
+      console.log(sunriseTimestamp, sunsetTimestamp);
+
       var sunriseDate = new Date(sunriseTimestamp * 1000);
       var sunsetDate = new Date(sunsetTimestamp * 1000);
 
@@ -98,24 +143,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       var currentDateTime = new Date(currentTimeStamp * 1000);
       var currentTimeString = currentDateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
-      // Calculate the time differences
-      var timeDifferenceOfSunriseSunset = (sunsetTimestamp - sunriseTimestamp) / 3600;
-      var timeDifferenceOfCurrentSunrise = (currentTimeStamp - sunriseTimestamp) / 3600;
 
-      // Get the sun position on the sunrise-sunset curve on loading the page
-      var rotationAngle = (timeDifferenceOfCurrentSunrise / timeDifferenceOfSunriseSunset) * 180;
-      var rotatingElement = document.querySelector('.position-aspect-ratio-1.rotatable');
-      var sun = document.querySelector('.moving-sun');
-
-      // Hide the sun if it is night time
-      if (currentTimeStamp <= sunriseTimestamp || currentTimeStamp >= sunsetTimestamp) {
-        rotationAngle = 0;
-        sun.style.display = 'none';
-      } else {
-        sun.style.display = 'block';
-      }
-
-      rotatingElement.style.transform = 'rotate(' + rotationAngle + 'deg)';
 
       // Display current weather information in corresponding HTML elements
       document.getElementById("current-temperature").textContent = temperature + "°C";
@@ -127,16 +155,15 @@ document.addEventListener("DOMContentLoaded", async function () {
       document.getElementById("sunrise-time").textContent = sunriseTime;
       document.getElementById("sunset-time").textContent = sunsetTime;
 
-      // Update the date in the .middle-6 class with the current date formatted in German style
-      var currentDateTime = new Date(currentTimeStamp * 1000);
-      var currentDateFormatted = currentDateTime.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
-
-      document.querySelector('.middle-6').textContent = currentDateFormatted;
-
-      // Update the time in the .middle-5 class with the current time in city's local time
+     
 
 
-      return cityTimezoneOffsetInHours;
+
+      return {
+        cityTimezoneOffsetInHours,
+        sunsetTimestamp,
+        sunriseTimestamp
+      };
     } catch (error) {
       console.error("An error occurred while fetching current weather:", error);
       return null;
