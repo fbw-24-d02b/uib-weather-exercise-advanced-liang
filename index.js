@@ -104,13 +104,17 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       // Get the sun position on the sunrise-sunset curve on loading the page
       var rotationAngle = (timeDifferenceOfCurrentSunrise / timeDifferenceOfSunriseSunset) * 180;
-      var element = document.querySelector('.position-aspect-ratio-1.rotatable');
+      var rotatingElement = document.querySelector('.position-aspect-ratio-1.rotatable');
+      var sun = document.querySelector('.moving-sun');
 
       if (currentTimeStamp <= sunriseTimestamp || currentTimeStamp >= sunsetTimestamp) {
         rotationAngle = 0;
+        sun.style.display = 'none';
+      } else {
+        sun.style.display = 'block';
       }
 
-      element.style.transform = 'rotate(' + rotationAngle + 'deg)';
+      rotatingElement.style.transform = 'rotate(' + rotationAngle + 'deg)';
 
       // Display current weather information in corresponding HTML elements
       document.getElementById("current-temperature").textContent = temperature + "°C";

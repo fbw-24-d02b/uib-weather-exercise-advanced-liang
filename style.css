@@ -467,10 +467,13 @@ section.general-forecast {
       rotate: 0deg;
       /* animation: movingSun 30s linear infinite; */
 
-      &::before {
+      .moving-sun {
         width: 1.05rem;
         background-color: var(--yellow-sun);
-
+        position: absolute;
+        display: block;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
         top: 50%;
         left: 0.8rem;
         translate: 0% -50%;
