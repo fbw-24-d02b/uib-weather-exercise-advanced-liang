@@ -42,8 +42,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     var daytime = (sunsetTimestamp - sunriseTimestamp) / 3600;
     var runningTime = (currentTimeStamp - sunriseTimestamp) / 3600;
 
-
-
     // Get the sun position on the sunrise-sunset curve on loading the page
     var rotationAngle = (runningTime / daytime) * 180;
     var rotatingElement = document.querySelector('.position-aspect-ratio-1.rotatable');
@@ -59,11 +57,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     rotatingElement.style.transform = 'rotate(' + rotationAngle + 'deg)';
 
-     // Update the date in the .middle-6 class with the current date formatted in German style
-     var currentDateTime = new Date(currentTimeStamp * 1000);
-     var currentDateFormatted = currentDateTime.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+    // Update the date in the .middle-6 class with the current date formatted in German style
+    var currentDateTime = new Date(currentTimeStamp * 1000);
+    var currentDateFormatted = currentDateTime.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
 
-     document.querySelector('.middle-6').textContent = currentDateFormatted;
+    document.querySelector('.middle-6').textContent = currentDateFormatted;
   }
 
   updateClockAndSunPosition(cityTimezoneOffsetInHours, sunsetTimestamp, sunriseTimestamp);
@@ -117,7 +115,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       var weatherDescription = weatherData.weather[0].description;
 
       // Get city timezone offset
-      var cityTimezoneOffset = weatherData.timezone - 7200;
+      var cityTimezoneOffset = weatherData.timezone;
       var cityTimezoneOffsetInHours = cityTimezoneOffset / 3600;
 
       // Calculate sunrise and sunset times in city's local time
@@ -138,13 +136,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       var sunsetMinutes = sunsetDate.getMinutes().toString().padStart(2, '0');
       var sunsetTime = sunsetHours + ":" + sunsetMinutes;
 
-      // Get current local time from API response
-      // Convert seconds to milliseconds
-      var currentDateTime = new Date(currentTimeStamp * 1000);
-      var currentTimeString = currentDateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-
-
-
       // Display current weather information in corresponding HTML elements
       document.getElementById("current-temperature").textContent = temperature + "°C";
       document.getElementById("max-temperature").textContent = maxTemperature + "°C";
@@ -154,10 +145,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       document.getElementById("weather-description").textContent = weatherDescription;
       document.getElementById("sunrise-time").textContent = sunriseTime;
       document.getElementById("sunset-time").textContent = sunsetTime;
-
-     
-
-
 
       return {
         cityTimezoneOffsetInHours,
