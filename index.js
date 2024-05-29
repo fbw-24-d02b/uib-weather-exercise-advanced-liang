@@ -19,32 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-  // Update the date in the .middle-6 class with the current date formatted in German style
-  var currentDate = new Date();
-  var formattedDate = currentDate.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
-  document.querySelector('.middle-6').textContent = formattedDate;
 
-  // Update the time in the .middle-5 class with the current time formatted as HH:MM:SS
-  function updateClock() {
-    var currentTime = new Date();
-    var hours = currentTime.getHours();
-    var minutes = currentTime.getMinutes();
-    var seconds = currentTime.getSeconds();
 
-    // Add leading zeros if needed
-    hours = (hours < 10 ? "0" : "") + hours;
-    minutes = (minutes < 10 ? "0" : "") + minutes;
-    seconds = (seconds < 10 ? "0" : "") + seconds;
-
-    var timeString = hours + ":" + minutes + ":" + seconds;
-    document.querySelector(".middle-5").textContent = timeString;
-  }
-
-  // Update the clock every second
-  setInterval(updateClock, 1000);
-
-  // Initial call to display the clock immediately
-  updateClock();
 
 
   // Fetch weather data for the default city and country
@@ -96,18 +72,19 @@ document.addEventListener("DOMContentLoaded", function () {
         var humidity = weatherData.main.humidity;
         var weatherDescription = weatherData.weather[0].description;
 
-            // Get city timezone offset
-            var cityTimezoneOffset = weatherData.timezone;
+        // Get city timezone offset
+        var cityTimezoneOffset = weatherData.timezone - 7200;
+        var cityTimezoneOffsetInHours = cityTimezoneOffset / 3600;
 
-            // Calculate sunrise and sunset times in city's local time
-            var sunriseTimestamp = (weatherData.sys.sunrise + cityTimezoneOffset);
-            var sunsetTimestamp = (weatherData.sys.sunset + cityTimezoneOffset);
+        // Calculate sunrise and sunset times in city's local time
+        var currentTimeStamp = weatherData.dt + cityTimezoneOffset;
+        var sunriseTimestamp = weatherData.sys.sunrise + cityTimezoneOffset;
+        var sunsetTimestamp = weatherData.sys.sunset + cityTimezoneOffset;
 
         var sunriseDate = new Date(sunriseTimestamp * 1000);
         var sunsetDate = new Date(sunsetTimestamp * 1000);
 
         var sunriseHours = sunriseDate.getHours().toString().padStart(2, '0');
-        sunriseHours = sunriseHours-2;
         var sunriseMinutes = sunriseDate.getMinutes().toString().padStart(2, '0');
         var sunriseTime = sunriseHours + ":" + sunriseMinutes;
 
@@ -116,20 +93,41 @@ document.addEventListener("DOMContentLoaded", function () {
         var sunsetTime = sunsetHours + ":" + sunsetMinutes;
 
         // Get current local time from API response
-        var currentTimeStamp = weatherData.dt;
-        var currentDateTime = new Date(currentTimeStamp);
+        // Convert seconds to milliseconds
+        var currentDateTime = new Date(currentTimeStamp * 1000);
         var currentTimeString = currentDateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
+        // console.log(currentTimeStamp);
+        console.log(currentDateTime);
+        console.log(currentTimeString);
+        console.log(cityTimezoneOffset);
+        console.log(city);
         // Calculate the time differences
         var timeDifferenceOfSunriseSunset = (sunsetTimestamp - sunriseTimestamp) / 3600;
         var timeDifferenceOfCurrentSunrise = (currentTimeStamp - sunriseTimestamp) / 3600;
 
-        console.log(weatherData);
-        console.log(sunriseTime + " " + sunsetTime);
-        console.log(currentTimeString);
-        console.log(weatherData.timezone);
-        console.log(timeDifferenceOfSunriseSunset);
-        console.log(timeDifferenceOfCurrentSunrise);
+        // to get the sun position on the sunrise-sunset curve on loading the page
+        var rotationAngle = (timeDifferenceOfCurrentSunrise / timeDifferenceOfSunriseSunset) * 180;
+        var element = document.querySelector('.position-aspect-ratio-1.rotatable');
+
+        if (currentTimeStamp <= sunriseTimestamp || currentTimeStamp >= sunsetTimestamp) {
+          rotationAngle = 0;
+        }
+
+        element.style.transform = 'rotate(' + rotationAngle + 'deg)';
+
+        console.log(sunriseTimestamp);
+        console.log(currentTimeStamp);
+        console.log(sunsetTimestamp);
+
+        // element.style.animationDuration = timeDifferenceOfCurrentSunrise + 'h';
+
+        // console.log(rotationAngle);
+        // console.log(weatherData);
+        // console.log(sunriseTime + " " + sunsetTime);
+        // console.log(weatherData.timezone);
+        // console.log(timeDifferenceOfSunriseSunset);
+        // console.log(timeDifferenceOfCurrentSunrise);
 
         // Display current weather information in corresponding HTML elements
         document.getElementById("current-temperature").textContent = temperature + "°C";
@@ -140,6 +138,35 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("weather-description").textContent = weatherDescription;
         document.getElementById("sunrise-time").textContent = sunriseTime;
         document.getElementById("sunset-time").textContent = sunsetTime;
+
+        // Update the date in the .middle-6 class with the current date formatted in German style
+        var currentDateTime = new Date(currentTimeStamp * 1000);
+        var currentDateFormatted = currentDateTime.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+
+        document.querySelector('.middle-6').textContent = currentDateFormatted;
+
+        // Update the time in the .middle-5 class with the current time formatted as HH:MM:SS
+        function updateClock() {
+          var currentTime = new Date();
+          var hours = currentTime.getHours() + cityTimezoneOffsetInHours;
+          var minutes = currentTime.getMinutes();
+          var seconds = currentTime.getSeconds();
+
+          // Add leading zeros if needed
+          hours = (hours < 10 ? "0" : "") + hours;
+          minutes = (minutes < 10 ? "0" : "") + minutes;
+          seconds = (seconds < 10 ? "0" : "") + seconds;
+
+          var timeString = hours + ":" + minutes;
+          document.querySelector(".middle-5").textContent = timeString;
+
+        }
+
+        // Update the clock every second
+        setInterval(updateClock, 60000);
+
+        // Initial call to display the clock immediately
+        updateClock();
       })
       .catch(error => console.error("An error occurred while fetching current weather:", error));
   }

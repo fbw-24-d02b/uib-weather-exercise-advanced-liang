@@ -464,7 +464,8 @@ section.general-forecast {
     }
 
     .position-aspect-ratio-1.rotatable {
-      animation: movingSun 30s linear infinite;
+      rotate: 0deg;
+      /* animation: movingSun 30s linear infinite; */
 
       &::before {
         width: 1.05rem;
