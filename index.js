@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var currentTimeString = currentDateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
         // console.log(currentTimeStamp);
-        console.log(currentDateTime);
+        // console.log(currentDateTime);
         // console.log(currentTimeString);
         console.log(cityTimezoneOffset);
         console.log(city);
@@ -130,42 +130,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-        // Update every minute the time in the .middle-5 class with the current time formatted as HH:MM
-        var systemTime = new Date();
-        var hours = systemTime.getHours() + cityTimezoneOffsetInHours;
-        if (hours >= 24) {
-          hours = hours - 24;
-        }
-        var minutes = systemTime.getMinutes();
-
-        hours = (hours < 10 ? "0" : "") + hours;
-        minutes = (minutes < 10 ? "0" : "") + minutes;
-
-        var timeString = hours + ":" + minutes;
-        document.querySelector(".middle-5").textContent = timeString;
-
+        // Update the time in the .middle-5 class with the current time in city's local time
         function updateClock() {
+
           var systemTime = new Date();
           var hours = systemTime.getHours() + cityTimezoneOffsetInHours;
           if (hours >= 24) {
             hours = hours - 24;
           }
           var minutes = systemTime.getMinutes();
-
+  
           hours = (hours < 10 ? "0" : "") + hours;
           minutes = (minutes < 10 ? "0" : "") + minutes;
-
+  
           var timeString = hours + ":" + minutes;
           document.querySelector(".middle-5").textContent = timeString;
-
+  
           console.log(timeString);
         }
+
         updateClock();
+
         setInterval(updateClock, 60000);
       })
-      
+
+
       .catch(error => console.error("An error occurred while fetching current weather:", error));
   }
-
+ 
 
 });
