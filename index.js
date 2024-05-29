@@ -17,6 +17,7 @@ task list:
 
 document.addEventListener("DOMContentLoaded", function () {
 
+
   // Fetch weather data for the default city and country
   const apiKey = '8ee0ee1386092cdc507a8269ed0e2b74';
   var city = 'Balingen';
@@ -130,9 +131,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         // Update every minute the time in the .middle-5 class with the current time formatted as HH:MM
-        function updateClock(cityTimezoneOffsetInHours) {
+        var systemTime = new Date();
+        var hours = systemTime.getHours() + cityTimezoneOffsetInHours;
+        if (hours >= 24) {
+          hours = hours - 24;
+        }
+        var minutes = systemTime.getMinutes();
+
+        hours = (hours < 10 ? "0" : "") + hours;
+        minutes = (minutes < 10 ? "0" : "") + minutes;
+
+        var timeString = hours + ":" + minutes;
+        document.querySelector(".middle-5").textContent = timeString;
+
+        function updateClock() {
           var systemTime = new Date();
           var hours = systemTime.getHours() + cityTimezoneOffsetInHours;
+          if (hours >= 24) {
+            hours = hours - 24;
+          }
           var minutes = systemTime.getMinutes();
 
           hours = (hours < 10 ? "0" : "") + hours;
@@ -140,16 +157,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
           var timeString = hours + ":" + minutes;
           document.querySelector(".middle-5").textContent = timeString;
-        }
-        updateClock(cityTimezoneOffsetInHours);
 
-        setInterval(() => {
-          updateClock(cityTimezoneOffsetInHours);
-        }, 1000);
+          console.log(timeString);
+        }
+        updateClock();
+        setInterval(updateClock, 60000);
       })
+      
       .catch(error => console.error("An error occurred while fetching current weather:", error));
   }
-
 
 
 });
