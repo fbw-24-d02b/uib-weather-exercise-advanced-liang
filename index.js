@@ -7,6 +7,30 @@ document.addEventListener("DOMContentLoaded", async function () {
   var country = 'Germany';
   cityTimezoneOffsetInHours = await fetchWeatherData(city, country, apiKey);
 
+  // define a function to update the clock with the current time in city's local time
+  function updateClock(TimezoneOffset) {
+    var systemTime = new Date();
+    var hours = systemTime.getHours() + TimezoneOffset;
+    if (hours >= 24) {
+      hours = hours - 24;
+    } else if (hours < 0) {
+      hours = hours + 24;
+    }
+
+    var minutes = systemTime.getMinutes();
+    var seconds = systemTime.getSeconds();
+
+    hours = (hours < 10 ? "0" : "") + hours;
+    minutes = (minutes < 10 ? "0" : "") + minutes;
+    seconds = (seconds < 10 ? "0" : "") + seconds;
+
+    var timeString = hours + ":" + minutes + ":" + seconds;
+    document.querySelector(".middle-5").textContent = timeString;
+  }
+
+  updateClock(cityTimezoneOffsetInHours);
+  setInterval(function () { updateClock(cityTimezoneOffsetInHours) }, 1000);
+
   // update the weather data when the form is submitted
   document.getElementById('weather-form').addEventListener('submit', async function (event) {
     event.preventDefault(); // Prevent form from submitting normally
@@ -18,29 +42,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById('address').textContent = city + ", " + country;
 
     cityTimezoneOffsetInHours = await fetchWeatherData(city, country, apiKey);
-    
-    function updateClock(TimezoneOffset) {
-      var systemTime = new Date();
-      var hours = systemTime.getHours() + TimezoneOffset;
-      if (hours >= 24) {
-        hours = hours - 24;
-      }
-      var minutes = systemTime.getMinutes();
-      var seconds = systemTime.getSeconds();
-
-      hours = (hours < 10 ? "0" : "") + hours;
-      minutes = (minutes < 10 ? "0" : "") + minutes;
-      seconds = (seconds < 10 ? "0" : "") + seconds;
-
-      var timeString = hours + ":" + minutes + ":" + seconds;
-      document.querySelector(".middle-5").textContent = timeString;
-      
-    }
-
     updateClock(cityTimezoneOffsetInHours);
-
-    setInterval(function(){updateClock(cityTimezoneOffsetInHours)}, 1000);
-
+    setInterval(function () { updateClock(cityTimezoneOffsetInHours) }, 1000);
   });
 
   // add a click event listener to the location icon
@@ -129,7 +132,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       // Update the time in the .middle-5 class with the current time in city's local time
 
-    
+
       return cityTimezoneOffsetInHours;
     } catch (error) {
       console.error("An error occurred while fetching current weather:", error);
