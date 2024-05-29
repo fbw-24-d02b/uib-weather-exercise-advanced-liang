@@ -42,8 +42,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById('address').textContent = city + ", " + country;
 
     cityTimezoneOffsetInHours = await fetchWeatherData(city, country, apiKey);
-    updateClock(cityTimezoneOffsetInHours);
-    setInterval(function () { updateClock(cityTimezoneOffsetInHours) }, 1000);
   });
 
   // add a click event listener to the location icon
