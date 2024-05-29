@@ -1,36 +1,15 @@
-/*
-task list:
-"general weather informaiton"
-    --static layout for general weather informaiton-- done
-    --fetch weather data from OpenWeatherMap API-- done
-    --add an form to refresh location and weather data-- done
-    --calculate real-time sun position on sunrise-sunset curve-- done
-    --update location time-- done
-    --add function to switch the background--
-    --change the image for the weather description automaticly-- 
-    --add cancel button and esc function to hide the location-input-form-- 
-    --save and deltete location--
-    --switch location by clicking on the location icon-- 
-    --switch location by dragging the screen--
-    --show weather app via githup or a rented domain--
-    --to convert all files into react components--
-*/
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-
+document.addEventListener("DOMContentLoaded", async function () {
+  var cityTimezoneOffsetInHours;
 
   // Fetch weather data for the default city and country
   const apiKey = '8ee0ee1386092cdc507a8269ed0e2b74';
   var city = 'Balingen';
   var country = 'Germany';
-  fetchWeatherData(city, country, apiKey);
+  cityTimezoneOffsetInHours = await fetchWeatherData(city, country, apiKey);
 
   // update the weather data when the form is submitted
-  document.getElementById('weather-form').addEventListener('submit', function (event) {
+  document.getElementById('weather-form').addEventListener('submit', async function (event) {
     event.preventDefault(); // Prevent form from submitting normally
-
 
     var city = document.getElementById('city').value;
     var country = document.getElementById('country').value;
@@ -38,7 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('weather-form').style.display = 'none';
     document.getElementById('address').textContent = city + ", " + country;
 
-    fetchWeatherData(city, country, apiKey);
+    cityTimezoneOffsetInHours = await fetchWeatherData(city, country, apiKey);
+    
+
   });
 
   // add a click event listener to the location icon
@@ -51,115 +32,103 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('country').value = '';
   });
 
-  // to define a function to fetch weather data from OpenWeatherMap API
-  function fetchWeatherData(city, country, apiKey) {
+  // define a function to fetch weather data from OpenWeatherMap API
+  async function fetchWeatherData(city, country, apiKey) {
 
     // Build the API request URL
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}&units=metric`;
 
-    // Fetch weather data from OpenWeatherMap API
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(weatherData => {
-        // Process the fetched weather data
-        var temperature = Math.floor(weatherData.main.temp);
-        var maxTemperature = Math.floor(weatherData.main.temp_max);
-        var minTemperature = Math.floor(weatherData.main.temp_min);
-        var windSpeed = Math.floor(weatherData.wind.speed);
-        var windSpeedKmh = Math.floor((windSpeed * 3.6));
-        var humidity = weatherData.main.humidity;
-        var weatherDescription = weatherData.weather[0].description;
+    try {
+      const response = await fetch(apiUrl);
+      const weatherData = await response.json();
 
-        // Get city timezone offset
-        var cityTimezoneOffset = weatherData.timezone - 7200;
-        var cityTimezoneOffsetInHours = cityTimezoneOffset / 3600;
+      // Process the fetched weather data
+      var temperature = Math.floor(weatherData.main.temp);
+      var maxTemperature = Math.floor(weatherData.main.temp_max);
+      var minTemperature = Math.floor(weatherData.main.temp_min);
+      var windSpeed = Math.floor(weatherData.wind.speed);
+      var windSpeedKmh = Math.floor((windSpeed * 3.6));
+      var humidity = weatherData.main.humidity;
+      var weatherDescription = weatherData.weather[0].description;
 
-        // Calculate sunrise and sunset times in city's local time
-        var currentTimeStamp = weatherData.dt + cityTimezoneOffset;
-        var sunriseTimestamp = weatherData.sys.sunrise + cityTimezoneOffset;
-        var sunsetTimestamp = weatherData.sys.sunset + cityTimezoneOffset;
+      // Get city timezone offset
+      var cityTimezoneOffset = weatherData.timezone - 7200;
+      var cityTimezoneOffsetInHours = cityTimezoneOffset / 3600;
 
-        var sunriseDate = new Date(sunriseTimestamp * 1000);
-        var sunsetDate = new Date(sunsetTimestamp * 1000);
+      // Calculate sunrise and sunset times in city's local time
+      var currentTimeStamp = weatherData.dt + cityTimezoneOffset;
+      var sunriseTimestamp = weatherData.sys.sunrise + cityTimezoneOffset;
+      var sunsetTimestamp = weatherData.sys.sunset + cityTimezoneOffset;
 
-        var sunriseHours = sunriseDate.getHours().toString().padStart(2, '0');
-        var sunriseMinutes = sunriseDate.getMinutes().toString().padStart(2, '0');
-        var sunriseTime = sunriseHours + ":" + sunriseMinutes;
+      var sunriseDate = new Date(sunriseTimestamp * 1000);
+      var sunsetDate = new Date(sunsetTimestamp * 1000);
 
-        var sunsetHours = sunsetDate.getHours().toString().padStart(2, '0');
-        var sunsetMinutes = sunsetDate.getMinutes().toString().padStart(2, '0');
-        var sunsetTime = sunsetHours + ":" + sunsetMinutes;
+      var sunriseHours = sunriseDate.getHours().toString().padStart(2, '0');
+      var sunriseMinutes = sunriseDate.getMinutes().toString().padStart(2, '0');
+      var sunriseTime = sunriseHours + ":" + sunriseMinutes;
 
-        // Get current local time from API response
-        // Convert seconds to milliseconds
-        var currentDateTime = new Date(currentTimeStamp * 1000);
-        var currentTimeString = currentDateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      var sunsetHours = sunsetDate.getHours().toString().padStart(2, '0');
+      var sunsetMinutes = sunsetDate.getMinutes().toString().padStart(2, '0');
+      var sunsetTime = sunsetHours + ":" + sunsetMinutes;
 
-        // console.log(currentTimeStamp);
-        // console.log(currentDateTime);
-        // console.log(currentTimeString);
-        console.log(cityTimezoneOffset);
-        console.log(city);
-        // Calculate the time differences
-        var timeDifferenceOfSunriseSunset = (sunsetTimestamp - sunriseTimestamp) / 3600;
-        var timeDifferenceOfCurrentSunrise = (currentTimeStamp - sunriseTimestamp) / 3600;
+      // Get current local time from API response
+      // Convert seconds to milliseconds
+      var currentDateTime = new Date(currentTimeStamp * 1000);
+      var currentTimeString = currentDateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
-        // to get the sun position on the sunrise-sunset curve on loading the page
-        var rotationAngle = (timeDifferenceOfCurrentSunrise / timeDifferenceOfSunriseSunset) * 180;
-        var element = document.querySelector('.position-aspect-ratio-1.rotatable');
+      // Calculate the time differences
+      var timeDifferenceOfSunriseSunset = (sunsetTimestamp - sunriseTimestamp) / 3600;
+      var timeDifferenceOfCurrentSunrise = (currentTimeStamp - sunriseTimestamp) / 3600;
 
-        if (currentTimeStamp <= sunriseTimestamp || currentTimeStamp >= sunsetTimestamp) {
-          rotationAngle = 0;
+      // Get the sun position on the sunrise-sunset curve on loading the page
+      var rotationAngle = (timeDifferenceOfCurrentSunrise / timeDifferenceOfSunriseSunset) * 180;
+      var element = document.querySelector('.position-aspect-ratio-1.rotatable');
+
+      if (currentTimeStamp <= sunriseTimestamp || currentTimeStamp >= sunsetTimestamp) {
+        rotationAngle = 0;
+      }
+
+      element.style.transform = 'rotate(' + rotationAngle + 'deg)';
+
+      // Display current weather information in corresponding HTML elements
+      document.getElementById("current-temperature").textContent = temperature + "°C";
+      document.getElementById("max-temperature").textContent = maxTemperature + "°C";
+      document.getElementById("min-temperature").textContent = minTemperature + "°C";
+      document.getElementById("wind-speed").textContent = windSpeedKmh + " km/h";
+      document.getElementById("humidity").textContent = humidity + "%";
+      document.getElementById("weather-description").textContent = weatherDescription;
+      document.getElementById("sunrise-time").textContent = sunriseTime;
+      document.getElementById("sunset-time").textContent = sunsetTime;
+
+      // Update the date in the .middle-6 class with the current date formatted in German style
+      var currentDateTime = new Date(currentTimeStamp * 1000);
+      var currentDateFormatted = currentDateTime.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+
+      document.querySelector('.middle-6').textContent = currentDateFormatted;
+
+      // Update the time in the .middle-5 class with the current time in city's local time
+      function updateClock() {
+        var systemTime = new Date();
+        var hours = systemTime.getHours() + cityTimezoneOffsetInHours;
+        if (hours >= 24) {
+          hours = hours - 24;
         }
+        var minutes = systemTime.getMinutes();
 
-        element.style.transform = 'rotate(' + rotationAngle + 'deg)';
+        hours = (hours < 10 ? "0" : "") + hours;
+        minutes = (minutes < 10 ? "0" : "") + minutes;
 
+        var timeString = hours + ":" + minutes;
+        document.querySelector(".middle-5").textContent = timeString;
+      }
 
-        // Display current weather information in corresponding HTML elements
-        document.getElementById("current-temperature").textContent = temperature + "°C";
-        document.getElementById("max-temperature").textContent = maxTemperature + "°C";
-        document.getElementById("min-temperature").textContent = minTemperature + "°C";
-        document.getElementById("wind-speed").textContent = windSpeedKmh + " km/h";
-        document.getElementById("humidity").textContent = humidity + "%";
-        document.getElementById("weather-description").textContent = weatherDescription;
-        document.getElementById("sunrise-time").textContent = sunriseTime;
-        document.getElementById("sunset-time").textContent = sunsetTime;
+      updateClock();
 
-        // Update the date in the .middle-6 class with the current date formatted in German style
-        var currentDateTime = new Date(currentTimeStamp * 1000);
-        var currentDateFormatted = currentDateTime.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
-
-        document.querySelector('.middle-6').textContent = currentDateFormatted;
-
-
-
-        // Update the time in the .middle-5 class with the current time in city's local time
-        function updateClock() {
-
-          var systemTime = new Date();
-          var hours = systemTime.getHours() + cityTimezoneOffsetInHours;
-          if (hours >= 24) {
-            hours = hours - 24;
-          }
-          var minutes = systemTime.getMinutes();
-  
-          hours = (hours < 10 ? "0" : "") + hours;
-          minutes = (minutes < 10 ? "0" : "") + minutes;
-  
-          var timeString = hours + ":" + minutes;
-          document.querySelector(".middle-5").textContent = timeString;
-  
-          console.log(timeString);
-        }
-
-        updateClock();
-
-        setInterval(updateClock, 60000);
-      })
-
-
-      .catch(error => console.error("An error occurred while fetching current weather:", error));
+      setInterval(updateClock, 60000);
+      return cityTimezoneOffsetInHours;
+    } catch (error) {
+      console.error("An error occurred while fetching current weather:", error);
+      return null;
+    }
   }
- 
-
 });
