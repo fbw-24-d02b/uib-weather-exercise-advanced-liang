@@ -107,6 +107,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       var rotatingElement = document.querySelector('.position-aspect-ratio-1.rotatable');
       var sun = document.querySelector('.moving-sun');
 
+      // Hide the sun if it is night time
       if (currentTimeStamp <= sunriseTimestamp || currentTimeStamp >= sunsetTimestamp) {
         rotationAngle = 0;
         sun.style.display = 'none';
