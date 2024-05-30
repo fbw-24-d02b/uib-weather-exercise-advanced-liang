@@ -131,7 +131,9 @@ svg {
   }
 }
 
-
+input[type="checkbox"]{
+  display: none;
+}
 
 /* general styling */
 .weather {
@@ -200,21 +202,13 @@ svg {
       }
 
       &.icon-location {
-        cursor: pointer;
         position: relative;
 
-        &:hover {
-          color: var(--yellow-sun);
-          scale: 1.1;
-          text-shadow: 0 0 10px var(--yellow-sun);
-
-          span {
-            display: block;
-
-            color: var(--primary-fc);
-            scale: 1;
-            text-shadow: none;
-          }
+        &:hover span {
+          display: block;
+          color: var(--primary-fc);
+          scale: 1;
+          text-shadow: none;
         }
       }
     }
@@ -314,19 +308,84 @@ section.general-forecast {
     place-content: center;
 
     .pic-locker {
+      cursor: pointer;
       position: absolute;
       transform: translateY(-6px);
 
+      label {
+        height: min-content;
+      }
 
-      i.icon-tupian_huaban {
+     
+
+      &:hover {
+        .icon-Page {
+          display: none;
+        }
+
+        .icon-unlock-fill {
+          display: inline-block;
+          font-size: var(--fs-400);
+          color: var(--yellow-sun);
+          scale: 1.1;
+        }
+      }
+
+
+      .icon-tupian_huaban {
         font-size: var(--fs-700);
       }
 
-      i.icon-Page {
+      .icon-Page,
+      .icon-unlock-fill {
         font-size: var(--fs-200);
+        font-weight: var(--fw-bold);
         position: absolute;
         left: var(--size-100);
         color: var(--primary-fc)
+      }
+
+      .icon-unlock-fill {
+        display: none;
+      }
+    }
+
+    .wallpaper-wrap {
+      position: absolute;
+      top: var(--size-600);
+      left: 0;
+      width: 100%;
+      height: var(--size-800);
+      overflow-y: hidden;
+      z-index: 1;
+
+      display: flex;
+      align-items: start;
+      gap: var(--size-200);
+
+      button {
+        cursor: pointer;
+        border-radius: var(--size-100);
+        color: var(--yellow-sun);
+        border: 0;
+        padding: var(--size-100);
+        background-color: var(--bgc-transparent);
+      }
+
+
+      .wallpaper {
+        width: var(--size-600);
+        height: var(--size-800);
+      }
+      
+      i {
+        display: block;
+
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
     }
 
@@ -507,6 +566,13 @@ section.general-forecast {
   display: block;
   aspect-ratio: 1/1;
   border-radius: 50%;
+}
+
+.hover-effect:hover {
+  cursor: pointer;
+  color: var(--yellow-sun);
+  scale: 1.1;
+  text-shadow: 0 0 10px var(--yellow-sun);
 }
 
 

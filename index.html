@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="./images/weather.svg">
-  <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4559490_jpwsvudw3p.css">
+  <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4559490_zpbths3jfs.css">
   <!--  <i class="iconfont icon-navigate"></i> -->
   <script src="index.js"></script>
   <title>weather</title>
@@ -19,7 +19,7 @@
       <div class="address">
         <p id="address">Balingen, Germany</p>
       </div>
-      <i class="iconfont icon-location">
+      <i class="iconfont icon-location hover-effect">
         <span>Add locations</span>
       </i>
     </header>
@@ -38,10 +38,37 @@
     <main>
       <section class="general-forecast">
         <div class="slider">
-          <div class="pic-locker">
-            <i class="iconfont icon-tupian_huaban"></i>
-            <i class="iconfont icon-Page"></i>
+          <div class="pic-locker ">
+            <label class="hover-effect">
+              <i class="iconfont icon-tupian_huaban"></i>
+              <i class="iconfont icon-Page"></i>
+              <i class="iconfont icon-unlock-fill"></i>
+              <input type="checkbox" id="check-lock">
+            </label>
           </div>
+          <div class="wallpaper-wrap">
+            <ul class="wallpapers">
+              <li class="wallpaper"><img src="./images/wallpaper-1.jpeg" alt="wallpaper"></li>
+              <li class="wallpaper"><img src="./images/wallpaper-2.jpeg" alt="wallpaper"></li>
+              <li class="wallpaper"><img src="./images/wallpaper-3.jpeg" alt="wallpaper"></li>
+              <li class="wallpaper"><img src="./images/wallpaper-4.jpeg" alt="wallpaper"></li>
+              <li class="wallpaper"><img src="./images/wallpaper-5.jpeg" alt="wallpaper"></li>
+              <li class="wallpaper"><img src="./images/wallpaper-6.jpeg" alt="wallpaper"></li>
+              <li class="wallpaper"><img src="./images/wallpaper-7.jpeg" alt="wallpaper"></li>
+              <li class="wallpaper"><img src="./images/wallpaper-8.jpeg" alt="wallpaper"></li>
+            </ul>
+            <div>
+              <i class="iconfont icon-shangjiantou hover-effect"></i>
+              <i class="iconfont icon-xiajiantou hover-effect"></i>
+            </div>
+            <label for="">
+              <input type="checkbox" id="check-ok">
+              <button class="hover-effect">OK</button>
+            </label>
+          </div>
+
+
+
           <ul class="points">
             <li></li>
             <li></li>
