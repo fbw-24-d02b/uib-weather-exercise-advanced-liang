@@ -269,10 +269,11 @@ svg {
     }
 
     button {
-      width: fit-content;
+      width: 6rem;
       cursor: pointer;
       padding: var(--size-100) var(--size-200);
       border: 0;
+      display: inline-block;
 
       &:hover {
         background-color: var(--yellow-sun);

@@ -104,6 +104,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   });
 
+  // add a click event listener to the cancel button
+  document.getElementById('cancel-button').addEventListener('click', function () {
+    document.getElementById('weather-form').style.display = 'none';
+  });
+
   // add a click event listener to the location icon
   var locationIcon = document.querySelector('.iconfont.icon-location');
 
