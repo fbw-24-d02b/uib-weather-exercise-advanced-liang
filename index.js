@@ -18,6 +18,48 @@
 
 
 document.addEventListener("DOMContentLoaded", async function () {
+  // carousel function
+  const size800Value = 4;
+  const carousel = document.querySelector('.carousel');
+  const buttonA = document.querySelector('.arrow-up');
+  const buttonB = document.querySelector('.arrow-down');
+  const totalSlides = document.querySelectorAll('.carousel-item').length;
+
+  let currentTranslateY = 0;
+  let currentSlideIndex = 0;
+
+  function updateCarousel() {
+    carousel.style.transform = `translateY(${currentTranslateY}rem)`;
+  }
+
+  function updateButtons() {
+    buttonA.disabled = currentSlideIndex === 0;
+    buttonB.disabled = currentSlideIndex === totalSlides - 1;
+  }
+
+  buttonA.addEventListener('click', () => {
+    if (currentSlideIndex > 0) {
+      currentSlideIndex--;
+      currentTranslateY += size800Value;
+      updateCarousel();
+      updateButtons();
+    }
+  });
+
+  buttonB.addEventListener('click', () => {
+    if (currentSlideIndex < totalSlides - 1) {
+      currentSlideIndex++;
+      currentTranslateY -= size800Value;
+      updateCarousel();
+      updateButtons();
+    }
+  });
+
+
+  updateButtons();
+
+
+
   var cityTimezoneOffsetInHours;
   var sunsetTimestamp;
   var sunriseTimestamp;
@@ -140,7 +182,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       // Get city timezone offset
       var cityTimezoneOffset = weatherData.timezone - 7200;
-      var cityTimezoneOffsetInHours = cityTimezoneOffset / 3600 ;
+      var cityTimezoneOffsetInHours = cityTimezoneOffset / 3600;
 
       // Calculate sunrise and sunset times in city's local time
       var sunriseTimestamp = weatherData.sys.sunrise + cityTimezoneOffset;
@@ -180,4 +222,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       return null;
     }
   }
+
+
+
 });

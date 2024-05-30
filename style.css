@@ -184,6 +184,7 @@ input[type="checkbox"]{
       span {
         width: max-content;
         font-size: var(--fs-400);
+        color: var(--yellow-sun);
         position: absolute;
         top: 100%;
         right: var(--size-200);
@@ -206,9 +207,7 @@ input[type="checkbox"]{
 
         &:hover span {
           display: block;
-          color: var(--primary-fc);
           scale: 1;
-          text-shadow: none;
         }
       }
     }
@@ -358,22 +357,40 @@ section.general-forecast {
       height: var(--size-800);
       overflow-y: hidden;
       z-index: 1;
-
       display: flex;
       align-items: start;
       gap: var(--size-200);
 
+      .arrows {
+        position: relative;
+        bottom: var(--size-200);
+      }
+
       button {
+        display: block;
         cursor: pointer;
         border-radius: var(--size-100);
         color: var(--yellow-sun);
         border: 0;
         padding: var(--size-100);
         background-color: var(--bgc-transparent);
+
+        &.arrow-up, &.arrow-down {
+          background-color: transparent;
+          &:disabled i {
+            color: var(--bgc-transparent);
+            text-shadow: none;
+          }
+
+        }
       }
 
+      .carousel {
+        transform: translateY(0);
+        transition: transform 0.3s ease-in-out;
+      }
 
-      .wallpaper {
+      .carousel-item {
         width: var(--size-600);
         height: var(--size-800);
       }

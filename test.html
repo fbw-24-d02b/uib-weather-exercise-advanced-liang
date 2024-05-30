@@ -1,92 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        div.moving-sun {
-            box-sizing: auto;
-            position: relative;
-            width: 340px;
-            height: 150px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Controlled Vertical Carousel</title>
+<style>
+  :root {
+  --size-800: 4rem; /* 定义变量 */
+}
 
-            svg {
-                overflow: visible;
-            }
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
 
-            #half-circle-2 {
-                transform-origin: 150px 150px;
-                rotate: 0deg;
-                transition-property: rotate;
-                transition-timing-function: linear;
+.carousel-container {
+  position: relative;
+}
 
-                animation: movingSun 10s linear infinite;
-            }
-        }
+.carousel {
+  transform: translateY(0); /* 初始transform值 */
+  transition: transform 0.5s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
 
+.carousel-item {
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  color: white;
+  background-color: #333;
+}
 
+button {
+  margin: 10px;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
 
-        @keyframes movingSun {
-            0% {
-                transform: rotate(0deg);
-            }
+button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
 
-            100% {
-                transform: rotate(180deg);
-            }
-        }
-    </style>
+</style>
 </head>
-
 <body>
-    <div class="moving-sun">
-        <svg width="300" height="300" viewBox="0 0 300 150">
-            <defs>
-                <linearGradient id="color-gradient">
-                    <stop offset="0%" stop-color="yellow" />
-                </linearGradient>
-            </defs>
-
-            <path id="half-circle" d="M0,150 A150,150 0 0,1 300,150" stroke="url(#color-gradient)" stroke-width="4"
-                fill="none" />
-
-            <defs>
-                <linearGradient id="color-gradient-2">
-                    <stop offset="0%" stop-color="blue" />
-                </linearGradient>
-            </defs>
-
-            <path id="half-circle-2" d="M0,150 A150,150 0 0,0 300,150" stroke="url(#color-gradient-2)" stroke-width="4"
-                fill="none" />
-
-            <circle id="moving-circle" cx="0" cy="0" r="10" fill="#FBFE41">
-                <animateMotion keyPoints="0;1" keyTimes="0;1" id="anim" dur="10s" repeatCount="indefinite"
-                    calcMode="linear">
-                    <mpath xlink:href="#half-circle" />
-                </animateMotion>
-            </circle>
-        </svg>
+  <div class="carousel-container">
+    <div class="carousel">
+      <div class="carousel-item">Slide 1</div>
+      <div class="carousel-item">Slide 2</div>
+      <div class="carousel-item">Slide 3</div>
+      <div class="carousel-item">Slide 4</div>
+      <div class="carousel-item">Slide 5</div>
+      <div class="carousel-item">Slide 6</div>
+      <div class="carousel-item">Slide 7</div>
+      <div class="carousel-item">Slide 8</div>
+      <div class="carousel-item">Slide 9</div>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Get the elements to be modified
-            var halfCircle2 = document.getElementById("half-circle-2");
-            var animateMotion = document.getElementById("anim");
+    <button id="buttonA">Up</button>
+    <button id="buttonB">Down</button>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const size800Value = 4; // 直接赋值 4rem
+  const carousel = document.querySelector('.carousel');
+  const buttonA = document.getElementById('buttonA');
+  const buttonB = document.getElementById('buttonB');
+  const totalSlides = document.querySelectorAll('.carousel-item').length;
 
-            // Modify the rotate rule in CSS
-            halfCircle2.style.transform = "rotate(0deg)";
+  let currentTranslateY = 0;
+  let currentSlideIndex = 0; // 当前展示的slide索引
 
-            // Modify the keyPoints value in animateMotion
-            animateMotion.setAttribute("keyPoints", "0;1");
-        });
-    </script>
+  function updateCarousel() {
+    carousel.style.transform = `translateY(${currentTranslateY}rem)`;
+  }
+
+  function updateButtons() {
+    buttonA.disabled = currentSlideIndex === 0;
+    buttonB.disabled = currentSlideIndex === totalSlides - 1;
+  }
+
+  buttonA.addEventListener('click', () => {
+    if (currentSlideIndex > 0) {
+      currentSlideIndex--;
+      currentTranslateY -= size800Value;
+      updateCarousel();
+      updateButtons();
+    }
+  });
+
+  buttonB.addEventListener('click', () => {
+    if (currentSlideIndex < totalSlides - 1) {
+      currentSlideIndex++;
+      currentTranslateY += size800Value;
+      updateCarousel();
+      updateButtons();
+    }
+  });
+
+  // 初始化按钮状态
+  updateButtons();
+});
+
+  </script>
 </body>
-
 </html>
