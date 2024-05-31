@@ -2,12 +2,12 @@
 // --static layout for general weather informaiton-- done
 // --fetch weather data from OpenWeatherMap API-- done
 // --add an form to refresh location and weather data-- done
-// --to convert all files into react components--
 // --calculate real-time sun position on sunrise-sunset curve-- done
+// --add cancel button to quit location-input-form-- done
 // --update location time-- done
-// --add function to switch the background--
+// --add function to switch the background--done
 // --change the image for the weather description automaticly-- 
-// --add cancel button and esc function to hide the location-input-form-- 
+// --add moon curve and display the moon position--
 // --save and deltete location--
 // --switch location by clicking on the location icon-- 
 // --switch the background image on changing locations--
@@ -26,23 +26,18 @@ document.addEventListener("DOMContentLoaded", async function () {
   const buttonA = document.querySelector('.arrow-up');
   const buttonB = document.querySelector('.arrow-down');
   const totalSlides = document.querySelectorAll('.carousel-item').length;
+  const carouselItems = document.querySelectorAll('.carousel-item img');
   const background = document.querySelector('.background');
-  const backgroundArray = [
-    "./images/Balingen-2.jpeg",
-    "./images/wallpaper-1.jpeg",
-    "./images/wallpaper-2.jpeg",
-    "./images/wallpaper-3.jpeg",
-    "./images/wallpaper-4.jpeg",
-    "./images/wallpaper-5.jpeg",
-    "./images/wallpaper-6.jpeg",
-    "./images/wallpaper-7.jpeg",
-    "./images/wallpaper-8.jpeg"
-  ];
+  const backgroundArray = [];
+
+  carouselItems.forEach(item => {
+    backgroundArray.push(item.src);
+  });
 
   okButton.addEventListener('click', function () {
     wallpaperWrap.style.display = 'none';
     checkLock.checked = false;
-    
+
     const selectedImage = backgroundArray[currentSlideIndex];
     background.style.backgroundImage = `linear-gradient(var(--bgc-transparent), var(--bgc-transparent)), url('${selectedImage}')`;
   });
@@ -259,6 +254,19 @@ document.addEventListener("DOMContentLoaded", async function () {
       document.getElementById("weather-description").textContent = weatherDescription;
       document.getElementById("sunrise-time").textContent = sunriseTime;
       document.getElementById("sunset-time").textContent = sunsetTime;
+
+      console.log(weatherDescription.textContent);
+      console.log(weatherDescription);
+      // Change the weather image based on the weather description
+      if (weatherDescription.includes('rain')) {
+        document.getElementById('weather-image').src = "./images/light-rain.svg";
+      } else if (weatherDescription.includes('cloud')) {
+        document.getElementById('weather-image').src = "./images/cloud.svg";
+      } else if (weatherDescription.includes('clear')) {
+        document.getElementById('weather-image').src = "./images/clear.svg";
+      } else {
+        document.getElementById('weather-image').src = "./images/cloud.svg";
+      }
 
       return {
         cityTimezoneOffsetInHours,
