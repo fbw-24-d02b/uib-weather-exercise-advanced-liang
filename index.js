@@ -18,7 +18,37 @@
 
 
 document.addEventListener("DOMContentLoaded", async function () {
-  // carousel function
+   // button.ok and #check-lock function, start
+   const okButton = document.querySelector('.ok');
+   const wallpaperWrap = document.querySelector('.wallpaper-wrap');
+   const checkLock = document.getElementById('check-lock');
+ 
+   okButton.addEventListener('click', function () {
+     wallpaperWrap.style.display = 'none';
+     checkLock.checked = false;
+   });
+ 
+   function updateWallpaperWrap() {
+     if (checkLock.checked) {
+       wallpaperWrap.style.display = 'flex';
+     } else {
+       wallpaperWrap.style.display = 'none';
+     }
+   }
+ 
+   // Initial check when the page loads
+   updateWallpaperWrap();
+ 
+   // Listen for changes on the checkbox
+   checkLock.addEventListener('change', function () {
+     updateWallpaperWrap();
+   });
+   // button.ok and #check-lock function, end
+
+
+
+   
+  // carousel function start
   const size800Value = 4;
   const carousel = document.querySelector('.carousel');
   const buttonA = document.querySelector('.arrow-up');
@@ -55,11 +85,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   });
 
-
   updateButtons();
+  // carousel function end
 
 
 
+
+  // Fetch und update weather data, start
   var cityTimezoneOffsetInHours;
   var sunsetTimestamp;
   var sunriseTimestamp;
@@ -222,6 +254,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       return null;
     }
   }
+  // Fetch und update weather data, end
 
 
 

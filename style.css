@@ -365,6 +365,10 @@ section.general-forecast {
         display: flex;
       }
 
+      /* :has(button.ok:active) & {
+        display: none;
+      } */
+
 
       .arrows {
         position: relative;
@@ -377,6 +381,12 @@ section.general-forecast {
         color: var(--yellow-sun);
         border: 0;
         background-color: transparent;
+
+        &.ok {
+          padding: var(--size-100);
+          border-radius: var(--size-100);
+          background-color: var(--bgc-transparent);
+        }
         
         &:disabled i {
           color: var(--bgc-transparent);
