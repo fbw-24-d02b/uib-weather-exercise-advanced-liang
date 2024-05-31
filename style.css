@@ -141,22 +141,22 @@ input[type="checkbox"] {
   width: 100svw;
   min-width: 350px;
   min-height: 100svh;
-  background-size: cover;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
 
 
   /* background image staying unmoved on scrolling */
-  &::before {
-    content: '';
+  .background {
     position: fixed;
     top: 0;
     left: 50%;
     translate: -50%;
-    width: 100svw;
-    height: 100svh;
+    width: min(428px, 100svw);
+    height: min(926px, 100svh);
+    overflow: hidden;
     background-image: linear-gradient(var(--bgc-transparent), var(--bgc-transparent)), url('./images/Balingen-2.jpeg');
     background-size: cover;
     background-position: center;
@@ -361,9 +361,9 @@ section.general-forecast {
       align-items: start;
       gap: var(--size-200);
 
-      :has(#check-lock:checked) & {
+      /* :has(#check-lock:checked) & {
         display: flex;
-      }
+      } */
 
       /* :has(button.ok:active) & {
         display: none;
@@ -387,7 +387,7 @@ section.general-forecast {
           border-radius: var(--size-100);
           background-color: var(--bgc-transparent);
         }
-        
+
         &:disabled i {
           color: var(--bgc-transparent);
           text-shadow: none;

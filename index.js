@@ -18,42 +18,56 @@
 
 
 document.addEventListener("DOMContentLoaded", async function () {
-   // button.ok and #check-lock function, start
-   const okButton = document.querySelector('.ok');
-   const wallpaperWrap = document.querySelector('.wallpaper-wrap');
-   const checkLock = document.getElementById('check-lock');
- 
-   okButton.addEventListener('click', function () {
-     wallpaperWrap.style.display = 'none';
-     checkLock.checked = false;
-   });
- 
-   function updateWallpaperWrap() {
-     if (checkLock.checked) {
-       wallpaperWrap.style.display = 'flex';
-     } else {
-       wallpaperWrap.style.display = 'none';
-     }
-   }
- 
-   // Initial check when the page loads
-   updateWallpaperWrap();
- 
-   // Listen for changes on the checkbox
-   checkLock.addEventListener('change', function () {
-     updateWallpaperWrap();
-   });
-   // button.ok and #check-lock function, end
-
-
-
-   
-  // carousel function start
-  const size800Value = 4;
+  // button.ok and #check-lock function, start
+  const okButton = document.querySelector('.ok');
+  const wallpaperWrap = document.querySelector('.wallpaper-wrap');
+  const checkLock = document.getElementById('check-lock'); const size800Value = 4;
   const carousel = document.querySelector('.carousel');
   const buttonA = document.querySelector('.arrow-up');
   const buttonB = document.querySelector('.arrow-down');
   const totalSlides = document.querySelectorAll('.carousel-item').length;
+  const background = document.querySelector('.background');
+  const backgroundArray = [
+    "./images/Balingen-2.jpeg",
+    "./images/wallpaper-1.jpeg",
+    "./images/wallpaper-2.jpeg",
+    "./images/wallpaper-3.jpeg",
+    "./images/wallpaper-4.jpeg",
+    "./images/wallpaper-5.jpeg",
+    "./images/wallpaper-6.jpeg",
+    "./images/wallpaper-7.jpeg",
+    "./images/wallpaper-8.jpeg"
+  ];
+
+  okButton.addEventListener('click', function () {
+    wallpaperWrap.style.display = 'none';
+    checkLock.checked = false;
+    
+    const selectedImage = backgroundArray[currentSlideIndex];
+    background.style.backgroundImage = `linear-gradient(var(--bgc-transparent), var(--bgc-transparent)), url('${selectedImage}')`;
+  });
+
+  function updateWallpaperWrap() {
+    if (checkLock.checked) {
+      wallpaperWrap.style.display = 'flex';
+    } else {
+      wallpaperWrap.style.display = 'none';
+    }
+  }
+
+  // Initial check when the page loads
+  updateWallpaperWrap();
+
+  // Listen for changes on the checkbox
+  checkLock.addEventListener('change', function () {
+    updateWallpaperWrap();
+  });
+
+
+
+
+
+  // carousel function start
 
   let currentTranslateY = 0;
   let currentSlideIndex = 0;
@@ -87,6 +101,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   updateButtons();
   // carousel function end
+  // button.ok and #check-lock function, end
+
 
 
 
