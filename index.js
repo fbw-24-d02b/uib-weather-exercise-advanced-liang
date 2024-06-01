@@ -29,9 +29,8 @@
 *     Fetch weather data for the default city and country
 
 *     function: define a function to update the clock with the current time in city's local time
-*       Get the current timestamp
-*       Calculate the time difference
-*       Get the sun position on the sunrise-sunset curve on loading the page
+*       Get the current timestamp in city's local time
+*       caculate the sun's position on the sunrise-sunset curve during daytime
 *       Hide the sun if it is night time
 *       Update the date in the .middle-6 class with the current date formatted in German style
 
@@ -54,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   // button.ok and #check-lock function, start
   const okButton = document.querySelector('.ok');
   const wallpaperWrap = document.querySelector('.wallpaper-wrap');
-  const checkLock = document.getElementById('check-lock'); 
+  const checkLock = document.getElementById('check-lock');
   const carousel = document.querySelector('.carousel');
   const buttonA = document.querySelector('.arrow-up');
   const buttonB = document.querySelector('.arrow-down');
@@ -154,6 +153,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // define a function to update the clock with the current time in city's local time
   function updateClockAndSunPosition(TimezoneOffset, sunsetTimestamp, sunriseTimestamp) {
+    // Get the current timestamp in city's local time
     var systemTime = new Date();
     var hours = systemTime.getHours() + TimezoneOffset;
     if (hours >= 24) {
@@ -172,34 +172,30 @@ document.addEventListener("DOMContentLoaded", async function () {
     var timeString = hours + ":" + minutes + ":" + seconds;
     document.querySelector(".middle-5").textContent = timeString;
 
-    // Get the current timestamp
 
+    // caculate the sun's position on the sunrise-sunset curve during daytime
     var currentTimeStamp = Math.floor(Date.now() / 1000) + TimezoneOffset * 3600;
-
-    // Calculate the time differences
     var daytime = (sunsetTimestamp - sunriseTimestamp) / 3600;
     var runningTime = (currentTimeStamp - sunriseTimestamp) / 3600;
 
-    // Get the sun position on the sunrise-sunset curve on loading the page
     var rotationAngle = (runningTime / daytime) * 180;
     var rotatingElement = document.querySelector('.position-aspect-ratio-1.rotatable');
-    var sun = document.querySelector('.moving-sun');
-
+    rotatingElement.style.transform = 'rotate(' + rotationAngle + 'deg)';
+    
+    // Update the date in the .middle-6 class with the current date formatted in German style
+    var currentDateTime = new Date(currentTimeStamp * 1000);
+    var currentDateFormatted = currentDateTime.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+    
+    document.querySelector('.middle-6').textContent = currentDateFormatted;
+    
     // Hide the sun if it is night time
+    var sun = document.querySelector('.moving-sun');
     if (currentTimeStamp <= sunriseTimestamp || currentTimeStamp >= sunsetTimestamp) {
       rotationAngle = 0;
       sun.style.display = 'none';
     } else {
       sun.style.display = 'block';
     }
-
-    rotatingElement.style.transform = 'rotate(' + rotationAngle + 'deg)';
-
-    // Update the date in the .middle-6 class with the current date formatted in German style
-    var currentDateTime = new Date(currentTimeStamp * 1000);
-    var currentDateFormatted = currentDateTime.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
-
-    document.querySelector('.middle-6').textContent = currentDateFormatted;
   }
 
   updateClockAndSunPosition(cityTimezoneOffsetInHours, sunsetTimestamp, sunriseTimestamp);
@@ -264,10 +260,11 @@ document.addEventListener("DOMContentLoaded", async function () {
       // Calculate sunrise and sunset times in city's local time
       var sunriseTimestamp = weatherData.sys.sunrise + cityTimezoneOffset;
       var sunsetTimestamp = weatherData.sys.sunset + cityTimezoneOffset;
-
+      const currentTimestamp = weatherData.dt + cityTimezoneOffset;
 
       var sunriseDate = new Date(sunriseTimestamp * 1000);
       var sunsetDate = new Date(sunsetTimestamp * 1000);
+      const currentDate = new Date(currentTimestamp * 1000);
 
       var sunriseHours = sunriseDate.getHours().toString().padStart(2, '0');
       var sunriseMinutes = sunriseDate.getMinutes().toString().padStart(2, '0');
@@ -277,7 +274,11 @@ document.addEventListener("DOMContentLoaded", async function () {
       var sunsetMinutes = sunsetDate.getMinutes().toString().padStart(2, '0');
       var sunsetTime = sunsetHours + ":" + sunsetMinutes;
 
-      console.log(sunriseTime, sunsetTime);
+      var currentHours = currentDate.getHours().toString().padStart(2, '0');
+      var currentMinutes = currentDate.getMinutes().toString().padStart(2, '0');
+      var currentTime = currentHours + ":" + currentMinutes;
+
+      console.log(sunriseTime, sunsetTime, currentTime);
 
       // Display current weather information in corresponding HTML elements
       document.getElementById("current-temperature").textContent = temperature + "°C";
@@ -286,8 +287,14 @@ document.addEventListener("DOMContentLoaded", async function () {
       document.getElementById("wind-speed").textContent = windSpeedKmh + " km/h";
       document.getElementById("humidity").textContent = humidity + "%";
       document.getElementById("weather-description").textContent = weatherDescription;
-      document.getElementById("sunrise-time").textContent = sunriseTime;
-      document.getElementById("sunset-time").textContent = sunsetTime;
+
+      if (currentTimestamp > sunriseTimestamp && currentTimestamp < sunsetTimestamp) {
+        document.getElementById("sunrise-time").textContent = sunriseTime;
+        document.getElementById("sunset-time").textContent = sunsetTime;
+      } else {
+        document.getElementById("sunrise-time").textContent = sunriseTime;
+        document.getElementById("sunset-time").textContent = sunsetTime;
+      }
 
       console.log(weatherDescription.textContent);
       console.log(weatherDescription);
