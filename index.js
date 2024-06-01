@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     checkLock.checked = false;
 
     const selectedImage = backgroundArray[currentSlideIndex];
-    background.style.backgroundImage = `linear-gradient(var(--bgc-transparent), var(--bgc-transparent)), url('${selectedImage}')`;
+    background.style.backgroundImage = `linear-gradient(var(--bgc-current), var(--bgc-current)), url('${selectedImage}')`;
   });
 
   function updateWallpaperWrap() {
@@ -195,6 +195,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // caculate the sun's position on the sunrise-sunset curve during daytime
     // caculate the moon's position on the moonrise-moonset curve during nighttime
+    // change the background image to dark-mode during nighttime
     var movingOrbitSun = document.querySelector('.moving-orbit-sun');
     var movingOrbitMoon = document.querySelector('.moving-orbit-moon');
     var currentTimeStamp = Math.floor(Date.now() / 1000) + TimezoneOffset * 3600;
@@ -206,7 +207,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     const sunsetMinutes = convertTimeToMinutes(sunsetTime);
     const currentMinutes = convertTimeToMinutes(currentTime);
 
+    function setCSSVariable(variable, value) {
+      document.documentElement.style.setProperty(variable, value);
+    }
+
     if (currentMinutes > sunriseMinutes && currentMinutes < sunsetMinutes) {
+      // daytime mode
       var dayTime = (sunsetMinutes - sunriseMinutes) / 60;
       var runningTime = (currentMinutes - sunriseMinutes) / 60;
       var rotationAngle = (runningTime / dayTime) * 180;
@@ -215,8 +221,10 @@ document.addEventListener("DOMContentLoaded", async function () {
       document.querySelector('.icons-sun').style.display = 'flex';
       document.querySelector(".moon-orbit").style.display = 'none';
       document.querySelector('.icons-moon').style.display = 'none';
+      setCSSVariable('--bgc-current', 'var(--bgc-transparent)');
     } 
     else {
+      // nighttime mode
       var nightTime = (1440 - (sunsetMinutes - sunriseMinutes)) / 60; // 1440 minutes in a day
       var runningTime = (currentMinutes > sunsetMinutes ? currentMinutes - sunsetMinutes : 1440 + currentMinutes - sunsetMinutes) / 60;
       var rotationAngle = (runningTime / nightTime) * 180;
@@ -225,6 +233,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       document.querySelector('.icons-sun').style.display = 'none';
       document.querySelector(".moon-orbit").style.display = 'block';
       document.querySelector('.icons-moon').style.display = 'flex';
+      setCSSVariable('--bgc-current', 'var(--bgc-dark-mode)');
     }
 
 
