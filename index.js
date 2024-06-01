@@ -25,20 +25,24 @@
 *     carousel function end
 *   button.ok and #check-lock function, end 
 *   
+    function: convert timestamp to time
+
 *   Fetch und update weather data, start
 *     Fetch weather data for the default city and country
 
-*     function: define a function to update the clock with the current time in city's local time
+*     function: update the clock with the current time in city's local time
 *       Get the current timestamp in city's local time
 *       caculate the sun's position on the sunrise-sunset curve during daytime
-*       Hide the sun if it is night time
+        caculate the moon's position on the moonrise-moonset curve during nighttime
+        Hide the sun if it is night time
 *       Update the date in the .middle-6 class with the current date formatted in German style
+
 
 *     function: update the weather data when the form is submitted
 *       add a click event listener to the cancel button
 *       add a click event listener to the location icon  
 
-*     function: define a function to fetch weather data from OpenWeatherMap API
+*     function: fetch weather data from OpenWeatherMap API
 *       Process the fetched weather data
 *     --important!!! Get city timezone offset  
 *       Calculate sunrise and sunset times in city's local time
@@ -130,8 +134,16 @@ document.addEventListener("DOMContentLoaded", async function () {
   updateButtons();
   // carousel function end
   // button.ok and #check-lock function, end
-
-
+  
+  
+  
+  // function: convert timestamp to time
+  function convertTimestampToTime(timestamp) {
+    var date = new Date(timestamp * 1000);
+    var hours = date.getHours().toString().padStart(2, '0');
+    var minutes = date.getMinutes().toString().padStart(2, '0');
+    return hours + ":" + minutes;
+  }
 
 
 
@@ -151,7 +163,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     sunriseTimestamp = weatherData.sunriseTimestamp;
   }
 
-  // define a function to update the clock with the current time in city's local time
+  // function: update the clock with the current time in city's local time
   function updateClockAndSunPosition(TimezoneOffset, sunsetTimestamp, sunriseTimestamp) {
     // Get the current timestamp in city's local time
     var systemTime = new Date();
@@ -177,6 +189,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     var movingOrbitSun = document.querySelector('.moving-orbit-sun');
     var movingOrbitMoon = document.querySelector('.moving-orbit-moon');
     // caculate the sun's position on the sunrise-sunset curve during daytime
+    // caculate the moon's position on the moonrise-moonset curve during nighttime
+    
     if (currentTimeStamp > sunriseTimestamp && currentTimeStamp < sunsetTimestamp) {
       var dayTime = (sunsetTimestamp - sunriseTimestamp) / 3600;
       var runningTime = (currentTimeStamp - sunriseTimestamp) / 3600;
@@ -197,18 +211,25 @@ document.addEventListener("DOMContentLoaded", async function () {
       document.querySelector('.icons-moon').style.display = 'flex';
     }
 
-    
+
     // Update the date in the .middle-6 class with the current date formatted in German style
     var currentDateTime = new Date(currentTimeStamp * 1000);
     var currentDateFormatted = currentDateTime.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
-    
+
     document.querySelector('.middle-6').textContent = currentDateFormatted;
   }
 
   updateClockAndSunPosition(cityTimezoneOffsetInHours, sunsetTimestamp, sunriseTimestamp);
   setInterval(function () { updateClockAndSunPosition(cityTimezoneOffsetInHours, sunsetTimestamp, sunriseTimestamp) }, 1000);
 
-  // update the weather data when the form is submitted
+
+
+
+
+
+
+
+  // function: update the weather data when the form is submitted
   document.getElementById('weather-form').addEventListener('submit', async function (event) {
     event.preventDefault(); // Prevent form from submitting normally
 
@@ -241,7 +262,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById('country').value = '';
   });
 
-  // define a function to fetch weather data from OpenWeatherMap API
+  // function: fetch weather data from OpenWeatherMap API
   async function fetchWeatherData(city, country, apiKey) {
 
     // Build the API request URL
@@ -269,21 +290,9 @@ document.addEventListener("DOMContentLoaded", async function () {
       var sunsetTimestamp = weatherData.sys.sunset + cityTimezoneOffset;
       const currentTimestamp = weatherData.dt + cityTimezoneOffset;
 
-      var sunriseDate = new Date(sunriseTimestamp * 1000);
-      var sunsetDate = new Date(sunsetTimestamp * 1000);
-      const currentDate = new Date(currentTimestamp * 1000);
-
-      var sunriseHours = sunriseDate.getHours().toString().padStart(2, '0');
-      var sunriseMinutes = sunriseDate.getMinutes().toString().padStart(2, '0');
-      var sunriseTime = sunriseHours + ":" + sunriseMinutes;
-
-      var sunsetHours = sunsetDate.getHours().toString().padStart(2, '0');
-      var sunsetMinutes = sunsetDate.getMinutes().toString().padStart(2, '0');
-      var sunsetTime = sunsetHours + ":" + sunsetMinutes;
-
-      var currentHours = currentDate.getHours().toString().padStart(2, '0');
-      var currentMinutes = currentDate.getMinutes().toString().padStart(2, '0');
-      var currentTime = currentHours + ":" + currentMinutes;
+      var sunriseTime = convertTimestampToTime(sunriseTimestamp);
+      var sunsetTime = convertTimestampToTime(sunsetTimestamp);
+      var currentTime = convertTimestampToTime(currentTimestamp);
 
       console.log(sunriseTime, sunsetTime, currentTime);
 
@@ -295,7 +304,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       document.getElementById("humidity").textContent = humidity + "%";
       document.getElementById("weather-description").textContent = weatherDescription;
 
-      var bull = currentTimestamp >  sunsetTimestamp;
+      var bull = currentTimestamp > sunsetTimestamp;
       console.log(bull);
 
       if (currentTimestamp > sunriseTimestamp && currentTimestamp < sunsetTimestamp) {
