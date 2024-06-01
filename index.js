@@ -295,15 +295,17 @@ document.addEventListener("DOMContentLoaded", async function () {
       document.getElementById("humidity").textContent = humidity + "%";
       document.getElementById("weather-description").textContent = weatherDescription;
 
+      var bull = currentTimestamp >  sunsetTimestamp;
+      console.log(bull);
+
       if (currentTimestamp > sunriseTimestamp && currentTimestamp < sunsetTimestamp) {
         document.getElementById("sunrise-time").textContent = sunriseTime;
         document.getElementById("sunset-time").textContent = sunsetTime;
       } else {
-        document.getElementById("sunrise-time").textContent = sunriseTime;
-        document.getElementById("sunset-time").textContent = sunsetTime;
+        document.getElementById("moonset-time").textContent = sunriseTime;
+        document.getElementById("moonrise-time").textContent = sunsetTime;
       }
 
-      console.log(weatherDescription.textContent);
       console.log(weatherDescription);
 
       // Change the weather image based on the weather description
