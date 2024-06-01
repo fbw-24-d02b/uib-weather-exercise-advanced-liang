@@ -1,117 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Controlled Vertical Carousel</title>
-<style>
-  :root {
-  --size-800: 4rem; /* 定义变量 */
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .container {
+      position: relative;
+      width: 1000px;
+      height: 1000px;
+      background-color: lightgrey; /* 添加背景颜色以更好地可视化容器 */
+    }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f0f0f0;
-}
-
-.carousel-container {
-  position: relative;
-}
-
-.carousel {
-  transform: translateY(0); /* 初始transform值 */
-  transition: transform 0.5s ease-in-out;
-  display: flex;
-  flex-direction: column;
-}
-
-.carousel-item {
-  height: 4rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-  color: white;
-  background-color: #333;
-}
-
-button {
-  margin: 10px;
-  padding: 10px;
-  background-color: #333;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-button:disabled {
-  background-color: #999;
-  cursor: not-allowed;
-}
-
-</style>
+    svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      height: 90%;
+      overflow: visible;
+    }
+  </style>
 </head>
 <body>
-  <div class="carousel-container">
-    <div class="carousel">
-      <div class="carousel-item">Slide 1</div>
-      <div class="carousel-item">Slide 2</div>
-      <div class="carousel-item">Slide 3</div>
-      <div class="carousel-item">Slide 4</div>
-      <div class="carousel-item">Slide 5</div>
-      <div class="carousel-item">Slide 6</div>
-      <div class="carousel-item">Slide 7</div>
-      <div class="carousel-item">Slide 8</div>
-      <div class="carousel-item">Slide 9</div>
-    </div>
-    <button id="buttonA">Up</button>
-    <button id="buttonB">Down</button>
+  <div class="container">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+      <!-- 使用 path 元素绘制两段圆弧 -->
+      <path d="M 0,50 A 50,50 0 0 1 100,50" fill="none" stroke="yellow" stroke-width="1" />
+      <path d="M 0,50 A 50,50 0 0 0 100,50" fill="none" stroke="blue" stroke-width="1" />
+      <path id="dynamicArc" d="M 0,50 A 50,50 0 0 1 75,6.7" fill="none" stroke="red" stroke-width="1" />
+      <circle cx="0" cy="100" r="2" fill="green" />
+      <circle cx="100" cy="0" r="2" fill="pink" />
+    </svg>
   </div>
+
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-  const size800Value = 4; // 直接赋值 4rem
-  const carousel = document.querySelector('.carousel');
-  const buttonA = document.getElementById('buttonA');
-  const buttonB = document.getElementById('buttonB');
-  const totalSlides = document.querySelectorAll('.carousel-item').length;
+    function updateArc(startAngleInDegrees, arcAngleInDegrees) {
+      const startAngleInRadians = (startAngleInDegrees * Math.PI / 180) - Math.PI / 2;
+      const arcAngleInRadians = arcAngleInDegrees * Math.PI / 180;
+      const radius = 50; // 半径
+      const centerX = 50; // 圆心X坐标
+      const centerY = 50; // 圆心Y坐标
 
-  let currentTranslateY = 0;
-  let currentSlideIndex = 0; // 当前展示的slide索引
+      // 计算起点坐标
+      const startX = centerX + radius * Math.cos(startAngleInRadians);
+      const startY = centerY + radius * Math.sin(startAngleInRadians);
 
-  function updateCarousel() {
-    carousel.style.transform = `translateY(${currentTranslateY}rem)`;
-  }
+      // 计算终点坐标
+      const endX = centerX + radius * Math.cos(startAngleInRadians + arcAngleInRadians);
+      const endY = centerY + radius * Math.sin(startAngleInRadians + arcAngleInRadians);
 
-  function updateButtons() {
-    buttonA.disabled = currentSlideIndex === 0;
-    buttonB.disabled = currentSlideIndex === totalSlides - 1;
-  }
+      // 根据弧度决定弧的大小弧或小弧
+      const largeArcFlag = arcAngleInDegrees > 180 ? 1 : 0;
 
-  buttonA.addEventListener('click', () => {
-    if (currentSlideIndex > 0) {
-      currentSlideIndex--;
-      currentTranslateY -= size800Value;
-      updateCarousel();
-      updateButtons();
+      const path = document.getElementById('dynamicArc');
+      path.setAttribute('d', `M ${startX},${startY} A 50,50 0 ${largeArcFlag} 1 ${endX},${endY}`);
     }
-  });
 
-  buttonB.addEventListener('click', () => {
-    if (currentSlideIndex < totalSlides - 1) {
-      currentSlideIndex++;
-      currentTranslateY += size800Value;
-      updateCarousel();
-      updateButtons();
-    }
-  });
-
-  // 初始化按钮状态
-  updateButtons();
-});
-
+    // 示例：起点为-45度，弧度为270度
+    updateArc(-45, 90);
   </script>
 </body>
 </html>
+
+
+
+<!-- 修正这个程序，让起点的角度可以为负值，弧长可以为任意值 -->
