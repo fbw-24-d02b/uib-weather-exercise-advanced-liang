@@ -26,6 +26,7 @@
 *   button.ok and #check-lock function, end 
 *   
     function: convert timestamp to time
+    Function: convert time (HH:MM) to total minutes
 
 *   Fetch und update weather data, start
 *     Fetch weather data for the default city and country
@@ -134,15 +135,21 @@ document.addEventListener("DOMContentLoaded", async function () {
   updateButtons();
   // carousel function end
   // button.ok and #check-lock function, end
-  
-  
-  
+
+
+
   // function: convert timestamp to time
   function convertTimestampToTime(timestamp) {
     var date = new Date(timestamp * 1000);
     var hours = date.getHours().toString().padStart(2, '0');
     var minutes = date.getMinutes().toString().padStart(2, '0');
     return hours + ":" + minutes;
+  }
+
+  // Function: convert time (HH:MM) to total minutes 
+  function convertTimeToMinutes(time) {
+    var [hours, minutes] = time.split(":").map(Number);
+    return hours * 60 + minutes;
   }
 
 
@@ -185,24 +192,33 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.querySelector(".middle-5").textContent = timeString;
 
 
-    var currentTimeStamp = Math.floor(Date.now() / 1000) + TimezoneOffset * 3600;
-    var movingOrbitSun = document.querySelector('.moving-orbit-sun');
-    var movingOrbitMoon = document.querySelector('.moving-orbit-moon');
+
     // caculate the sun's position on the sunrise-sunset curve during daytime
     // caculate the moon's position on the moonrise-moonset curve during nighttime
-    
-    if (currentTimeStamp > sunriseTimestamp && currentTimeStamp < sunsetTimestamp) {
-      var dayTime = (sunsetTimestamp - sunriseTimestamp) / 3600;
-      var runningTime = (currentTimeStamp - sunriseTimestamp) / 3600;
+    var movingOrbitSun = document.querySelector('.moving-orbit-sun');
+    var movingOrbitMoon = document.querySelector('.moving-orbit-moon');
+    var currentTimeStamp = Math.floor(Date.now() / 1000) + TimezoneOffset * 3600;
+    const currentTime = convertTimestampToTime(currentTimeStamp);
+    const sunriseTime = convertTimestampToTime(sunriseTimestamp);
+    const sunsetTime = convertTimestampToTime(sunsetTimestamp);
+
+    const sunriseMinutes = convertTimeToMinutes(sunriseTime);
+    const sunsetMinutes = convertTimeToMinutes(sunsetTime);
+    const currentMinutes = convertTimeToMinutes(currentTime);
+
+    if (currentMinutes > sunriseMinutes && currentMinutes < sunsetMinutes) {
+      var dayTime = (sunsetMinutes - sunriseMinutes) / 60;
+      var runningTime = (currentMinutes - sunriseMinutes) / 60;
       var rotationAngle = (runningTime / dayTime) * 180;
       movingOrbitSun.style.transform = 'rotate(' + rotationAngle + 'deg)';
       document.querySelector(".sun-orbit").style.display = 'block';
       document.querySelector('.icons-sun').style.display = 'flex';
       document.querySelector(".moon-orbit").style.display = 'none';
       document.querySelector('.icons-moon').style.display = 'none';
-    } else {
-      var nightTime = 24 - (sunsetTimestamp - sunriseTimestamp) / 3600;
-      var runningTime = (currentTimeStamp - sunsetTimestamp) / 3600;
+    } 
+    else {
+      var nightTime = (1440 - (sunsetMinutes - sunriseMinutes)) / 60; // 1440 minutes in a day
+      var runningTime = (currentMinutes > sunsetMinutes ? currentMinutes - sunsetMinutes : 1440 + currentMinutes - sunsetMinutes) / 60;
       var rotationAngle = (runningTime / nightTime) * 180;
       movingOrbitMoon.style.transform = 'rotate(' + rotationAngle + 'deg)';
       document.querySelector(".sun-orbit").style.display = 'none';
@@ -304,9 +320,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       document.getElementById("humidity").textContent = humidity + "%";
       document.getElementById("weather-description").textContent = weatherDescription;
 
-      var bull = currentTimestamp > sunsetTimestamp;
-      console.log(bull);
-
       if (currentTimestamp > sunriseTimestamp && currentTimestamp < sunsetTimestamp) {
         document.getElementById("sunrise-time").textContent = sunriseTime;
         document.getElementById("sunset-time").textContent = sunsetTime;
@@ -315,7 +328,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         document.getElementById("moonrise-time").textContent = sunsetTime;
       }
 
-      console.log(weatherDescription);
 
       // Change the weather image based on the weather description
       if (weatherDescription.includes('rain')) {
