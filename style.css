@@ -573,7 +573,6 @@ section.general-forecast {
 }
 
 /* utility class */
-
 .hide-bottom-half {
   position: absolute;
   width: 100%;
@@ -602,11 +601,6 @@ section.general-forecast {
   scale: 1.1;
   text-shadow: 0 0 10px var(--yellow-sun);
 }
-
-
-
-
-
 
 /* animation */
 
