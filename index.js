@@ -173,14 +173,30 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.querySelector(".middle-5").textContent = timeString;
 
 
-    // caculate the sun's position on the sunrise-sunset curve during daytime
     var currentTimeStamp = Math.floor(Date.now() / 1000) + TimezoneOffset * 3600;
-    var daytime = (sunsetTimestamp - sunriseTimestamp) / 3600;
-    var runningTime = (currentTimeStamp - sunriseTimestamp) / 3600;
+    var movingOrbitSun = document.querySelector('.moving-orbit-sun');
+    var movingOrbitMoon = document.querySelector('.moving-orbit-moon');
+    // caculate the sun's position on the sunrise-sunset curve during daytime
+    if (currentTimeStamp > sunriseTimestamp && currentTimeStamp < sunsetTimestamp) {
+      var dayTime = (sunsetTimestamp - sunriseTimestamp) / 3600;
+      var runningTime = (currentTimeStamp - sunriseTimestamp) / 3600;
+      var rotationAngle = (runningTime / dayTime) * 180;
+      movingOrbitSun.style.transform = 'rotate(' + rotationAngle + 'deg)';
+      document.querySelector(".sun-orbit").style.display = 'block';
+      document.querySelector('.icons-sun').style.display = 'flex';
+      document.querySelector(".moon-orbit").style.display = 'none';
+      document.querySelector('.icons-moon').style.display = 'none';
+    } else {
+      var nightTime = 24 - (sunsetTimestamp - sunriseTimestamp) / 3600;
+      var runningTime = (currentTimeStamp - sunsetTimestamp) / 3600;
+      var rotationAngle = (runningTime / nightTime) * 180;
+      movingOrbitMoon.style.transform = 'rotate(' + rotationAngle + 'deg)';
+      document.querySelector(".sun-orbit").style.display = 'none';
+      document.querySelector('.icons-sun').style.display = 'none';
+      document.querySelector(".moon-orbit").style.display = 'block';
+      document.querySelector('.icons-moon').style.display = 'flex';
+    }
 
-    var rotationAngle = (runningTime / daytime) * 180;
-    var rotatingElement = document.querySelector('.position-aspect-ratio-1.rotatable');
-    rotatingElement.style.transform = 'rotate(' + rotationAngle + 'deg)';
     
     // Update the date in the .middle-6 class with the current date formatted in German style
     var currentDateTime = new Date(currentTimeStamp * 1000);

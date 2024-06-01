@@ -292,294 +292,297 @@ input[type="checkbox"] {
       width: var(--maxw-handy);
     }
   }
-}
 
 
 
-/* main */
-section.general-forecast {
-  padding: var(--size-200);
+  /* main */
+  section.general-forecast {
+    padding: var(--size-200);
 
-  .slide-show {
-    height: var(--size-600);
-    position: relative;
-    display: grid;
-    place-content: center;
+    .slide-show {
+      height: var(--size-600);
+      position: relative;
+      display: grid;
+      place-content: center;
 
-    .pic-locker {
-      cursor: pointer;
-      position: absolute;
-      transform: translateY(-6px);
+      .pic-locker {
+        cursor: pointer;
+        position: absolute;
+        transform: translateY(-6px);
 
-      &:hover,
-      :has(#check-lock:checked) {
-        color: var(--yellow-sun);
-        text-shadow: 0 0 10px var(--yellow-sun);
+        &:hover,
+        :has(#check-lock:checked) {
+          color: var(--yellow-sun);
+          text-shadow: 0 0 10px var(--yellow-sun);
 
 
-        .icon-Page {
-          display: none;
+          .icon-Page {
+            display: none;
+          }
+
+          .icon-unlock-fill {
+            display: inline-block;
+            font-size: var(--fs-400);
+            color: var(--yellow-sun);
+            scale: 1.1;
+          }
+        }
+
+
+        .icon-tupian_huaban {
+          font-size: var(--fs-700);
+        }
+
+        .icon-Page,
+        .icon-unlock-fill {
+          font-size: var(--fs-200);
+          font-weight: var(--fw-bold);
+          position: absolute;
+          left: var(--size-100);
+          color: var(--primary-fc)
         }
 
         .icon-unlock-fill {
-          display: inline-block;
-          font-size: var(--fs-400);
-          color: var(--yellow-sun);
-          scale: 1.1;
+          display: none;
         }
       }
 
-
-      .icon-tupian_huaban {
-        font-size: var(--fs-700);
-      }
-
-      .icon-Page,
-      .icon-unlock-fill {
-        font-size: var(--fs-200);
-        font-weight: var(--fw-bold);
-        position: absolute;
-        left: var(--size-100);
-        color: var(--primary-fc)
-      }
-
-      .icon-unlock-fill {
+      .wallpaper-wrap {
         display: none;
-      }
-    }
+        position: absolute;
+        width: 100%;
+        height: var(--size-800);
+        top: var(--size-600);
+        left: 0;
+        overflow-y: hidden;
+        z-index: 1;
 
-    .wallpaper-wrap {
-      display: none;
-      position: absolute;
-      width: 100%;
-      height: var(--size-800);
-      top: var(--size-600);
-      left: 0;
-      overflow-y: hidden;
-      z-index: 1;
+        align-items: start;
+        gap: var(--size-200);
 
-      align-items: start;
-      gap: var(--size-200);
-
-      /* :has(#check-lock:checked) & {
+        /* :has(#check-lock:checked) & {
         display: flex;
       } */
 
-      /* :has(button.ok:active) & {
+        /* :has(button.ok:active) & {
         display: none;
       } */
 
 
-      .arrows {
-        position: relative;
-        bottom: var(--size-200);
-      }
-
-      button {
-        display: block;
-        cursor: pointer;
-        color: var(--yellow-sun);
-        border: 0;
-        background-color: transparent;
-
-        &.ok {
-          padding: var(--size-100);
-          border-radius: var(--size-100);
-          background-color: var(--bgc-transparent);
+        .arrows {
+          position: relative;
+          bottom: var(--size-200);
         }
 
-        &:disabled i {
-          color: var(--bgc-transparent);
-          text-shadow: none;
+        button {
+          display: block;
+          cursor: pointer;
+          color: var(--yellow-sun);
+          border: 0;
+          background-color: transparent;
+
+          &.ok {
+            padding: var(--size-100);
+            border-radius: var(--size-100);
+            background-color: var(--bgc-transparent);
+          }
+
+          &:disabled i {
+            color: var(--bgc-transparent);
+            text-shadow: none;
+          }
+
         }
 
-      }
-
-      .carousel {
-        transform: translateY(0);
-        transition: transform 0.3s ease-in-out;
-      }
-
-      .carousel-item {
-        width: var(--size-600);
-        height: var(--size-800);
-      }
-
-      i {
-        display: block;
-
-      }
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-
-    .points {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 4px;
-
-      li {
-        width: var(--size-300);
-        height: var(--size-300);
-        border-radius: 50%;
-        border: 1px solid var(--primary-fc);
-
-        &:first-child {
-          background-color: var(--primary-fc);
+        .carousel {
+          transform: translateY(0);
+          transition: transform 0.3s ease-in-out;
         }
-      }
-    }
-  }
 
-  .sunrise-sunset-plate {
-    position: relative;
-    width: 95%;
-    aspect-ratio: 1/1;
-    border-radius: 50%;
-    margin: var(--size-300) auto;
-    background-image: linear-gradient(var(--bgc-transparent), var(--bgc-transparent));
-    display: grid;
+        .carousel-item {
+          width: var(--size-600);
+          height: var(--size-800);
+        }
 
-    .grid-box {
-      display: grid;
-      place-items: center;
-      grid-template-columns: auto 1fr auto;
-      grid-template-rows: repeat(2, 0.6fr) 1.5fr repeat(3, 0.7fr) 1fr;
-      grid-template-areas:
-        "richu middle-1 rila"
-        "richu middle-1 rila"
-        "richu middle-2 rila"
-        "richu middle-3 rila"
-        "richu middle-4 rila"
-        "richu middle-5 rila"
-        "richu middle-6 rila";
+        i {
+          display: block;
 
-      i.icon-navigate {
-        color: #51F3FA;
-      }
-
-      i.icon-yusan {
-        color: #4FFF39;
-      }
-
-      li.middle-1 {
-        grid-area: middle-1;
-        align-self: end;
-      }
-
-      li.middle-2 {
-        grid-area: middle-2;
-        white-space: nowrap;
-
-        align-self: center;
-        font-size: var(--fs-800);
-        font-weight: var(--fw-bold);
+        }
 
         img {
-          display: inline-block;
-          width: var(--size-500);
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
       }
 
-      li.middle-3 {
-        grid-area: middle-3;
+      .points {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
 
-        text-transform: uppercase;
-        font-size: var(--fs-500);
-        font-weight: var(--fw-bold);
+        li {
+          width: var(--size-300);
+          height: var(--size-300);
+          border-radius: 50%;
+          border: 1px solid var(--primary-fc);
+
+          &:first-child {
+            background-color: var(--primary-fc);
+          }
+        }
+      }
+    }
+
+    .sunrise-sunset-plate {
+      position: relative;
+      width: 95%;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      margin: var(--size-300) auto;
+      background-image: linear-gradient(var(--bgc-transparent), var(--bgc-transparent));
+      display: grid;
+
+      .grid-box {
+        display: grid;
+        place-items: center;
+        grid-template-columns: auto 1fr auto;
+        grid-template-rows: repeat(2, 0.6fr) 1.5fr repeat(3, 0.7fr) 1fr;
+        grid-template-areas:
+          "richu middle-1 rila"
+          "richu middle-1 rila"
+          "richu middle-2 rila"
+          "richu middle-3 rila"
+          "richu middle-4 rila"
+          "richu middle-5 rila"
+          "richu middle-6 rila";
+
+        i.icon-navigate {
+          color: #51F3FA;
+        }
+
+        i.icon-yusan {
+          color: #4FFF39;
+        }
+
+        li.middle-1 {
+          grid-area: middle-1;
+          align-self: end;
+        }
+
+        li.middle-2 {
+          grid-area: middle-2;
+          white-space: nowrap;
+
+          align-self: center;
+          font-size: var(--fs-800);
+          font-weight: var(--fw-bold);
+
+          img {
+            display: inline-block;
+            width: var(--size-500);
+          }
+        }
+
+        li.middle-3 {
+          grid-area: middle-3;
+
+          text-transform: uppercase;
+          font-size: var(--fs-500);
+          font-weight: var(--fw-bold);
+        }
+
+        li.middle-4 {
+          grid-area: middle-4;
+
+          font-size: var(--fs-300);
+          padding: var(--size-100);
+          white-space: nowrap;
+          display: flex;
+          justify-content: space-between;
+          gap: var(--size-500);
+          align-items: center;
+          background-image: linear-gradient(var(--bgc-transparent), var(--bgc-transparent));
+        }
+
+        li.middle-5 {
+          grid-area: middle-5;
+        }
+
+        li.middle-6 {
+          grid-area: middle-6;
+
+          align-self: start;
+        }
       }
 
-      li.middle-4 {
-        grid-area: middle-4;
-
-        font-size: var(--fs-300);
-        padding: var(--size-100);
-        white-space: nowrap;
+      .icons-sun,
+      .icons-moon {
+        position: absolute;
+        width: 100%;
+        height: 100%;
         display: flex;
         justify-content: space-between;
-        gap: var(--size-500);
         align-items: center;
-        background-image: linear-gradient(var(--bgc-transparent), var(--bgc-transparent));
+        padding-top: 15%;
+        padding-inline: var(--size-200);
+        text-align: center;
+
+        p {
+          font-size: var(--fs-300);
+        }
+
+        .icon-richu,
+        .icon-rila,
+        .fa-moon {
+          color: var(--yellow-sun);
+          font-size: var(--fs-600);
+        }
+
+        .moonset i,
+        .icon-rila {
+          color: var(--dark-night);
+        }
       }
 
-      li.middle-5 {
-        grid-area: middle-5;
+      .icons-moon {
+        top: -3.2rem;
       }
 
-      li.middle-6 {
-        grid-area: middle-6;
-
-        align-self: start;
-      }
-    }
-
-    .icons-sun, .icons-moon {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 15%;
-      padding-inline: var(--size-200);
-      text-align: center;
-
-      p {
-        font-size: var(--fs-300);
+      .half-circle-yellow::before,
+      .half-circle-white::before {
+        width: 100%;
+        outline: var(--size-100) solid var(--yellow-sun);
+        outline-offset: -1.5rem;
       }
 
-      .icon-richu,
-      .icon-rila, .fa-moon{
-        color: var(--yellow-sun);
-        font-size: var(--fs-600);
+      .half-circle-white::before {
+        outline: var(--size-100) solid var(--primary-fc);
       }
 
-      .moonset i, .icon-rila{
-        color: var(--dark-night);
+      .moving-orbit-sun,
+      .moving-orbit-moon {
+        /* animation: movingSun 30s linear infinite; */
+
+        .moving-sun,
+        .moving-moon {
+          width: 1.05rem;
+          aspect-ratio: 1/1;
+          background-color: var(--yellow-sun);
+          position: absolute;
+          display: block;
+          border-radius: 50%;
+          top: 50%;
+          left: 0.8rem;
+          translate: 0% -50%;
+          z-index: 1;
+        }
       }
-    }
-
-    .icons-moon {
-      top: -3.2rem;
-    }
-
-    .half-circle-yellow::before,
-    .half-circle-white::before {
-      width: 100%;
-      outline: var(--size-100) solid var(--yellow-sun);
-      outline-offset: -1.5rem;
-    }
-
-    .half-circle-white::before {
-      outline: var(--size-100) solid var(--primary-fc);
-    }
-
-    .position-aspect-ratio-1.rotatable {
-      rotate: 0deg;
-      /* animation: movingSun 30s linear infinite; */
-
-      .moving-sun {
-        width: 1.05rem;
-        background-color: var(--yellow-sun);
-        position: absolute;
-        display: block;
-        aspect-ratio: 1/1;
-        border-radius: 50%;
-        top: 50%;
-        left: 0.8rem;
-        translate: 0% -50%;
-        z-index: 1;
+      .moon-orbit {
+        rotate: 180deg;
       }
-    }
-
-    .moon-orbit {
-      rotate: 180deg;
     }
   }
 }
