@@ -5,7 +5,6 @@
   --primary-fc: #ffffff;
   --bgc-transparent: rgba(0, 0, 0, 0.5);
   --yellow-sun: #FBFE41;
-  --sun-moon-set: #b9bca1;
 
   /* font-weight constants */
   --fw-regular: 400;
@@ -538,7 +537,7 @@ input[type="checkbox"] {
 
         .moonset i,
         .icon-rila {
-          color: var(--sun-moon-set);
+          color: var(--primary-fc);
         }
       }
 
