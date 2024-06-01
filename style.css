@@ -3,7 +3,7 @@
 
   /* color constants */
   --primary-fc: #ffffff;
-  --bgc-transparent: rgba(0, 0, 0, 0.5);
+  --bgc-transparent: rgba(0, 0, 0, 0.4);
   --bgc-dark-mode: rgba(0, 0, 0, 0.8);
   --bgc-current: var(--bgc-transparent);
   --yellow-sun: #FBFE41;

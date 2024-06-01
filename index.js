@@ -5,17 +5,14 @@
 // --calculate real-time sun position on sunrise-sunset curve-- done
 // --add cancel button to quit location-input-form-- done
 // --update location time-- done
+// --publish weather app via githup or a rented domain--done
 // --add function to switch the background--done
 // --change the image for the weather description automaticly-- done
-// --add moon curve and display the moon position--
-// --add dark mode and light mode--
-// --save and deltete location--
+// --add moon curve and display the moon position-- done
+// --add dark mode and light mode-- done
+// --to convert all files into react components-- not working
 // --switch location by clicking on the location icon-- 
-// --switch the background image on changing locations--
-// --calculate real-time sun position on sunrise-sunset curve--
 // --switch location by dragging the screen--
-// --show weather app via githup or a rented domain--
-// --to convert all files into react components--
 
 
 /* 
