@@ -6,8 +6,9 @@
 // --add cancel button to quit location-input-form-- done
 // --update location time-- done
 // --add function to switch the background--done
-// --change the image for the weather description automaticly-- 
+// --change the image for the weather description automaticly-- done
 // --add moon curve and display the moon position--
+// --add dark mode and light mode--
 // --save and deltete location--
 // --switch location by clicking on the location icon-- 
 // --switch the background image on changing locations--
@@ -17,11 +18,43 @@
 // --to convert all files into react components--
 
 
+/* 
+*structure of js code
+*   button.ok and #check-lock function start
+*     carousel function start
+*     carousel function end
+*   button.ok and #check-lock function, end 
+*   
+*   Fetch und update weather data, start
+*     Fetch weather data for the default city and country
+
+*     function: define a function to update the clock with the current time in city's local time
+*       Get the current timestamp
+*       Calculate the time difference
+*       Get the sun position on the sunrise-sunset curve on loading the page
+*       Hide the sun if it is night time
+*       Update the date in the .middle-6 class with the current date formatted in German style
+
+*     function: update the weather data when the form is submitted
+*       add a click event listener to the cancel button
+*       add a click event listener to the location icon  
+
+*     function: define a function to fetch weather data from OpenWeatherMap API
+*       Process the fetched weather data
+*     --important!!! Get city timezone offset  
+*       Calculate sunrise and sunset times in city's local time
+*       Display current weather information in corresponding HTML elements
+*       Change the weather image based on the weather description
+*       Return the city timezone offset, sunset and sunrise timestamps
+*   Fetch und update weather data, end
+*/
+
+
 document.addEventListener("DOMContentLoaded", async function () {
   // button.ok and #check-lock function, start
   const okButton = document.querySelector('.ok');
   const wallpaperWrap = document.querySelector('.wallpaper-wrap');
-  const checkLock = document.getElementById('check-lock'); const size800Value = 4;
+  const checkLock = document.getElementById('check-lock'); 
   const carousel = document.querySelector('.carousel');
   const buttonA = document.querySelector('.arrow-up');
   const buttonB = document.querySelector('.arrow-down');
@@ -29,6 +62,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const carouselItems = document.querySelectorAll('.carousel-item img');
   const background = document.querySelector('.background');
   const backgroundArray = [];
+  const size800Value = 4;
 
   carouselItems.forEach(item => {
     backgroundArray.push(item.src);
@@ -257,6 +291,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       console.log(weatherDescription.textContent);
       console.log(weatherDescription);
+
       // Change the weather image based on the weather description
       if (weatherDescription.includes('rain')) {
         document.getElementById('weather-image').src = "./images/light-rain.svg";
@@ -268,6 +303,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         document.getElementById('weather-image').src = "./images/cloud.svg";
       }
 
+      // Return the city timezone offset, sunset and sunrise timestamps
       return {
         cityTimezoneOffsetInHours,
         sunsetTimestamp,

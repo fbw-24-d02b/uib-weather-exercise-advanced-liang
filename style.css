@@ -437,7 +437,7 @@ section.general-forecast {
     }
   }
 
-  .sunrise-sunset {
+  .sunrise-sunset-plate {
     position: relative;
     width: 95%;
     aspect-ratio: 1/1;
@@ -450,7 +450,7 @@ section.general-forecast {
       display: grid;
       place-items: center;
       grid-template-columns: auto 1fr auto;
-      grid-template-rows: repeat(2, 0.6fr) 1.5fr repeat(4, 1fr);
+      grid-template-rows: repeat(2, 0.6fr) 1.5fr repeat(3, 0.7fr) 1fr;
       grid-template-areas:
         "richu middle-1 rila"
         "richu middle-1 rila"
@@ -519,7 +519,7 @@ section.general-forecast {
       }
     }
 
-    div.icons-sun {
+    .icons-sun, .icons-moon {
       position: absolute;
       width: 100%;
       height: 100%;
@@ -534,21 +534,29 @@ section.general-forecast {
         font-size: var(--fs-300);
       }
 
-      i.icon-richu,
-      i.icon-rila {
+      .icon-richu,
+      .icon-rila, .fa-moon{
         color: var(--yellow-sun);
         font-size: var(--fs-600);
       }
+
+      .moonset i, .icon-rila{
+        color: var(--dark-night);
+      }
     }
 
-    div.half-circle-yellow::before,
-    div.half-circle-white::before {
+    .icons-moon {
+      top: -3.2rem;
+    }
+
+    .half-circle-yellow::before,
+    .half-circle-white::before {
       width: 100%;
       outline: var(--size-100) solid var(--yellow-sun);
       outline-offset: -1.5rem;
     }
 
-    div.half-circle-white::before {
+    .half-circle-white::before {
       outline: var(--size-100) solid var(--primary-fc);
     }
 
@@ -568,6 +576,10 @@ section.general-forecast {
         translate: 0% -50%;
         z-index: 1;
       }
+    }
+
+    .moon-orbit {
+      rotate: 180deg;
     }
   }
 }
@@ -600,6 +612,21 @@ section.general-forecast {
   color: var(--yellow-sun);
   scale: 1.1;
   text-shadow: 0 0 10px var(--yellow-sun);
+}
+
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+}
+
+.absolute-full {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 /* animation */
