@@ -507,6 +507,7 @@ input[type="checkbox"] {
         }
 
         li.middle-5 {
+          color: var(--yellow-sun);
           grid-area: middle-5;
         }
 
