@@ -656,3 +656,9 @@ input[type="checkbox"] {
     transform: translateX(-100%);
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bgc-current: var(--bgc-dark-mode) !important;
+  }
+}

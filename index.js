@@ -1,18 +1,20 @@
-
+/* task list */
 // --static layout for general weather informaiton-- done
 // --fetch weather data from OpenWeatherMap API-- done
-// --add an form to refresh location and weather data-- done
+// --add an input-submit-form to refresh location and weather data-- done
 // --calculate real-time sun position on sunrise-sunset curve-- done
-// --add cancel button to quit location-input-form-- done
-// --update location time-- done
+// --add cancel-button to quit input-submit-form-- done
+// --update location time erery second-- done
 // --publish weather app via githup or a rented domain--done
-// --add function to switch the background--done
+// --add function to switch the background-image--done
 // --change the image for the weather description automaticly-- done
 // --add moon curve and display the moon position-- done
 // --add dark mode and light mode-- done
 // --to convert all files into react components-- not working
+// --add a timing function to update the data every 10 min-- 
 // --switch location by clicking on the location icon-- 
 // --switch location by dragging the screen--
+// --add more weather data in--
 
 
 /* 
@@ -24,7 +26,7 @@
 *   
     function: convert timestamp to time
     Function: convert time (HH:MM) to total minutes
-
+    
 *   Fetch und update weather data, start
 *     Fetch weather data for the default city and country
 
@@ -34,7 +36,6 @@
         caculate the moon's position on the moonrise-moonset curve during nighttime
         Hide the sun if it is night time
 *       Update the date in the .middle-6 class with the current date formatted in German style
-
 
 *     function: update the weather data when the form is submitted
 *       add a click event listener to the cancel button

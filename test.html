@@ -3,39 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Draggable Div</title>
+  <style>
+    .draggable {
+      width: 150px;
+      height: 150px;
+      background-color: coral;
+      position: absolute;
+      top: 50px;
+      left: 50px;
+      cursor: move;
+      user-select: none; /* Prevent text selection */
+    }
+  </style>
 </head>
 <body>
+  <div class="draggable">Drag me!</div>
+
   <script>
-      if (currentTimeStamp > sunriseTimestamp && currentTimeStamp < sunsetTimestamp) {
-      var dayTime = (sunsetTimestamp - sunriseTimestamp) / 3600;
-      var runningTime = (currentTimeStamp - sunriseTimestamp) / 3600;
-      var rotationAngle = (runningTime / dayTime) * 180;
-      movingOrbitSun.style.transform = 'rotate(' + rotationAngle + 'deg)';
-      document.querySelector(".sun-orbit").style.display = 'block';
-      document.querySelector('.icons-sun').style.display = 'flex';
-      document.querySelector(".moon-orbit").style.display = 'none';
-      document.querySelector('.icons-moon').style.display = 'none';
-    } else {
-      var nightTime = 24 - (sunsetTimestamp - sunriseTimestamp) / 3600;
-      var runningTime = (currentTimeStamp - sunsetTimestamp) / 3600;
-      var rotationAngle = (runningTime / nightTime) * 180;
-      movingOrbitMoon.style.transform = 'rotate(' + rotationAngle + 'deg)';
-      document.querySelector(".sun-orbit").style.display = 'none';
-      document.querySelector('.icons-sun').style.display = 'none';
-      document.querySelector(".moon-orbit").style.display = 'block';
-      document.querySelector('.icons-moon').style.display = 'flex';
-    }
+    const draggable = document.querySelector('.draggable');
 
-     // function: convert timestamp to time
-  function convertTimestampToTime(timestamp) {
-    var date = new Date(timestamp * 1000);
-    var hours = date.getHours().toString().padStart(2, '0');
-    var minutes = date.getMinutes().toString().padStart(2, '0');
-    return hours + ":" + minutes;
-  }
+    draggable.addEventListener('mousedown', function(e) {
+      let offsetX = e.clientX - draggable.getBoundingClientRect().left;
+      let offsetY = e.clientY - draggable.getBoundingClientRect().top;
+
+      function onMouseMove(e) {
+        draggable.style.left = `${e.clientX - offsetX}px`;
+        draggable.style.top = `${e.clientY - offsetY}px`;
+      }
+
+      function onMouseUp() {
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+      }
+
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    });
   </script>
-
-  <!-- 修改代码，if (currentTimeStamp > sunriseTimestamp && currentTimeStamp < sunsetTimestamp)这里不要比较currentTimeStamp，sunriseTimestamp，sunsetTimestamp，而是把这几个参数用function convertTimestampToTime(timestamp) 转化成小时和分钟的形式，按照小时和分钟去比较大小 -->
 </body>
 </html>
