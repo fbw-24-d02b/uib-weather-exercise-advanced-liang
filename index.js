@@ -203,15 +203,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     var currentDateFormatted = currentDateTime.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
     
     document.querySelector('.middle-6').textContent = currentDateFormatted;
-    
-    // Hide the sun if it is night time
-    var sun = document.querySelector('.moving-sun');
-    if (currentTimeStamp <= sunriseTimestamp || currentTimeStamp >= sunsetTimestamp) {
-      rotationAngle = 0;
-      sun.style.display = 'none';
-    } else {
-      sun.style.display = 'block';
-    }
   }
 
   updateClockAndSunPosition(cityTimezoneOffsetInHours, sunsetTimestamp, sunriseTimestamp);
