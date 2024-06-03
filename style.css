@@ -433,19 +433,21 @@ input[type="checkbox"] {
         border: 1px solid var(--primary-fc);
         cursor: pointer;
 
-        &:first-child {
-          background-color: var(--primary-fc);
-        }
-
         &:hover {
           background-color: var(--primary-fc);
+
+          .city-name {
+            display: block;
+          }
         }
       }
 
-      .city-name, .country-name {
+      .city-name,
+      .country-name {
+        white-space: nowrap;
         display: none;
         position: absolute;
-        top: var(--size-300);
+        bottom: var(--size-400);
         left: 50%;
         translate: -50%;
         font-size: var(--fs-200);
