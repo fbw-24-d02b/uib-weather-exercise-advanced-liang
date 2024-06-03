@@ -123,7 +123,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       if (city === 'Beijing') {
         movingPoint.style.transform = 'translate(200%, 0)';
-      } 
+      } else if (city === 'New York') {
+        movingPoint.style.transform = 'translate(400%, 0)';
+      } else {
+        movingPoint.style.transform = 'translate(0, 0)';
+      }
 
       let weatherData = await fetchWeatherData(city, country, apiKey);
       if (weatherData) {
