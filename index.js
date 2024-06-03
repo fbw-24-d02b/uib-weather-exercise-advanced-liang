@@ -107,8 +107,11 @@ document.addEventListener("DOMContentLoaded", async function () {
   // function for draggable element end
 
 
+  
+
   // Fetch the weather data for the gived 3 default citys
   const listItems = document.querySelectorAll('.points li');
+  const movingPoint = document.querySelector('.moving-point');
 
   listItems.forEach(item => {
     item.addEventListener('click', async function () {

@@ -418,28 +418,33 @@ input[type="checkbox"] {
       }
 
       .points {
+        position: relative;
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: var(--size-200);
+        gap: var(--size-300);
+      }
+
+      .moving-point {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: var(--primary-fc);
+        translate: 0%;
       }
 
       li {
         position: relative;
-        width: var(--size-300);
-        height: var(--size-300);
-        border-radius: 50%;
-        border: 1px solid var(--primary-fc);
         cursor: pointer;
         z-index: 1;
 
-        &:hover, &:first-child{
+        &:hover {
           background-color: var(--primary-fc);
-        }
 
-        &:hover .city-name {
-          display: block;
+          .city-name {
+            display: block;
+          }
         }
       }
 
@@ -668,6 +673,13 @@ input[type="checkbox"] {
 
 .draggable {
   user-select: none;
+}
+
+.circle-point {
+  width: var(--size-300);
+  height: var(--size-300);
+  border-radius: 50%;
+  border: 1px solid var(--primary-fc);
 }
 
 /* animation */
