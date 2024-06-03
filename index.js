@@ -19,6 +19,8 @@
 
 /* 
 *structure of js code
+    function for draggable element start
+    function for draggable element end
     Fetch the weather data for the gived 3 default citys
 *   button.ok and #check-lock function start
 *     carousel function start
@@ -54,6 +56,57 @@
 
 
 document.addEventListener("DOMContentLoaded", async function () {
+  // function for draggable element start
+  const draggable = document.querySelector('.draggable');
+  let initialX;
+  let offsetX;
+  let distanceX = 0;
+
+  draggable.addEventListener('mousedown', function (e) {
+    initialX = e.clientX;
+    offsetX = draggable.getBoundingClientRect().left;
+    offsetX = 0;
+    console.log(offsetX);
+
+    function onMouseMove(e) {
+      const newX = e.clientX;
+      distanceX = newX - initialX;
+
+
+      // Update the position of .draggable element
+      draggable.style.left = `${distanceX + offsetX}px`;
+
+      // Check if resetting is needed
+      checkReset();
+    }
+
+    function onMouseUp() {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+
+      // Reset .draggable to initial position when mouse is released
+      draggable.style.left = `${offsetX}px`;
+    }
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
+
+  // Function to check if resetting is needed
+  function checkReset() {
+    if (Math.abs(distanceX) > draggable.offsetWidth / 2) {
+      // Reset if distanceX exceeds half of its own width
+      draggable.style.left = `${offsetX}px`;
+
+      if (distanceX > 0) {
+      } else {
+      }
+    }
+  }
+
+  // function for draggable element end
+
+
   // Fetch the weather data for the gived 3 default citys
   const listItems = document.querySelectorAll('.points li');
 

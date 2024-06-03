@@ -458,6 +458,7 @@ input[type="checkbox"] {
 
     .data-plate {
       position: relative;
+      left: 0;
       width: 95%;
       aspect-ratio: 1/1;
       border-radius: 50%;
@@ -641,6 +642,12 @@ input[type="checkbox"] {
   text-shadow: 0 0 10px var(--yellow-sun);
 }
 
+.absolute-horizontal-center {
+  position: absolute;
+  left: 50%;
+  translate: -50%;
+}
+
 .absolute-center {
   position: absolute;
   top: 50%;
@@ -658,6 +665,10 @@ input[type="checkbox"] {
 
 .hide {
   display: none;
+}
+
+.draggable {
+  user-select: none;
 }
 
 /* animation */
