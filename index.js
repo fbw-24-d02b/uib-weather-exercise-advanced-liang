@@ -78,6 +78,16 @@ document.addEventListener("DOMContentLoaded", async function () {
   countryList.forEach(country => {
     countrys.push(country.textContent);
   });
+  async function getWeather(city, country, apiKey) {
+    document.getElementById('address').textContent = city + ", " + country;
+  
+      let weatherData = await fetchWeatherData(city, country, apiKey);
+      if (weatherData) {
+        cityTimezoneOffsetInHours = weatherData.cityTimezoneOffsetInHours;
+        sunsetTimestamp = weatherData.sunsetTimestamp;
+        sunriseTimestamp = weatherData.sunriseTimestamp;
+      }
+  }
   
 
   // Add mousedown event listener to the draggable element
@@ -141,14 +151,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       console.log(index);
       city = citys[index];
       country = countrys[index];
-      document.getElementById('address').textContent = city + ", " + country;
-
-      let weatherData = await fetchWeatherData(city, country, apiKey);
-      if (weatherData) {
-        cityTimezoneOffsetInHours = weatherData.cityTimezoneOffsetInHours;
-        sunsetTimestamp = weatherData.sunsetTimestamp;
-        sunriseTimestamp = weatherData.sunriseTimestamp;
-      }
+      getWeather(city, country, apiKey);
     }
 
 
@@ -177,7 +180,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     item.addEventListener('click', async function () {
       const city = item.querySelector('.city-name').textContent;
       const country = item.querySelector('.country-name').textContent;
-      document.getElementById('address').textContent = city + ", " + country;
 
       if (city === 'Beijing') {
         movingPoint.style.transform = 'translate(200%, 0)';
@@ -187,12 +189,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         movingPoint.style.transform = 'translate(0, 0)';
       }
 
-      let weatherData = await fetchWeatherData(city, country, apiKey);
-      if (weatherData) {
-        cityTimezoneOffsetInHours = weatherData.cityTimezoneOffsetInHours;
-        sunsetTimestamp = weatherData.sunsetTimestamp;
-        sunriseTimestamp = weatherData.sunriseTimestamp;
-      }
+      getWeather(city, country, apiKey);
     });
   });
 
@@ -304,12 +301,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   
   city = 'Balingen';
   country = 'Germany';
-  let weatherData = await fetchWeatherData(city, country, apiKey);
-  if (weatherData) {
-    cityTimezoneOffsetInHours = weatherData.cityTimezoneOffsetInHours;
-    sunsetTimestamp = weatherData.sunsetTimestamp;
-    sunriseTimestamp = weatherData.sunriseTimestamp;
-  }
+  getWeather(city, country, apiKey);
 
   // function: update the clock with the current time in city's local time
   function updateClockAndSunPosition(TimezoneOffset, sunsetTimestamp, sunriseTimestamp) {
@@ -403,14 +395,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     var country = document.getElementById('country').value;
 
     document.getElementById('weather-form').style.display = 'none';
-    document.getElementById('address').textContent = city + ", " + country;
 
-    let weatherData = await fetchWeatherData(city, country, apiKey);
-    if (weatherData) {
-      cityTimezoneOffsetInHours = weatherData.cityTimezoneOffsetInHours;
-      sunsetTimestamp = weatherData.sunsetTimestamp;
-      sunriseTimestamp = weatherData.sunriseTimestamp;
-    }
+    getWeather(city, country, apiKey);
+    
   });
 
   // add a click event listener to the cancel button
