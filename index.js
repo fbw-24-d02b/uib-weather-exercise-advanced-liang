@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       // Update the position of .draggable element
       draggable.style.left = `${distanceX + offsetX}px`;
+      movingPoint.style.transform = `translate(${persent * 200}%, 0)`;
 
       // Check if resetting is needed
       checkReset();
