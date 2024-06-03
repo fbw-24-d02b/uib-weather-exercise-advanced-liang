@@ -422,18 +422,34 @@ input[type="checkbox"] {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 4px;
+        gap: var(--size-200);
+      }
 
-        li {
-          width: var(--size-300);
-          height: var(--size-300);
-          border-radius: 50%;
-          border: 1px solid var(--primary-fc);
+      li {
+        position: relative;
+        width: var(--size-300);
+        height: var(--size-300);
+        border-radius: 50%;
+        border: 1px solid var(--primary-fc);
+        cursor: pointer;
 
-          &:first-child {
-            background-color: var(--primary-fc);
-          }
+        &:first-child {
+          background-color: var(--primary-fc);
         }
+
+        &:hover {
+          background-color: var(--primary-fc);
+        }
+      }
+
+      .city-name, .country-name {
+        display: none;
+        position: absolute;
+        top: var(--size-300);
+        left: 50%;
+        translate: -50%;
+        font-size: var(--fs-200);
+        text-transform: capitalize;
       }
     }
 
@@ -536,7 +552,7 @@ input[type="checkbox"] {
           font-size: var(--fs-300);
         }
 
-       
+
 
         .moonset i,
         .icon-rila {
@@ -568,6 +584,7 @@ input[type="checkbox"] {
 
       .moving-orbit-sun,
       .moving-orbit-moon {
+
         /* animation: movingSun 30s linear infinite; */
         .moving-sun,
         .moving-moon {
@@ -583,6 +600,7 @@ input[type="checkbox"] {
           z-index: 1;
         }
       }
+
       .moon-orbit {
         rotate: 180deg;
       }
@@ -633,6 +651,10 @@ input[type="checkbox"] {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.hide {
+  display: none;
 }
 
 /* animation */
