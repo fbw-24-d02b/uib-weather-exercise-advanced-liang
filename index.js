@@ -118,10 +118,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       const city = item.querySelector('.city-name').textContent;
       const country = item.querySelector('.country-name').textContent;
       document.getElementById('address').textContent = city + ", " + country;
-      listItems.forEach(li => {
-        li.style.backgroundColor = 'transparent';
-      });
-      item.style.backgroundColor = 'var(--primary-fc)';
 
       let weatherData = await fetchWeatherData(city, country, apiKey);
       if (weatherData) {
