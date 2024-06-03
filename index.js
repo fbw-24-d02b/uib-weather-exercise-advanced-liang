@@ -62,27 +62,93 @@ document.addEventListener("DOMContentLoaded", async function () {
   let initialX;
   let offsetX;
   let distanceX = 0;
-  let persent = 0;
+  let percent = 0;
+  let index = 0; // Initialize index outside to maintain state between events
+  let isMoving = false; // Flag to check if moving is allowed
+  const cityList = document.querySelectorAll('.city-name');
+  const countryList = document.querySelectorAll('.country-name');
+  const citys = [];
+  const countrys = [];
+  var city, country;
+
+  const apiKey = '8ee0ee1386092cdc507a8269ed0e2b74';
+  cityList.forEach(city => {
+    citys.push(city.textContent);
+  });
+  countryList.forEach(country => {
+    countrys.push(country.textContent);
+  });
+  
 
   // Add mousedown event listener to the draggable element
   draggable.addEventListener('mousedown', function (e) {
     initialX = e.clientX;
     offsetX = draggable.getBoundingClientRect().left;
     offsetX = 0;
-    console.log(offsetX);
+    isMoving = true; // Enable moving on mousedown
 
     function onMouseMove(e) {
+      if (!isMoving) return; // Exit if moving is not allowed
+
       const newX = e.clientX;
       distanceX = newX - initialX;
-      persent = (Math.abs(distanceX)) / draggable.offsetWidth;
+      percent = (Math.abs(distanceX)) / draggable.offsetWidth;
 
       // Update the position of .draggable element
       draggable.style.left = `${distanceX + offsetX}px`;
-      movingPoint.style.transform = `translate(${persent * 200}%, 0)`;
+      if (distanceX < 0) {
+        movingPoint.style.transform = `translate(${percent * 200 + index * 200}%, 0)`;
+      } else {
+        movingPoint.style.transform = `translate(${index * 200 - percent * 200}%, 0)`;
+      }
 
       // Check if resetting is needed
-      checkReset();
+      if (percent > 0.5) {
+        index = checkReset(index, percent, distanceX);
+        isMoving = false; // Disable moving when percent > 0.5
+      }
     }
+
+
+    // Function to check if resetting is needed
+    function checkReset(index, percent, distanceX) {
+      if (percent > 0.5) {
+        // Reset if distanceX exceeds half of its own width
+        draggable.style.left = `${offsetX}px`;
+
+        if (distanceX < 0) {
+          index++;
+          checkWeatherData(index);
+          if (index >= 2) {
+            index = 2;
+          }
+          movingPoint.style.transform = `translate(${index * 200}%, 0)`;
+        }
+        else {
+          index--;
+          checkWeatherData(index);
+          if (index <= 0) {
+            index = 0;
+          }
+          movingPoint.style.transform = `translate(${index * 200}%, 0)`;
+        }
+      }
+      return index;
+    }
+
+    // Function to check the weather data for the selected city
+    async function  checkWeatherData(index) {
+      console.log(index);
+      city = citys[index];
+      country = countrys[index];
+      let weatherData = await fetchWeatherData(city, country, apiKey);
+      if (weatherData) {
+        cityTimezoneOffsetInHours = weatherData.cityTimezoneOffsetInHours;
+        sunsetTimestamp = weatherData.sunsetTimestamp;
+        sunriseTimestamp = weatherData.sunriseTimestamp;
+      }
+    }
+
 
     function onMouseUp() {
       document.removeEventListener('mousemove', onMouseMove);
@@ -96,22 +162,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.addEventListener('mouseup', onMouseUp);
   });
 
-  // Function to check if resetting is needed
-  function checkReset() {
-    if (persent > 0.5) {
-      // Reset if distanceX exceeds half of its own width
-      draggable.style.left = `${offsetX}px`;
-    }
-  }
-
   // function for draggable element end
 
 
-  
+
 
   // Fetch the weather data for the gived 3 default citys
   const listItems = document.querySelectorAll('.points li');
-  
+
 
   listItems.forEach(item => {
     item.addEventListener('click', async function () {
@@ -241,9 +299,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   var sunriseTimestamp;
 
   // Fetch weather data for the default city and country
-  const apiKey = '8ee0ee1386092cdc507a8269ed0e2b74';
-  var city = 'Balingen';
-  var country = 'Germany';
+  
+  city = 'Balingen';
+  country = 'Germany';
   let weatherData = await fetchWeatherData(city, country, apiKey);
   if (weatherData) {
     cityTimezoneOffsetInHours = weatherData.cityTimezoneOffsetInHours;
