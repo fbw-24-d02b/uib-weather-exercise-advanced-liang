@@ -458,7 +458,6 @@ input[type="checkbox"] {
 
     .data-plate {
       position: relative;
-      left: 0;
       width: 95%;
       aspect-ratio: 1/1;
       border-radius: 50%;
