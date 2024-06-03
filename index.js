@@ -60,6 +60,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     item.addEventListener('click', async function () {
       const city = item.querySelector('.city-name').textContent;
       const country = item.querySelector('.country-name').textContent;
+      document.getElementById('address').textContent = city + ", " + country;
+      listItems.forEach(li => {
+        li.style.backgroundColor = 'transparent';
+      });
+      item.style.backgroundColor = 'var(--primary-fc)';
+
       let weatherData = await fetchWeatherData(city, country, apiKey);
       if (weatherData) {
         cityTimezoneOffsetInHours = weatherData.cityTimezoneOffsetInHours;
@@ -236,7 +242,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       document.querySelector(".moon-orbit").style.display = 'none';
       document.querySelector('.icons-moon').style.display = 'none';
       setCSSVariable('--bgc-current', 'var(--bgc-transparent)');
-    } 
+    }
     else {
       // nighttime mode
       var nightTime = (1440 - (sunsetMinutes - sunriseMinutes)) / 60; // 1440 minutes in a day
