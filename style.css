@@ -429,6 +429,7 @@ input[type="checkbox"] {
       .moving-point {
         position: absolute;
         top: 0;
+        left: calc(2*var(--size-300));
         left: 0;
         background-color: var(--primary-fc);
         translate: 0%;

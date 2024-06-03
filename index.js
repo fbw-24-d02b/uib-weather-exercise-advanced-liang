@@ -112,12 +112,18 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Fetch the weather data for the gived 3 default citys
   const listItems = document.querySelectorAll('.points li');
   const movingPoint = document.querySelector('.moving-point');
+  const rootStyles = getComputedStyle(document.documentElement);
+
 
   listItems.forEach(item => {
     item.addEventListener('click', async function () {
       const city = item.querySelector('.city-name').textContent;
       const country = item.querySelector('.country-name').textContent;
       document.getElementById('address').textContent = city + ", " + country;
+
+      if (city === 'Beijing') {
+        movingPoint.style.transform = 'translate(200%, 0)';
+      } 
 
       let weatherData = await fetchWeatherData(city, country, apiKey);
       if (weatherData) {
