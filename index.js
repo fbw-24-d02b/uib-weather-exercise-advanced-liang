@@ -97,10 +97,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (Math.abs(distanceX) > draggable.offsetWidth / 2) {
       // Reset if distanceX exceeds half of its own width
       draggable.style.left = `${offsetX}px`;
-
-      if (distanceX > 0) {
-      } else {
-      }
     }
   }
 
@@ -112,8 +108,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Fetch the weather data for the gived 3 default citys
   const listItems = document.querySelectorAll('.points li');
   const movingPoint = document.querySelector('.moving-point');
-  const rootStyles = getComputedStyle(document.documentElement);
-
 
   listItems.forEach(item => {
     item.addEventListener('click', async function () {
