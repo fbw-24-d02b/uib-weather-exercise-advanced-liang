@@ -7,13 +7,13 @@
 // --update location time erery second-- done
 // --publish weather app via githup or a rented domain--done
 // --add function to switch the background-image--done
-// --change the image for the weather description automaticly-- done
-// --add moon curve and display the moon position-- done
+// --change the image of the weather according to description automaticly-- done
+// --add moon curve and update the moon position automaticly-- done
 // --add dark mode and light mode-- done
+// --switch dark mode during night time in location-- done
+// --switch location by clicking on the location icon-- done
+// --switch location by dragging the screen--done 
 // --to convert all files into react components-- not working
-// --add a timing function to update the data every 10 min-- 
-// --switch location by clicking on the location icon-- 
-// --switch location by dragging the screen--
 // --add more weather data in--
 
 
