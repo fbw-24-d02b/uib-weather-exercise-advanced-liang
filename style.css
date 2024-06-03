@@ -432,6 +432,7 @@ input[type="checkbox"] {
         border-radius: 50%;
         border: 1px solid var(--primary-fc);
         cursor: pointer;
+        z-index: 1;
 
         &:hover {
           background-color: var(--primary-fc);

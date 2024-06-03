@@ -53,6 +53,22 @@
 
 
 document.addEventListener("DOMContentLoaded", async function () {
+
+  const listItems = document.querySelectorAll('.points li');
+
+  listItems.forEach(item => {
+    item.addEventListener('click', async function () {
+      const city = item.querySelector('.city-name').textContent;
+      const country = item.querySelector('.country-name').textContent;
+      let weatherData = await fetchWeatherData(city, country, apiKey);
+      if (weatherData) {
+        cityTimezoneOffsetInHours = weatherData.cityTimezoneOffsetInHours;
+        sunsetTimestamp = weatherData.sunsetTimestamp;
+        sunriseTimestamp = weatherData.sunriseTimestamp;
+      }
+    });
+  });
+
   // button.ok and #check-lock function, start
   const okButton = document.querySelector('.ok');
   const wallpaperWrap = document.querySelector('.wallpaper-wrap');
