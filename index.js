@@ -141,6 +141,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       console.log(index);
       city = citys[index];
       country = countrys[index];
+      document.getElementById('address').textContent = city + ", " + country;
+
       let weatherData = await fetchWeatherData(city, country, apiKey);
       if (weatherData) {
         cityTimezoneOffsetInHours = weatherData.cityTimezoneOffsetInHours;
