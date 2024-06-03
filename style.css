@@ -434,12 +434,12 @@ input[type="checkbox"] {
         cursor: pointer;
         z-index: 1;
 
-        &:hover {
+        &:hover, &:first-child{
           background-color: var(--primary-fc);
+        }
 
-          .city-name {
-            display: block;
-          }
+        &:hover .city-name {
+          display: block;
         }
       }
 

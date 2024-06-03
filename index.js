@@ -19,6 +19,7 @@
 
 /* 
 *structure of js code
+    Fetch the weather data for the gived 3 default citys
 *   button.ok and #check-lock function start
 *     carousel function start
 *     carousel function end
@@ -53,7 +54,7 @@
 
 
 document.addEventListener("DOMContentLoaded", async function () {
-
+  // Fetch the weather data for the gived 3 default citys
   const listItems = document.querySelectorAll('.points li');
 
   listItems.forEach(item => {

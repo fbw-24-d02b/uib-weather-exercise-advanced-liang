@@ -12,7 +12,6 @@
       position: absolute;
       top: 50px;
       left: 50px;
-      cursor: move;
       user-select: none; /* Prevent text selection */
     }
   </style>
@@ -25,11 +24,9 @@
 
     draggable.addEventListener('mousedown', function(e) {
       let offsetX = e.clientX - draggable.getBoundingClientRect().left;
-      let offsetY = e.clientY - draggable.getBoundingClientRect().top;
 
       function onMouseMove(e) {
         draggable.style.left = `${e.clientX - offsetX}px`;
-        draggable.style.top = `${e.clientY - offsetY}px`;
       }
 
       function onMouseUp() {
