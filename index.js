@@ -161,6 +161,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       // Reset .draggable to initial position when mouse is released
       draggable.style.left = `${offsetX}px`;
+      movingPoint.style.transform = `translate(${index * 200}%, 0)`; // Reset moving point
+      
     }
 
     document.addEventListener('mousemove', onMouseMove);
@@ -379,12 +381,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   updateClockAndSunPosition(cityTimezoneOffsetInHours, sunsetTimestamp, sunriseTimestamp);
   setInterval(function () { updateClockAndSunPosition(cityTimezoneOffsetInHours, sunsetTimestamp, sunriseTimestamp) }, 1000);
-
-
-
-
-
-
 
 
   // function: update the weather data when the form is submitted
