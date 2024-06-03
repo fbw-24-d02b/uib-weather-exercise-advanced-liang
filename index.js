@@ -58,10 +58,13 @@
 document.addEventListener("DOMContentLoaded", async function () {
   // function for draggable element start
   const draggable = document.querySelector('.draggable');
+  const movingPoint = document.querySelector('.moving-point');
   let initialX;
   let offsetX;
   let distanceX = 0;
+  let persent = 0;
 
+  // Add mousedown event listener to the draggable element
   draggable.addEventListener('mousedown', function (e) {
     initialX = e.clientX;
     offsetX = draggable.getBoundingClientRect().left;
@@ -71,7 +74,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     function onMouseMove(e) {
       const newX = e.clientX;
       distanceX = newX - initialX;
-
+      persent = (Math.abs(distanceX)) / draggable.offsetWidth;
 
       // Update the position of .draggable element
       draggable.style.left = `${distanceX + offsetX}px`;
@@ -94,7 +97,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // Function to check if resetting is needed
   function checkReset() {
-    if (Math.abs(distanceX) > draggable.offsetWidth / 2) {
+    if (persent > 0.5) {
       // Reset if distanceX exceeds half of its own width
       draggable.style.left = `${offsetX}px`;
     }
@@ -107,7 +110,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // Fetch the weather data for the gived 3 default citys
   const listItems = document.querySelectorAll('.points li');
-  const movingPoint = document.querySelector('.moving-point');
+  
 
   listItems.forEach(item => {
     item.addEventListener('click', async function () {
