@@ -128,18 +128,18 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         if (distanceX < 0) {
           index++;
-          checkWeatherData(index);
           if (index >= 2) {
             index = 2;
           }
+          checkWeatherData(index);
           movingPoint.style.transform = `translate(${index * 200}%, 0)`;
         }
         else {
           index--;
-          checkWeatherData(index);
           if (index <= 0) {
             index = 0;
           }
+          checkWeatherData(index);
           movingPoint.style.transform = `translate(${index * 200}%, 0)`;
         }
       }
