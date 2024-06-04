@@ -670,8 +670,11 @@ input[type="checkbox"] {
 }
 
 .draggable {
-  animation: onload 0.4s ease-in-out;
   user-select: none;
+}
+
+.draggable.animate {
+  animation: onload 0.5s ease-in-out;
 }
 
 .circle-point {

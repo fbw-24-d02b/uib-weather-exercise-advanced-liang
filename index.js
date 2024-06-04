@@ -20,6 +20,7 @@
 
 /* 
 *structure of js code
+    function triggerAnimation()
     function for draggable element start
     function for draggable element end
     Fetch the weather data for the gived 3 default citys
@@ -82,15 +83,22 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
   async function getWeather(city, country, apiKey) {
     document.getElementById('address').textContent = city + ", " + country;
-  
-      let weatherData = await fetchWeatherData(city, country, apiKey);
-      if (weatherData) {
-        cityTimezoneOffsetInHours = weatherData.cityTimezoneOffsetInHours;
-        sunsetTimestamp = weatherData.sunsetTimestamp;
-        sunriseTimestamp = weatherData.sunriseTimestamp;
-      }
+
+    let weatherData = await fetchWeatherData(city, country, apiKey);
+    if (weatherData) {
+      cityTimezoneOffsetInHours = weatherData.cityTimezoneOffsetInHours;
+      sunsetTimestamp = weatherData.sunsetTimestamp;
+      sunriseTimestamp = weatherData.sunriseTimestamp;
+    }
+    triggerAnimation();
   }
-  
+
+  function triggerAnimation() {
+    draggable.classList.add('animate');
+    draggable.addEventListener('animationend', () => {
+      draggable.classList.remove('animate');
+    }, { once: true });
+  }
 
   // Add mousedown event listener to the draggable element
   draggable.addEventListener('mousedown', function (e) {
@@ -138,9 +146,9 @@ document.addEventListener("DOMContentLoaded", async function () {
             index = 2;
           }
           checkWeatherData(index);
-          
+
           movingPoint.style.transform = `translate(${index * 200}%, 0)`;
-        
+
         }
         else {
           index--;
@@ -155,7 +163,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     // Function to check the weather data for the selected city
-    async function  checkWeatherData(index) {
+    async function checkWeatherData(index) {
       console.log(index);
       city = citys[index];
       country = countrys[index];
@@ -170,7 +178,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       // Reset .draggable to initial position when mouse is released
       draggable.style.left = `${offsetX}px`;
       movingPoint.style.transform = `translate(${index * 200}%, 0)`; // Reset moving point
-      
+
     }
 
     document.addEventListener('mousemove', onMouseMove);
@@ -308,7 +316,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   var sunriseTimestamp;
 
   // Fetch weather data for the default city and country
-  
+
   city = 'Balingen';
   country = 'Germany';
   getWeather(city, country, apiKey);
@@ -403,7 +411,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById('weather-form').style.display = 'none';
 
     getWeather(city, country, apiKey);
-    
+
   });
 
   // add a click event listener to the cancel button
