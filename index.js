@@ -13,6 +13,7 @@
 // --switch dark mode during night time in location-- done
 // --switch location by clicking on the location icon-- done
 // --switch location by dragging the screen--done 
+// --call weather Api every 5min--   
 // --to convert all files into react components-- not working
 // --add more weather data in--
 
@@ -71,6 +72,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const countrys = [];
   var city, country;
 
+
   const apiKey = '8ee0ee1386092cdc507a8269ed0e2b74';
   cityList.forEach(city => {
     citys.push(city.textContent);
@@ -96,6 +98,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     offsetX = draggable.getBoundingClientRect().left;
     offsetX = 0;
     isMoving = true; // Enable moving on mousedown
+    const size300 = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--size-300'));
+
 
     function onMouseMove(e) {
       if (!isMoving) return; // Exit if moving is not allowed
@@ -107,10 +111,16 @@ document.addEventListener("DOMContentLoaded", async function () {
       // Update the position of .draggable element
       draggable.style.left = `${distanceX + offsetX}px`;
       if (distanceX < 0) {
-        movingPoint.style.transform = `translate(${percent * 200 + index * 200}%, 0)`;
+        const scrollAmountRem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+        movingPoint.style.transform = `translate(${(index + percent) * 200}%, 0)`;
+        movingPoint.scrollBy({
+          left: 0.75 * scrollAmountRem * (index + percent) * 2,
+          behavior: 'smooth'
+        });
       } else {
-        movingPoint.style.transform = `translate(${index * 200 - percent * 200}%, 0)`;
+        movingPoint.style.transform = `translate(${(index - percent) * 200}%, 0)`;
       }
+      console.log("left:", movingPoint.scrollLeft);
 
       // Check if resetting is needed
       if (percent > 0.5) {
@@ -132,7 +142,9 @@ document.addEventListener("DOMContentLoaded", async function () {
             index = 2;
           }
           checkWeatherData(index);
+          
           movingPoint.style.transform = `translate(${index * 200}%, 0)`;
+        
         }
         else {
           index--;
