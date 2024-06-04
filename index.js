@@ -81,8 +81,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   countryList.forEach(country => {
     countrys.push(country.textContent);
   });
+  var cityEx = "";
   async function getWeather(city, country, apiKey) {
-    var cityEx;
+   
     document.getElementById('address').textContent = city + ", " + country;
 
     let weatherData = await fetchWeatherData(city, country, apiKey);
@@ -91,9 +92,10 @@ document.addEventListener("DOMContentLoaded", async function () {
       sunsetTimestamp = weatherData.sunsetTimestamp;
       sunriseTimestamp = weatherData.sunriseTimestamp;
     }
-
+    console.log("1", cityEx, city);
     if (cityEx !== city) {triggerAnimation();}
     cityEx = city; 
+    console.log("2", cityEx, city);
   }
 
   function triggerAnimation() {
