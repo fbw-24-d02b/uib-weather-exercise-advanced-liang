@@ -4,7 +4,7 @@
 // --add an input-submit-form to refresh location and weather data-- done
 // --calculate real-time sun position on sunrise-sunset curve-- done
 // --add cancel-button to quit input-submit-form-- done
-// --update location time erery second-- done
+// --Synchronize local time erery second-- done
 // --publish weather app via githup or a rented domain--done
 // --add function to switch the background-image--done
 // --change the image of the weather according to description automaticly-- done
