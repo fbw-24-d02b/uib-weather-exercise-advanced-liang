@@ -112,10 +112,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       // Update the position of .draggable element
       draggable.style.left = `${distanceX + offsetX}px`;
       if (distanceX < 0) {
-        movingPoint.scrollBy({
-          left: 0.75 * scrollAmountRem * (index + percent) * 2,
-          behavior: 'smooth'
-        });
         movingPoint.style.transform = `translate(${(index + percent) * 200}%, 0)`;
       } else {
         movingPoint.style.transform = `translate(${(index - percent) * 200}%, 0)`;
