@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Horizontal ScrollTo Example</title>
+  <link rel="stylesheet" href="style.css">
   <style>
     body, html {
   margin: 0;
@@ -70,17 +71,22 @@ const scrollLeftBtn = document.getElementById('scrollLeftBtn');
 const scrollRightBtn = document.getElementById('scrollRightBtn');
 
 const scrollAmount = 100; // Number of pixels to scroll
+const scrollAmountRem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+const size300 = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--size-300')) * scrollAmountRem;
+
+console.log(scrollAmountRem);
+console.log(size300);
 
 scrollLeftBtn.addEventListener('click', () => {
   scrollContainer.scrollBy({
-    left: -scrollAmount,
+    left: -2 * scrollAmountRem,
     behavior: 'smooth'
   });
 });
 
 scrollRightBtn.addEventListener('click', () => {
   scrollContainer.scrollBy({
-    left: scrollAmount,
+    left: 2 * scrollAmountRem,
     behavior: 'smooth'
   });
 });

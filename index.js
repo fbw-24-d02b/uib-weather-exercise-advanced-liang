@@ -107,16 +107,16 @@ document.addEventListener("DOMContentLoaded", async function () {
       const newX = e.clientX;
       distanceX = newX - initialX;
       percent = (Math.abs(distanceX)) / draggable.offsetWidth;
+      const scrollAmountRem = parseFloat(getComputedStyle(document.documentElement).fontSize);
 
       // Update the position of .draggable element
       draggable.style.left = `${distanceX + offsetX}px`;
       if (distanceX < 0) {
-        const scrollAmountRem = parseFloat(getComputedStyle(document.documentElement).fontSize);
-        movingPoint.style.transform = `translate(${(index + percent) * 200}%, 0)`;
         movingPoint.scrollBy({
           left: 0.75 * scrollAmountRem * (index + percent) * 2,
           behavior: 'smooth'
         });
+        movingPoint.style.transform = `translate(${(index + percent) * 200}%, 0)`;
       } else {
         movingPoint.style.transform = `translate(${(index - percent) * 200}%, 0)`;
       }
