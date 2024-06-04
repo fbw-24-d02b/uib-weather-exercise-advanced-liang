@@ -13,7 +13,7 @@
 // --switch dark mode during night time in location-- done
 // --switch location by clicking on the location icon-- done
 // --switch location by dragging the screen--done 
-// --call weather Api every 5min--   
+// --call weather Api every 5min-- done
 // --to convert all files into react components-- not working
 // --add more weather data in--
 
@@ -312,6 +312,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   city = 'Balingen';
   country = 'Germany';
   getWeather(city, country, apiKey);
+  setInterval(function () { getWeather(city, country, apiKey) }, 300000);
+
 
   // function: update the clock with the current time in city's local time
   function updateClockAndSunPosition(TimezoneOffset, sunsetTimestamp, sunriseTimestamp) {

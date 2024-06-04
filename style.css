@@ -670,6 +670,7 @@ input[type="checkbox"] {
 }
 
 .draggable {
+  animation: onload 0.4s ease-in-out;
   user-select: none;
 }
 
@@ -699,6 +700,16 @@ input[type="checkbox"] {
 
   100% {
     transform: translateX(-100%);
+  }
+}
+
+@keyframes onload {
+  0% {
+    transform: scale(3);
+  }
+
+  100% {
+    transform: scale(1);
   }
 }
 
