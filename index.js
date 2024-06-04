@@ -92,10 +92,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       sunsetTimestamp = weatherData.sunsetTimestamp;
       sunriseTimestamp = weatherData.sunriseTimestamp;
     }
-    console.log("1", cityEx, city);
     if (cityEx !== city) {triggerAnimation();}
     cityEx = city; 
-    console.log("2", cityEx, city);
   }
 
   function triggerAnimation() {
