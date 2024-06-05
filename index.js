@@ -103,8 +103,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     }, { once: true });
   }
 
+  
+
   // Add mousedown event listener to the draggable element
-  draggable.addEventListener('mousedown', function (e) {
+  draggable.addEventListener('mousedown', startDrag);
+
+  function startDrag(e) {
     initialX = e.clientX;
     offsetX = draggable.getBoundingClientRect().left;
     offsetX = 0;
@@ -186,7 +190,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
-  });
+  }
 
   // function for draggable element end
 
