@@ -61,10 +61,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   // function for draggable element start
   const draggable = document.querySelector('.draggable');
   const movingPoint = document.querySelector('.moving-point');
-  let initialX;
-  let offsetX;
-  let distanceX = 0;
-  let percent = 0;
+
+  
   let index = 0; // Initialize index outside to maintain state between events
   let isMoving = false; // Flag to check if moving is allowed
   const cityList = document.querySelectorAll('.city-name');
@@ -83,7 +81,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
   var cityEx = "";
   async function getWeather(city, country, apiKey) {
-   
+
     document.getElementById('address').textContent = city + ", " + country;
 
     let weatherData = await fetchWeatherData(city, country, apiKey);
@@ -92,8 +90,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       sunsetTimestamp = weatherData.sunsetTimestamp;
       sunriseTimestamp = weatherData.sunriseTimestamp;
     }
-    if (cityEx !== city) {triggerAnimation();}
-    cityEx = city; 
+    if (cityEx !== city) { triggerAnimation(); }
+    cityEx = city;
   }
 
   function triggerAnimation() {
@@ -103,26 +101,48 @@ document.addEventListener("DOMContentLoaded", async function () {
     }, { once: true });
   }
 
-  
+
 
   // Add mousedown event listener to the draggable element
   draggable.addEventListener('mousedown', startDrag);
+  draggable.addEventListener('touchstart', startDrag);
 
   function startDrag(e) {
-    initialX = e.clientX;
+    let initialX;
+    let offsetX;
+
+    // Prevent default behavior to avoid scrolling on touch devices
+    e.preventDefault();
+
+    // to select the initialX value from the event object
+    if (e.type === 'mousedown') {
+      initialX = e.clientX;
+    } else if (e.type === 'touchstart') {
+      initialX = e.touches[0].clientX;
+    }
+
     offsetX = draggable.getBoundingClientRect().left;
     offsetX = 0;
     isMoving = true; // Enable moving on mousedown
-    const size300 = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--size-300'));
 
+    // Add event listeners for mousemove, touchmove, mouseup, and touchend ！！！
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('touchmove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('touchend', onMouseUp);
 
     function onMouseMove(e) {
       if (!isMoving) return; // Exit if moving is not allowed
 
-      const newX = e.clientX;
-      distanceX = newX - initialX;
-      percent = (Math.abs(distanceX)) / draggable.offsetWidth;
-      const scrollAmountRem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+      let newX;
+      if (e.type === 'mousemove') {
+        newX = e.clientX;
+      } else if (e.type === 'touchmove') {
+        newX = e.touches[0].clientX;
+      }
+
+      const distanceX = newX - initialX;
+      const percent = (Math.abs(distanceX)) / draggable.offsetWidth;
 
       // Update the position of .draggable element
       draggable.style.left = `${distanceX + offsetX}px`;
@@ -131,7 +151,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       } else {
         movingPoint.style.transform = `translate(${(index - percent) * 200}%, 0)`;
       }
-      console.log("left:", movingPoint.scrollLeft);
 
       // Check if resetting is needed
       if (percent > 0.5) {
@@ -180,7 +199,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     function onMouseUp() {
       document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('touchmove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('touchend', onMouseUp);
 
       // Reset .draggable to initial position when mouse is released
       draggable.style.left = `${offsetX}px`;
