@@ -3,84 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Touch Screen Drag Test</title>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .draggable {
-      width: 100px;
-      height: 100px;
-      background-color: #3498db;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      touch-action: none;
-    }
-  </style>
+  <title>Document</title>
 </head>
 <body>
-  <div class="draggable"></div>
   <script>
-    const draggable = document.querySelector('.draggable');
+     const apiKey = '8ee0ee1386092cdc507a8269ed0e2b74';
+const city = 'London'; // 示例城市
+const country = 'GB'; // 示例国家代码
 
-    let initialX, initialY, offsetX, offsetY, isMoving = false;
+// 获取城市的经纬度
+async function getCityCoordinates(city, country, apiKey) {
+  const geoApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city},${country}&limit=1&appid=${apiKey}`;
+  const response = await fetch(geoApiUrl);
+  const data = await response.json();
+  if (data.length > 0) {
+    const { lat, lon } = data[0];
+    return { lat, lon };
+  } else {
+    throw new Error('无法获取城市坐标');
+  }
+}
 
-    function startDrag(e) {
-      e.preventDefault();
+// 获取7天的天气预报
+async function getWeatherForecast(lat, lon, apiKey) {
+  console.log(lat, lon);
+  const oneCallApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely,current&appid=${apiKey}&units=metric`;
+  const response = await fetch(oneCallApiUrl);
+  const data = await response.json();
+  return data.daily;
+}
 
-      if (e.type === 'mousedown') {
-        initialX = e.clientX;
-        initialY = e.clientY;
-      } else if (e.type === 'touchstart') {
-        initialX = e.touches[0].clientX;
-        initialY = e.touches[0].clientY;
-      }
+// 主函数，获取并显示7天的天气预报
+async function main() {
+  try {
+    const { lat, lon } = await getCityCoordinates(city, country, apiKey);
+    const forecast = await getWeatherForecast(lat, lon, apiKey);
+    console.log('7天的天气预报:', forecast);
+  } catch (error) {
+    console.error('获取天气预报时出错:', error);
+  }
+}
 
-      offsetX = draggable.getBoundingClientRect().left;
-      offsetY = draggable.getBoundingClientRect().top;
-      isMoving = true;
+main();
 
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('touchmove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
-      document.addEventListener('touchend', onMouseUp);
-    }
-
-    function onMouseMove(e) {
-      if (!isMoving) return;
-
-      let newX, newY;
-      if (e.type === 'mousemove') {
-        newX = e.clientX;
-        newY = e.clientY;
-      } else if (e.type === 'touchmove') {
-        newX = e.touches[0].clientX;
-        newY = e.touches[0].clientY;
-      }
-
-      const distanceX = newX - initialX;
-      const distanceY = newY - initialY;
-
-      draggable.style.left = `${distanceX + offsetX}px`;
-      draggable.style.top = `${distanceY + offsetY}px`;
-    }
-
-    function onMouseUp() {
-      isMoving = false;
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('touchmove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
-      document.removeEventListener('touchend', onMouseUp);
-    }
-
-    draggable.addEventListener('mousedown', startDrag);
-    draggable.addEventListener('touchstart', startDrag);
   </script>
 </body>
 </html>
