@@ -718,8 +718,8 @@ input[type="checkbox"] {
   }
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --bgc-current: var(--bgc-dark-mode) !important;
   }
-}
+} */
