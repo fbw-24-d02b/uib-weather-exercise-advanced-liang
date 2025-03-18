@@ -215,9 +215,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // function for draggable element end
 
-
-
-
   // Fetch the weather data for the gived 3 default citys
   const listItems = document.querySelectorAll('.points li');
 
@@ -531,7 +528,4 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
   // Fetch und update weather data, end
-
-
-
 });
