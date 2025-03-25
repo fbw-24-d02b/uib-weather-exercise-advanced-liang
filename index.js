@@ -54,7 +54,7 @@
 *       Return the city timezone offset, sunset and sunrise timestamps
 *   Fetch und update weather data, end
 */
-import apiKey from "./apiKey.js";
+const apiKey = '8ee0ee1386092cdc507a8269ed0e2b74'
 
 main();
 
