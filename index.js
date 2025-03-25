@@ -108,6 +108,106 @@ async function main() {
   draggable.addEventListener("mousedown", startDrag);
   draggable.addEventListener("touchstart", startDrag);
 
+  function startDrag(e) {
+    let initialX;
+    let offsetX;
+  
+    // Prevent default behavior to avoid scrolling on touch devices
+    e.preventDefault();
+  
+    // to select the initialX value from the event object
+    if (e.type === "mousedown") {
+      initialX = e.clientX;
+    } else if (e.type === "touchstart") {
+      initialX = e.touches[0].clientX;
+    }
+  
+    offsetX = draggable.getBoundingClientRect().left;
+    offsetX = 0;
+    isMoving = true; // Enable moving on mousedown
+  
+    // Add event listeners for mousemove, touchmove, mouseup, and touchend ！！！
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("touchmove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+    document.addEventListener("touchend", onMouseUp);
+  
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+  
+    function onMouseMove(e) {
+      if (!isMoving) return; // Exit if moving is not allowed
+  
+      let newX;
+      if (e.type === "mousemove") {
+        newX = e.clientX;
+      } else if (e.type === "touchmove") {
+        newX = e.touches[0].clientX;
+      }
+  
+      const distanceX = newX - initialX;
+      const percent = Math.abs(distanceX) / draggable.offsetWidth;
+  
+      // Update the position of .draggable element
+      draggable.style.left = `${distanceX + offsetX}px`;
+      if (distanceX < 0) {
+        movingPoint.style.transform = `translate(${(index + percent) * 200}%, 0)`;
+      } else {
+        movingPoint.style.transform = `translate(${(index - percent) * 200}%, 0)`;
+      }
+  
+      // Check if resetting is needed
+      if (percent > 0.5) {
+        index = checkReset(index, percent, distanceX);
+        isMoving = false; // Disable moving when percent > 0.5
+      }
+    }
+    // Function to check if resetting is needed
+    function checkReset(index, percent, distanceX) {
+      if (percent > 0.5) {
+        // Reset if distanceX exceeds half of its own width
+        draggable.style.left = `${offsetX}px`;
+  
+        if (distanceX < 0) {
+          index++;
+          if (index >= 2) {
+            index = 2;
+          }
+          checkWeatherData(index);
+  
+          movingPoint.style.transform = `translate(${index * 200}%, 0)`;
+        } else {
+          index--;
+          if (index <= 0) {
+            index = 0;
+          }
+          checkWeatherData(index);
+          movingPoint.style.transform = `translate(${index * 200}%, 0)`;
+        }
+      }
+      return index;
+    }
+  
+    // Function to check the weather data for the selected city
+    async function checkWeatherData(index) {
+      console.log(index);
+      city = citys[index];
+      country = countrys[index];
+      getWeather(city, country, apiKey);
+    }
+  
+    function onMouseUp() {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("touchmove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+      document.removeEventListener("touchend", onMouseUp);
+  
+      // Reset .draggable to initial position when mouse is released
+      draggable.style.left = `${offsetX}px`;
+      movingPoint.style.transform = `translate(${index * 200}%, 0)`; // Reset moving point
+    }
+  }
+
   // function for draggable element end
 
   // Fetch the weather data for the gived 3 default citys
@@ -393,7 +493,7 @@ async function main() {
       var sunsetTime = convertTimestampToTime(sunsetTimestamp);
       var currentTime = convertTimestampToTime(currentTimestamp);
 
-      console.log(sunriseTime, sunsetTime, currentTime);
+      // console.log(sunriseTime, sunsetTime, currentTime);
 
       // Display current weather information in corresponding HTML elements
       document.getElementById("current-temperature").textContent =
@@ -445,104 +545,4 @@ async function main() {
   // Fetch und update weather data, end
 }
 
-function startDrag(e) {
-  let initialX;
-  let offsetX;
 
-  // Prevent default behavior to avoid scrolling on touch devices
-  e.preventDefault();
-
-  // to select the initialX value from the event object
-  if (e.type === "mousedown") {
-    initialX = e.clientX;
-  } else if (e.type === "touchstart") {
-    initialX = e.touches[0].clientX;
-  }
-
-  offsetX = draggable.getBoundingClientRect().left;
-  offsetX = 0;
-  isMoving = true; // Enable moving on mousedown
-
-  // Add event listeners for mousemove, touchmove, mouseup, and touchend ！！！
-  document.addEventListener("mousemove", onMouseMove);
-  document.addEventListener("touchmove", onMouseMove);
-  document.addEventListener("mouseup", onMouseUp);
-  document.addEventListener("touchend", onMouseUp);
-
- 
-
-  document.addEventListener("mousemove", onMouseMove);
-  document.addEventListener("mouseup", onMouseUp);
-}
-
-function onMouseMove(e) {
-  if (!isMoving) return; // Exit if moving is not allowed
-
-  let newX;
-  if (e.type === "mousemove") {
-    newX = e.clientX;
-  } else if (e.type === "touchmove") {
-    newX = e.touches[0].clientX;
-  }
-
-  const distanceX = newX - initialX;
-  const percent = Math.abs(distanceX) / draggable.offsetWidth;
-
-  // Update the position of .draggable element
-  draggable.style.left = `${distanceX + offsetX}px`;
-  if (distanceX < 0) {
-    movingPoint.style.transform = `translate(${(index + percent) * 200}%, 0)`;
-  } else {
-    movingPoint.style.transform = `translate(${(index - percent) * 200}%, 0)`;
-  }
-
-  // Check if resetting is needed
-  if (percent > 0.5) {
-    index = checkReset(index, percent, distanceX);
-    isMoving = false; // Disable moving when percent > 0.5
-  }
-}
-// Function to check if resetting is needed
-function checkReset(index, percent, distanceX) {
-  if (percent > 0.5) {
-    // Reset if distanceX exceeds half of its own width
-    draggable.style.left = `${offsetX}px`;
-
-    if (distanceX < 0) {
-      index++;
-      if (index >= 2) {
-        index = 2;
-      }
-      checkWeatherData(index);
-
-      movingPoint.style.transform = `translate(${index * 200}%, 0)`;
-    } else {
-      index--;
-      if (index <= 0) {
-        index = 0;
-      }
-      checkWeatherData(index);
-      movingPoint.style.transform = `translate(${index * 200}%, 0)`;
-    }
-  }
-  return index;
-}
-
-// Function to check the weather data for the selected city
-async function checkWeatherData(index) {
-  console.log(index);
-  city = citys[index];
-  country = countrys[index];
-  getWeather(city, country, apiKey);
-}
-
-function onMouseUp() {
-  document.removeEventListener("mousemove", onMouseMove);
-  document.removeEventListener("touchmove", onMouseMove);
-  document.removeEventListener("mouseup", onMouseUp);
-  document.removeEventListener("touchend", onMouseUp);
-
-  // Reset .draggable to initial position when mouse is released
-  draggable.style.left = `${offsetX}px`;
-  movingPoint.style.transform = `translate(${index * 200}%, 0)`; // Reset moving point
-}
