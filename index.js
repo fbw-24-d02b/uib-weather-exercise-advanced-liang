@@ -190,7 +190,6 @@ async function main() {
   
     // Function to check the weather data for the selected city
     async function checkWeatherData(index) {
-      console.log(index);
       city = citys[index];
       country = countrys[index];
       getWeather(city, country, apiKey);
