@@ -1,5 +1,5 @@
 :root {
-  --ff-primary: "Be Vietnam Pro", sans-serif;
+  --ff-primary: system-ui, Avenir, Helvetica, Arial, sans-serif;
 
   /* color constants */
   --primary-fc: #ffffff;
