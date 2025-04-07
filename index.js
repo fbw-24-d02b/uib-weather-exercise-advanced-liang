@@ -480,7 +480,7 @@ async function main() {
       var weatherDescription = weatherData.weather[0].description;
 
       // Get city timezone offset
-      var cityTimezoneOffset = weatherData.timezone - 3600;
+      var cityTimezoneOffset = weatherData.timezone - 7200;
       var cityTimezoneOffsetInHours = cityTimezoneOffset / 3600;
 
       // Calculate sunrise and sunset times in city's local time
