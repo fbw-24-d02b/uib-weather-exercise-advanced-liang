@@ -327,7 +327,7 @@ async function main() {
 
   // Fetch weather data for the default city and country
 
-  city = "Balingen";
+  city = "Hamburg";
   country = "Germany";
   getWeather(city, country, apiKey);
   setInterval(function () {
